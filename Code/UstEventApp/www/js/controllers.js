@@ -232,37 +232,6 @@ angular.module('starter.controllers', [])
     $scope.user = {};
 })
 
-.controller('RateApp', function ($scope) {
-    $scope.rateApp = function () {
-        if (ionic.Platform.isIOS()) {
-                AppRate.promptForRating(true);
-        } else if (ionic.Platform.isAndroid()) {
-            //you need to set your own android app id
-            AppRate.preferences.storeAppURL.android = 'market://details?id=ionFB';
-            AppRate.promptForRating(true);
-        }
-    };
-})
-
-.controller('SendMailCtrl', function ($scope) {
-    $scope.sendMail = function () {
-        cordova.plugins.email.addAlias('gmail', 'com.google.android.gm');
-        cordova.plugins.email.isAvailable(
-			function (isAvailable) {
-			    alert('Service is not available');
-			    cordova.plugins.email.open({
-			        app: 'gmail',
-			        to: 'praveen.dexter@gmail.com',
-			        cc: 'praveen.dexter@gmail.com',
-			        // bcc:     ['XXXX', 'XXXX'],
-			        subject: 'Greetings',
-			        body: 'How are you? Nice greetings from Ionic'
-			    });
-			}
-		);
-    };
-})
-
 
 // FEED
 //brings all feed categories
@@ -383,10 +352,7 @@ angular.module('starter.controllers', [])
 
     $scope.doRefresh();
 
-    $scope.bookmarkPost = function (post) {
-        $ionicLoading.show({ template: 'Post Saved!', noBackdrop: true, duration: 1000 });
-        BookMarkService.bookmarkFeedPost(post);
-    };
+ 
 })
 
 //PLAYER LIST CONTROLLER
