@@ -356,7 +356,9 @@ angular.module('starter.controllers', [])
 })
 
 //PLAYER LIST CONTROLLER
-.controller('PlayerListCtrl', function ($scope, $stateParams, $http, $firebaseArray, fireBaseData, $q) {
+//TEST PENDING 
+/*.controller('PlayerListCtrl', function ($scope, $stateParams, $http, $firebaseArray, fireBaseData, $q) {
+   
     $scope.feeds_PlayerList = $firebaseArray(fireBaseData.refPlayerList());
 
 
@@ -396,7 +398,7 @@ angular.module('starter.controllers', [])
 
 
     //$state.go('app.player-list');
-})
+}) */
 
 
 // SETTINGS
