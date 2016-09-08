@@ -228,6 +228,15 @@ angular.module('starter.factories', [])
       var refTeamNames = new Firebase("https://ustdb.firebaseio.com/teamNames");
     //  var refTeamMembers = new Firebase("https://ustdb.firebaseio.com/teamMembers");
 
+      var refSurveyDashboard = new Firebase("https://ustdb.firebaseio.com/surveyDashBoard");
+
+      var refMatchSchedule = new Firebase("https://ustdb.firebaseio.com/matchSchedule");
+
+
+      var refPlayerList = new Firebase("https://ustdb.firebaseio.com/sportsList/feed_source/");
+    
+      var refLiveScore = new Firebase("https://ustdb.firebaseio.com/liveScore");
+
       return {
           refRegisteration: function () {
             return  refRegisteration;
@@ -279,7 +288,23 @@ angular.module('starter.factories', [])
           },
           eventNews: function () {
               return eventNews;
-          }
+          },
+          refSurveyDashboard : function()
+          {
+          return refSurveyDashboard;
+          },
+          refMatchSchedule : function()
+          {
+              return refMatchSchedule;
+          },
+          refPlayerList: function ()
+          {
+              return refPlayerList;
+          },
+          refLiveScore :function()
+         {
+              return refLiveScore;
+         }
       };
 })
 

@@ -25,8 +25,8 @@ angular.module('starter', [
   'slugifier',
   'ionic.contrib.ui.tinderCards',
   'youtube-embed',
-  'firebase'
-])
+  'firebase',
+  ])
 
 .run(function($ionicPlatform, PushNotificationsService, $rootScope, $ionicConfig, $timeout) {
 
@@ -196,6 +196,27 @@ angular.module('starter', [
       }
     }
   })
+
+  .state('app.player-list', {
+      url: "/player-list/:categoryId/:sourceId",
+      views: {
+          'menuContent': {
+              templateUrl: "views/app/feeds/player-list.html",
+               controller: "PlayerListCtrl"
+          }
+      }
+})
+
+   .state('app.survey-details', {
+       url: "/survey-details/:sourceId",
+       views: {
+           'menuContent': {
+               templateUrl: "views/app/feeds/survey-details.html",
+               controller: 'SurveyCtrl'
+           }
+       }
+
+   })
 
   .state('app.feed-entries', {
     url: "/feed-entries/:categoryId/:sourceId",

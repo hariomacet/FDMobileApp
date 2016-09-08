@@ -1,3 +1,5 @@
+/// <reference path="../views/app/feeds/questionModal.html" />
+/// <reference path="../views/app/feeds/questionModal.html" />
 angular.module('starter.controllers', [])
 
 .controller('AuthCtrl', function ($scope, $ionicConfig) {
@@ -36,8 +38,8 @@ angular.module('starter.controllers', [])
 
     $scope.user = {};
 
-    $scope.user.email = ""; //"john@doe.com";
-    $scope.user.pin = "";  //"12345"
+    $scope.user.email = ""; //"XXXXX";
+    $scope.user.pin = "";   //"12345"
 
     // We need this for the form validation
     $scope.selected_tab = "";
@@ -153,21 +155,20 @@ angular.module('starter.controllers', [])
     $scope.surveyQ.$loaded()
                    .then(function (surveyQ) {
                        angular.forEach(surveyQ, function (surveyitems) {
-                           if(surveyitems.surveyActive==1)
-                           {
+                           if (surveyitems.surveyActive == 1) {
                                //for (i in surveyitems)
                                //{
                                //    item = surveyitems[i];
                                //}
                                //$scope.surveyItemValues = surveyitems;
                                arraySurveyQuestions.push(surveyitems);
-                              
+
                                console.log(surveyitems);
                            }
                        })
                        $scope.Surveylist = arraySurveyQuestions;
                    });
-   
+
 
 
     $scope.surveyKey = {};
@@ -175,7 +176,7 @@ angular.module('starter.controllers', [])
         $scope.surveyresult = surveyresult.$add({
             questionId: $scope.surveyKey.select,
             mobileNo: $rootScope.userIdPhone.PhoneNumber,  //GET VALUES ON LOGIN 
-            surveyId: $scope.surveyInfo.surveyid,   
+            surveyId: $scope.surveyInfo.surveyid,
             userId: $rootScope.userIdPhone.userId    //GET VALUES ON LOGIN 
 
         }).then(function (ref) {
@@ -183,7 +184,7 @@ angular.module('starter.controllers', [])
         }, function (error) {
             console.log("Error:", error);
         });
-       $state.go('app.feeds-categories');
+        $state.go('app.feeds-categories');
     }
     //else {
     //                $scope.userExists = "Already Exists!!";
@@ -193,6 +194,35 @@ angular.module('starter.controllers', [])
 
 
 })
+
+
+    .controller('SurveyCtrl', function ($scope, $state, $stateParams, $ionicModal) {
+        $scope.SurveyTitle = $stateParams.sourceId;
+        $ionicModal.fromTemplateUrl('views/app/feeds/survey-details.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(
+               function (modal) {
+                   vm.modal = modal;
+                   vm.modal.show();
+               }
+               )
+    })
+
+
+
+           // $state.go('app.feeds-categories');
+
+
+
+
+
+    //    function closeQuestionEditor() {
+    //    vm.modal.hide();
+    //    vm.modal.remove();
+
+    //    $ionicListDelegate.closeOptionButtons();
+    //}
 
 .controller('ForgotPasswordCtrl', function ($scope, $state) {
     $scope.recoverPassword = function () {
@@ -205,9 +235,7 @@ angular.module('starter.controllers', [])
 .controller('RateApp', function ($scope) {
     $scope.rateApp = function () {
         if (ionic.Platform.isIOS()) {
-            //you need to set your own ios app id
-            AppRate.preferences.storeAppURL.ios = '1234555553>';
-            AppRate.promptForRating(true);
+                AppRate.promptForRating(true);
         } else if (ionic.Platform.isAndroid()) {
             //you need to set your own android app id
             AppRate.preferences.storeAppURL.android = 'market://details?id=ionFB';
@@ -221,12 +249,12 @@ angular.module('starter.controllers', [])
         cordova.plugins.email.addAlias('gmail', 'com.google.android.gm');
         cordova.plugins.email.isAvailable(
 			function (isAvailable) {
-		       alert('Service is not available') ;
-               cordova.plugins.email.open({
-                    app: 'gmail',
+			    alert('Service is not available');
+			    cordova.plugins.email.open({
+			        app: 'gmail',
 			        to: 'praveen.dexter@gmail.com',
-			        cc: 'praveenx.nelge@intel.com',
-			        // bcc:     ['john@doe.com', 'jane@doe.com'],
+			        cc: 'praveen.dexter@gmail.com',
+			        // bcc:     ['XXXX', 'XXXX'],
 			        subject: 'Greetings',
 			        body: 'How are you? Nice greetings from Ionic'
 			    });
@@ -358,37 +386,46 @@ angular.module('starter.controllers', [])
 })
 
 //bring specific category providers
-.controller('CategoryFeedsCtrl', function ($scope, $http, $stateParams,$firebaseArray, fireBaseData) {
+.controller('CategoryFeedsCtrl', function ($scope, $http, $stateParams, $firebaseArray, fireBaseData) {
     $scope.category_sources = [];
     $scope.categoryitems = [];
     $scope.categoryId = $stateParams.categoryId;
+
+    $scope.categoryTitle = $stateParams.categoryId;
 
 
     $scope.categoryitem = $stateParams.categoryId == 'events2016' ? $firebaseArray(fireBaseData.refEventsList())
          : $stateParams.categoryId == 'sports' ? $firebaseArray(fireBaseData.refSportsList())
         : $stateParams.categoryId == 'events-news' ? $firebaseArray(fireBaseData.eventNews())
         : $stateParams.categoryId == 'CSR' ? $firebaseArray(fireBaseData.refCsr())
-        : $stateParams.categoryId == 'technology' ? $firebaseArray(fireBaseData.reftechnology()) : $firebaseArray(fireBaseData.refNowU());
+        : $stateParams.categoryId == 'technology' ? $firebaseArray(fireBaseData.reftechnology())
+        : $stateParams.categoryId == 'survey' ? $firebaseArray(fireBaseData.refSurveyDashboard()) : $firebaseArray(fireBaseData.refNowU());
 
     $scope.categoryitem.$loaded()
              .then(function (categoryitem) {
-                // angular.forEach(categoryitem, function (categorylist) {
-               //  if (surveyitem.surveyActive == 1) {
-                // $scope.categoryTitle = categoryitem.title;
-                 $scope.category_sources = categoryitem[0];
-                  
+              
+                 if ($scope.categoryTitle != "survey") {
+                     $scope.category_sources = categoryitem[0];
 
-               //  }
-          //   })
-         });
+                 }
+                 else {
+                     $scope.category_sources = categoryitem;
+
+                 }
 
 
-    if ($stateParams.categoryId =='db002')
-    {
+
+
+
+
+             });
+
+
+    if ($stateParams.categoryId == 'db002') {
         $scope.category_sources = $firebaseArray(fireBaseData.refSportsList());
     }
 
-  
+
     //$http.get('feeds-categories.json').success(function (response) {
     //    var category = _.find(response, { id: $scope.categoryId });
     //    $scope.categoryTitle = category.title;
@@ -397,35 +434,61 @@ angular.module('starter.controllers', [])
 })
 
 //this method brings posts for a source provider
-.controller('FeedEntriesCtrl', function ($scope, $stateParams, $http, FeedList, $q, $ionicLoading, BookMarkService) {
+.controller('FeedEntriesCtrl', function ($scope, $stateParams, $http, FeedList, $q, $ionicLoading, BookMarkService, $firebaseArray, fireBaseData) {
     $scope.feed = [];
 
+    $scope.count = 0;
+    $scope.likeCount = function () {
+        $scope.count = $scope.count + 1;
+    }
+
+    
     var categoryId = $stateParams.categoryId,
 			sourceId = $stateParams.sourceId;
+    $scope.sportsName = sourceId;
+
+    $scope.categoryTitle = $stateParams.sourceId;
 
     $scope.doRefresh = function () {
 
-        $http.get('feeds-categories.json').success(function (response) {
+        $scope.feeds_MatchSchedule = $firebaseArray(fireBaseData.refMatchSchedule());
+        $scope.feeds_LiveScore = $firebaseArray(fireBaseData.refLiveScore());
 
-            $ionicLoading.show({
-                template: 'Loading entries...'
+        $scope.feeds_LiveScore.$loaded()
+           .then(function (result) {
+               angular.forEach(result, function (liveScore) {
+                   if (liveScore.$id.toUpperCase() == sourceId.toUpperCase()) {
+                       $scope.liveScore = liveScore;
+                   }
+               })
+           })
+
+
+        //  $scope.feed_MatchDetails = JSON.stringify($scope.feeds_MatchSchedule);
+
+        if ($scope.feeds_MatchSchedule == null) {
+            $http.get('feeds-categories.json').success(function (response) {
+
+                $ionicLoading.show({
+                    template: 'Loading entries...'
+                });
+
+                var category = _.find(response, { id: categoryId }),
+                        source = _.find(category.feed_sources, { id: sourceId });
+
+                $scope.sourceTitle = source.title;
+
+                FeedList.get(source.url)
+                .then(function (result) {
+                    $scope.feed = result.feed;
+                    $ionicLoading.hide();
+                    $scope.$broadcast('scroll.refreshComplete');
+                }, function (reason) {
+                    $ionicLoading.hide();
+                    $scope.$broadcast('scroll.refreshComplete');
+                });
             });
-
-            var category = _.find(response, { id: categoryId }),
-					source = _.find(category.feed_sources, { id: sourceId });
-
-            $scope.sourceTitle = source.title;
-
-            FeedList.get(source.url)
-			.then(function (result) {
-			    $scope.feed = result.feed;
-			    $ionicLoading.hide();
-			    $scope.$broadcast('scroll.refreshComplete');
-			}, function (reason) {
-			    $ionicLoading.hide();
-			    $scope.$broadcast('scroll.refreshComplete');
-			});
-        });
+        }
     };
 
     $scope.doRefresh();
@@ -435,6 +498,50 @@ angular.module('starter.controllers', [])
         BookMarkService.bookmarkFeedPost(post);
     };
 })
+
+//PLAYER LIST CONTROLLER
+.controller('PlayerListCtrl', function ($scope, $stateParams, $http, $firebaseArray, fireBaseData, $q) {
+    $scope.feeds_PlayerList = $firebaseArray(fireBaseData.refPlayerList());
+
+
+
+
+
+    $scope.teamName = $stateParams.categoryId;
+    $scope.SportsName = $stateParams.sourceId;
+
+
+    $scope.feeds_PlayerList.$loaded()
+           .then(function (playerlist) {
+               //    var playerlist = JSON.stringify(arrplayerlist);
+               angular.forEach(playerlist, function (sportlist) {
+                   if (sportlist.title.toUpperCase() == $scope.SportsName.toUpperCase()) {
+                       angular.forEach(sportlist.teams, function (teamlistNames) {
+                           angular.forEach(teamlistNames, function (teamlist) {
+                               if (teamlist.TeamName.toUpperCase() == $scope.teamName.toUpperCase()) {
+                                   $scope.playerlistitems = teamlist.TeamList;
+                               }
+                           })
+                       })
+                       //$scope.categoryTitle = categoryitem.title;
+                       //$scope.category_sources = categoryitem[0];
+                   }
+               })
+
+               //if(playerlist[0].title=="Cricket")
+               //{
+               //    if (playerlist[0].teams[0][0].TeamName == "Red") {
+               //        $scope.playerlistitems =playerlist[0].teams[0][0].TeamList;
+               //    }
+
+               //}
+
+           });
+
+
+    //$state.go('app.player-list');
+})
+
 
 // SETTINGS
 .controller('SettingsCtrl', function ($scope, $ionicActionSheet, $state) {
@@ -481,165 +588,5 @@ angular.module('starter.controllers', [])
     };
 })
 
-// TINDER CARDS
-.controller('TinderCardsCtrl', function ($scope, $http) {
-
-    $scope.cards = [];
-
-
-    $scope.addCard = function (img, name) {
-        var newCard = { image: img, name: name };
-        newCard.id = Math.random();
-        $scope.cards.unshift(angular.extend({}, newCard));
-    };
-
-    $scope.addCards = function (count) {
-        $http.get('http://api.randomuser.me/?results=' + count).then(function (value) {
-            angular.forEach(value.data.results, function (v) {
-                $scope.addCard(v.user.picture.large, v.user.name.first + " " + v.user.name.last);
-            });
-        });
-    };
-
-    $scope.addFirstCards = function () {
-        $scope.addCard("https://dl.dropboxusercontent.com/u/30675090/envato/tinder-cards/left.png", "Nope");
-        $scope.addCard("https://dl.dropboxusercontent.com/u/30675090/envato/tinder-cards/right.png", "Yes");
-    };
-
-    $scope.addFirstCards();
-    $scope.addCards(5);
-
-    $scope.cardDestroyed = function (index) {
-        $scope.cards.splice(index, 1);
-        $scope.addCards(1);
-    };
-
-    $scope.transitionOut = function (card) {
-        console.log('card transition out');
-    };
-
-    $scope.transitionRight = function (card) {
-        console.log('card removed to the right');
-        console.log(card);
-    };
-
-    $scope.transitionLeft = function (card) {
-        console.log('card removed to the left');
-        console.log(card);
-    };
-})
-
-
-// BOOKMARKS
-.controller('BookMarksCtrl', function ($scope, $rootScope, BookMarkService, $state) {
-
-    $scope.bookmarks = BookMarkService.getBookmarks();
-
-    // When a new post is bookmarked, we should update bookmarks list
-    $rootScope.$on("new-bookmark", function (event) {
-        $scope.bookmarks = BookMarkService.getBookmarks();
-    });
-
-    $scope.goToFeedPost = function (link) {
-        window.open(link, '_blank', 'location=yes');
-    };
-    $scope.goToWordpressPost = function (postId) {
-        $state.go('app.post', { postId: postId });
-    };
-})
-
-// WORDPRESS
-.controller('WordpressCtrl', function ($scope, $http, $ionicLoading, PostService, BookMarkService) {
-    $scope.posts = [];
-    $scope.page = 1;
-    $scope.totalPages = 1;
-
-    $scope.doRefresh = function () {
-        $ionicLoading.show({
-            template: 'Loading posts...'
-        });
-
-        //Always bring me the latest posts => page=1
-        PostService.getRecentPosts(1)
-		.then(function (data) {
-		    $scope.totalPages = data.pages;
-		    $scope.posts = PostService.shortenPosts(data.posts);
-
-		    $ionicLoading.hide();
-		    $scope.$broadcast('scroll.refreshComplete');
-		});
-    };
-
-    $scope.loadMoreData = function () {
-        $scope.page += 1;
-
-        PostService.getRecentPosts($scope.page)
-		.then(function (data) {
-		    //We will update this value in every request because new posts can be created
-		    $scope.totalPages = data.pages;
-		    var new_posts = PostService.shortenPosts(data.posts);
-		    $scope.posts = $scope.posts.concat(new_posts);
-
-		    $scope.$broadcast('scroll.infiniteScrollComplete');
-		});
-    };
-
-    $scope.moreDataCanBeLoaded = function () {
-        return $scope.totalPages > $scope.page;
-    };
-
-    $scope.bookmarkPost = function (post) {
-        $ionicLoading.show({ template: 'Post Saved!', noBackdrop: true, duration: 1000 });
-        BookMarkService.bookmarkWordpressPost(post);
-    };
-
-    $scope.doRefresh();
-})
-
-// WORDPRESS POST
-.controller('WordpressPostCtrl', function ($scope, post_data, $ionicLoading) {
-
-    $scope.post = post_data.post;
-    $ionicLoading.hide();
-
-    $scope.sharePost = function (link) {
-        window.plugins.socialsharing.share('Check this post here: ', null, null, link);
-    };
-})
-
-
-.controller('ImagePickerCtrl', function ($scope, $rootScope, $cordovaCamera) {
-
-    $scope.images = [];
-
-    $scope.selImages = function () {
-
-        window.imagePicker.getPictures(
-			function (results) {
-			    for (var i = 0; i < results.length; i++) {
-			        console.log('Image URI: ' + results[i]);
-			        $scope.images.push(results[i]);
-			    }
-			    if (!$scope.$$phase) {
-			        $scope.$apply();
-			    }
-			}, function (error) {
-			    console.log('Error: ' + error);
-			}
-		);
-    };
-
-    $scope.removeImage = function (image) {
-        $scope.images = _.without($scope.images, image);
-    };
-
-    $scope.shareImage = function (image) {
-        window.plugins.socialsharing.share(null, null, image);
-    };
-
-    $scope.shareAll = function () {
-        window.plugins.socialsharing.share(null, null, $scope.images);
-    };
-})
 
 ;
