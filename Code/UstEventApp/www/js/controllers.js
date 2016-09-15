@@ -149,10 +149,10 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('SurveyDetailsCtrl', function ($scope, $state, $firebaseArray, fireBaseData) {
+.controller('SurveyDetailsCtrl', function ($scope, $state, $firebaseArray, fireBaseData,$rootScope) {
     $scope.surveyInfo = {};
     $scope.surveyDetails = $firebaseArray(fireBaseData.refSurveyquestionaires());
-    $scope.surveyresult = $firebaseArray(fireBaseData.refSurveyresult());
+   // $scope.surveyresult = $firebaseArray(fireBaseData.refSurveyresult());
     $scope.userFetchDetails = $firebaseArray(fireBaseData.refRegisteration());
     $scope.surveyQ = $firebaseArray(fireBaseData.refSurveyquestions());
 
@@ -203,22 +203,30 @@ angular.module('starter.controllers', [])
                    });
 
 
+   
+    $scope.surveyKeySelected = '';
+    $scope.submitSurvey = function (params) {
+       
+        
+      
 
-    $scope.surveyKey = {};
-    $scope.submitSurvey = function () {
-        $scope.surveyresult = surveyresult.$add({
-            questionId: $scope.surveyKey.select,
-            mobileNo: $rootScope.userIdPhone.PhoneNumber,  //GET VALUES ON LOGIN 
-            surveyId: $scope.surveyInfo.surveyid,
-            userId: $rootScope.userIdPhone.userId    //GET VALUES ON LOGIN 
+        $scope.surveyresult = $firebaseArray(fireBaseData.refSurveyresult());
+        $scope.surveyresult.$loaded()
+                  .then(function (surveyresult) {                    
+                      $scope.surveyres = surveyresult.$add({
+                          questionId: $scope.surveyKeySelected,
+                          mobileNo: $rootScope.userIdPhone.PhoneNumber,  //GET VALUES ON LOGIN 
+                          surveyId: $scope.surveyInfo.surveyid,
+                          userId: $rootScope.userIdPhone.userId    //GET VALUES ON LOGIN 
 
-        }).then(function (ref) {
-            console.log(ref);
-        }, function (error) {
-            console.log("Error:", error);
-        });
-        $state.go('app.feeds-categories');
-    }
+                      }).then(function (ref) {
+                          console.log(ref);
+                      }, function (error) {
+                          console.log("Error:", error);
+                      });
+                      $state.go('app.feeds-categories');
+                  }
+        )}
     //else {
     //                $scope.userExists = "Already Exists!!";
     //    // return;
@@ -266,7 +274,10 @@ angular.module('starter.controllers', [])
 })
 
 
-
+.controller('FeedCommentsCtrl', function ($state,$scope,$stateParams, $rootScope) {
+    $scope.user = {};
+    $state.go('app.enter-comments');
+})
 
 
 
