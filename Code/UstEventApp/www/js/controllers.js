@@ -7,39 +7,71 @@ angular.module('starter.controllers', [])
 })
 
 // APP
-.controller('AppCtrl', function ($scope, $ionicConfig) {
+.controller('AppCtrl', function ($scope, $ionicConfig, $rootScope) {
 
+    $scope.userName = $rootScope.userIdPhone.UserName;
+    // listen for the event in the relevant $scope
+    //$scope.$on('userDetailsbroadcast', function (event, data) {
+    //    $scope.userName = data// 'Data to send'
+    //});
 })
 
 //LOGIN
 .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $firebaseArray, fireBaseData) {
     $scope.user = {};
     $rootScope.userIdPhone = {};
+    $scope.validUser = false;
 
     $scope.doLogIn = function () {
         $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
         $scope.userdetails.$loaded().then(function (userdetails) {
             var userlength = userdetails.length; // data is loaded here
             angular.forEach(userdetails, function (userdata) {
-                angular.forEach(userdata, function (item) {
-                    if (item.userEmailId == $scope.user.email) {
-                        $rootScope.userIdPhone.userId = item.userId;
-                        $rootScope.userIdPhone.PhoneNumber = item.userNumber;
+                //  angular.forEach(userdata, function (item) {
+                if ($scope.user.email != '') {
+                    if (userdata.userEmailId == $scope.user.email && userdata.userPassword == $scope.user.password) {
+                                             
+                            $scope.emailcolor = "Green";
+                            $scope.validUser = true;
+                   
+                       
+                            $rootScope.userIdPhone.userId = userdata.userId;
+                            $rootScope.userIdPhone.UserName = userdata.userName;
+
+
+                        $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
+                      
+                        //$scope.$broadcast('userDetailsbroadcast', {
+                        //    someProp: userdata.userName // send whatever you want
+                        //});
+                      
                     }
-                    else if (item.userNumber == $scope.user.phone) {
-                        $rootScope.userIdPhone.userId = item.userId;
-                        $rootScope.userIdPhone.PhoneNumber = item.userNumber;
-                    }
-                })
+                    $scope.emailcolor = "Red";
+                    $scope.emailborder = "solid";
+                }
+                else if (userdata.userNumber == $scope.user.phone && userdata.pin == $scope.user.pin) {
+                    $rootScope.userIdPhone.userId = userdata.userId;
+                    $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
+                    $scope.validUser = true;
+                }
+                else
+                {
+                    $scope.phonecolor = "Red";
+                    $scope.phoneborder="solid";
+                }
+                // })
             })
         })
-        $state.go('app.feeds-categories');
+        if ($scope.validUser == true) {
+            $state.go('app.feeds-categories');
+        }
+
     };
 
     $scope.user = {};
 
     $scope.user.email = ""; //"XXXXX";
-    $scope.user.pin = "";   //"12345"
+   $scope.user.pin = "";   //"12345"
 
     // We need this for the form validation
     $scope.selected_tab = "";
@@ -77,13 +109,14 @@ angular.module('starter.controllers', [])
             if (!checkEmailId && !checkPhonenumber) {
                 $scope.saveuserdetails = userdetails.$add({
                     userName: $scope.user.name,
-                    userId: "ust" + (++userdetails.length),
+                    userId:  $scope.user.userId,
                     userNumber: $scope.user.phone,
                     userEmailId: $scope.user.email,
                     userPassword: $scope.user.password,
                     userIsAdmin: "0",
                     userIsActive: "1",
-                    userCreateDate: dateNow.toDateString()
+                    userCreateDate: dateNow.toDateString(),
+                    pin :$scope.user.pin
                 }).then(function (ref) {
                     console.log(ref);
                 }, function (error) {
@@ -233,6 +266,13 @@ angular.module('starter.controllers', [])
 })
 
 
+
+
+
+
+
+
+
 // FEED
 //brings all feed categories
 .controller('FeedsCategoriesCtrl', function ($scope, $http, $firebaseArray, fireBaseData) {
@@ -262,7 +302,11 @@ angular.module('starter.controllers', [])
 
     $scope.categoryitem.$loaded()
              .then(function (categoryitem) {
-              
+                 // angular.forEach(categoryitem, function (categorylist) {
+                 //  if (surveyitem.surveyActive == 1) {
+                 // $scope.categoryTitle = categoryitem.title;
+                 //$scope.category_sources = categoryitem[0];
+
                  if ($scope.categoryTitle != "survey") {
                      $scope.category_sources = categoryitem[0];
 
@@ -277,6 +321,8 @@ angular.module('starter.controllers', [])
 
 
 
+                 //  }
+                 //   })
              });
 
 
@@ -292,22 +338,77 @@ angular.module('starter.controllers', [])
     //});
 })
 
+.controller('FeedCommentsCtrl', function ($state,$scope,$stateParams, $rootScope) {
+    $scope.user = {};
+    $state.go('app.enter-comments');
+})
+
+
 //this method brings posts for a source provider
-.controller('FeedEntriesCtrl', function ($scope, $stateParams, $http, FeedList, $q, $ionicLoading, BookMarkService, $firebaseArray, fireBaseData) {
+.controller('FeedEntriesCtrl', function ($scope, $stateParams, $http, FeedList, $q, $ionicLoading, BookMarkService, $firebaseArray, fireBaseData,$rootScope) {
     $scope.feed = [];
-
-    $scope.count = 0;
-    $scope.likeCount = function () {
-        $scope.count = $scope.count + 1;
-    }
-
+    $scope.userId = $rootScope.userIdPhone.userId;
     
+    $scope.EventUserMap = $firebaseArray(fireBaseData.refEventUserMap());
+    $scope.EventUserMap.$loaded()
+          .then(function (itemValues) {
+              
+
+          })
+   
+
+    $scope.enableDisableAnchor = false;
+    
+    $scope.count = 0;
+
+
+
     var categoryId = $stateParams.categoryId,
 			sourceId = $stateParams.sourceId;
     $scope.sportsName = sourceId;
 
     $scope.categoryTitle = $stateParams.sourceId;
+    
 
+    $scope.likeCount = function (params1,params2 ) {
+        var str= params1;
+        // var str = $scope.entry.eventId;
+        $scope.count = params2;
+
+        $scope.Items = {};
+        $scope.eventName = {};
+        $scope.userId = {};
+
+
+       $scope.EventUserMap = $firebaseArray(fireBaseData.refEventUserMap());
+
+        $scope.EventUserMap.$loaded()
+         .then(function (itemValues) {
+             angular.forEach(itemValues, function (itemlist) {
+                 if (itemlist.eventId == params1 & itemlist.userId == $rootScope.userIdPhone.userId) {
+                     $scope.enableDisableAnchor = true;
+                     //$scope.Items = itemlist.eventId;
+                     //$scope.eventName = itemlist.userId;
+                     //$scope.userId = itemlist.eventName;
+                 }
+                 if (!$scope.enableDisableAnchor) {
+                     var messageListRef = new Firebase('https://ustdb.firebaseio.com/eventUserMapping');
+                     messageListRef.push({ 'eventId': params1, 'eventName': $stateParams.sourceId, 'like': '1', 'userId': $rootScope.userIdPhone.userId });
+                     $scope.enableDisableAnchor = true;
+                     $scope.count = $scope.count + 1;
+                 }
+             })
+
+         });
+
+
+
+
+
+
+    }
+
+     // $scope.entry.eventId = '';
     $scope.doRefresh = function () {
 
         $scope.feeds_MatchSchedule = $firebaseArray(fireBaseData.refMatchSchedule());
@@ -318,6 +419,7 @@ angular.module('starter.controllers', [])
                angular.forEach(result, function (liveScore) {
                    if (liveScore.$id.toUpperCase() == sourceId.toUpperCase()) {
                        $scope.liveScore = liveScore;
+                      // $rootScope.eventId = $scope.entry.eventId;
                    }
                })
            })
@@ -352,13 +454,15 @@ angular.module('starter.controllers', [])
 
     $scope.doRefresh();
 
- 
+    $scope.bookmarkPost = function (post) {
+        $ionicLoading.show({ template: 'Post Saved!', noBackdrop: true, duration: 1000 });
+
+        BookMarkService.bookmarkFeedPost(post);
+    };
 })
 
 //PLAYER LIST CONTROLLER
-//TEST PENDING 
-/*.controller('PlayerListCtrl', function ($scope, $stateParams, $http, $firebaseArray, fireBaseData, $q) {
-   
+.controller('PlayerListCtrl', function ($scope, $stateParams, $http, $firebaseArray, fireBaseData, $q) {
     $scope.feeds_PlayerList = $firebaseArray(fireBaseData.refPlayerList());
 
 
@@ -398,7 +502,7 @@ angular.module('starter.controllers', [])
 
 
     //$state.go('app.player-list');
-}) */
+})
 
 
 // SETTINGS
@@ -445,6 +549,17 @@ angular.module('starter.controllers', [])
 
     };
 })
+
+
+
+
+
+
+
+
+
+
+
 
 
 ;
