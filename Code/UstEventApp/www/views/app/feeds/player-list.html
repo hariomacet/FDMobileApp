@@ -1,0 +1,13 @@
+﻿<ion-view class="player-list-view">
+    <ion-nav-title>
+        <span>{{teamName}}</span>
+        <!--<i class="icon ion-ios-plus" ng-click=""> ADD ITEMS</i>-->
+    </ion-nav-title>
+    <div class="list category-feeds">
+
+        <a ng-repeat="player in playerlistitems" class="item item-icon-right">
+            {{player.userName}}            
+        </a>
+
+    </div>
+</ion-view>

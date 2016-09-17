@@ -14,13 +14,13 @@
                   
                   <div class="row">
 
-                    <div class="col-34" style="background-color:{{entry.team1.teamName}} !important;color:white; text-align:center">
+                    <div class="col-34" style="background-color:{{entry.team1.teamColor}} !important;color:white; text-align:center">
                         <a class="feed-category" ui-sref="app.player-list({categoryId: entry.team1.teamName, sourceId: (sportsName | slugify)})" style="color:white;">{{ entry.team1.teamName}}</a>
                     </div>
                     <div class="col-25" style="text-align:center;">
                         Vs
                     </div>
-                    <div class="col-34" style="background-color:{{entry.team2.teamName}} !important;color:white;text-align:center">
+                    <div class="col-34" style="background-color:{{entry.team2.teamColor}} !important;color:white;text-align:center">
                         <a class="feed-category" ui-sref="app.player-list({categoryId: entry.team2.teamName, sourceId: (sportsName | slugify)})" style="color:white;">{{ entry.team2.teamName}}</a>
                     </div>
                 </div>
@@ -46,18 +46,24 @@
                         </div>
                        
                     </div>
+                    
+                   
+
                     <div class="entry-actions row">
                         <div class="actions col col-center col-66">
-                            <a href="" ng-click="likeCount()"  class="subdued">{{count}} Like</a>
+                            <a href="" ng-click="scorelikeCount1()" ng-disabled={{!enableDisableAnchor}}  class="subdued">{{entry.likesTeam1}} <i class="icon ion-thumbsup"></i> Cheers</a>
                         </div>
                         <div class="read-more col col-center col-33">
-                            <a href="#" class="subdued">5 Comments</a>
+                            <!--<a href="#" class="subdued">5 Comments</a>-->
+                            <a href="" ng-click="scorelikeCount2()" class="subdued">{{entry.likesTeam2}} <i class="icon ion-thumbsup"></i> Cheers</a>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
 
+        
         <div class="entries-list">
             
             
@@ -85,11 +91,13 @@
                    
                     <div class="entry-actions row">
                         <div class="actions col col-center col-66">
-                            <a href="#" class="subdued">1 Like</a>
+                            <a href="" ng-click="schedulelikeCount()" class="subdued">{{scheduleLCount}} Like</a>
                         </div>
                         <div class="read-more col col-center col-33">
-                            <a href="#" class="subdued">5 Comments</a>
+                            <a href="" ng-click="schedulecommentsCount()" class="subdued">{{scheduleCCount}} Comments</a>
                         </div>
+                      
+
                     </div>
                 </div>
             </div>

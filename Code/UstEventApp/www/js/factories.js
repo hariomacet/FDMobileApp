@@ -236,6 +236,7 @@ angular.module('starter.factories', [])
       var refPlayerList = new Firebase("https://ustdb.firebaseio.com/sportsList/feed_source/");
     
       var refLiveScore = new Firebase("https://ustdb.firebaseio.com/liveScore");
+      var refEventUserMap = new Firebase("https://ustdb.firebaseio.com/eventUserMapping");
 
       return {
           refRegisteration: function () {
@@ -304,7 +305,11 @@ angular.module('starter.factories', [])
           refLiveScore :function()
          {
               return refLiveScore;
-         }
+          },
+          refEventUserMap :function()
+          {
+              return refEventUserMap;
+          }
       };
 })
 

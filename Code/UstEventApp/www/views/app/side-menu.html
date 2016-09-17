@@ -19,7 +19,7 @@
                             <img class="user-image" ng-src="../../img/ust_global.jpg" spinner-on-load>
                         </pre-img>
                     </div>
-                    <h2 class="greeting">Hi Praveen</h2>
+                    <h2 class="greeting">Hi {{userName}}</h2>
                     <p class="message">Welcome back</p>
                 </ion-item>
                 <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.bookmarks">
@@ -38,9 +38,9 @@
                     <i class="icon ion-wand"></i>
                     <h2 class="menu-text">Layouts</h2>
                 </ion-item>-->
-                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.miscellaneous">
+                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.miscellaneous" ng-if="userIsAdmin != '0'">
                     <i class="icon ion-asterisk"></i>
-                    <h2 class="menu-text">Admin</h2>
+                    <h2  class="menu-text">Admin</h2>
                 </ion-item>
                 <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.forms">
                   <i class="icon ion-document"></i>
