@@ -10,7 +10,7 @@ angular.module('starter.controllers', [])
 .controller('AppCtrl', function ($scope, $ionicConfig, $rootScope) {
 
     $scope.userName = $rootScope.userIdPhone.UserName;
-    
+
     $scope.userIsAdmin = $rootScope.userIdPhone.userIsAdmin;
     // listen for the event in the relevant $scope
     //$scope.$on('userDetailsbroadcast', function (event, data) {
@@ -307,13 +307,13 @@ angular.module('starter.controllers', [])
 
     $scope.categoryTitle = $stateParams.categoryId;
 
-
     $scope.categoryitem = $stateParams.categoryId == 'events2016' ? $firebaseArray(fireBaseData.refEventsList())
          : $stateParams.categoryId == 'sports' ? $firebaseArray(fireBaseData.refSportsList())
-        : $stateParams.categoryId == 'events-news' ? $firebaseArray(fireBaseData.eventNews())
+        : $stateParams.categoryId == 'event-updates' ? $firebaseArray(fireBaseData.eventNews())
         : $stateParams.categoryId == 'CSR' ? $firebaseArray(fireBaseData.refCsr())
-        : $stateParams.categoryId == 'technology' ? $firebaseArray(fireBaseData.reftechnology())
-        : $stateParams.categoryId == 'survey' ? $firebaseArray(fireBaseData.refSurveyDashboard()) : $firebaseArray(fireBaseData.refNowU());
+        : $stateParams.categoryId == 'summary' ? $firebaseArray(fireBaseData.refsummary())
+        : $stateParams.categoryId == 'survey' ? $firebaseArray(fireBaseData.refSurveyDashboard())
+        : $firebaseArray(fireBaseData.refNowU());
 
     $scope.categoryitem.$loaded()
              .then(function (categoryitem) {
@@ -370,44 +370,63 @@ angular.module('starter.controllers', [])
 
           })
 
-
+    //debugger;
     $scope.enableDisableAnchor = false;
 
     $scope.count = 0;
 
-
+    $scope.galleryItem = {};
+    $scope.championShipItems = {};
 
     var categoryId = $stateParams.categoryId,
+        sourceTitle = $stateParams.sourceTitle,
 			sourceId = $stateParams.sourceId;
-    $scope.sportsName = sourceId;
 
-    $scope.categoryTitle = $stateParams.sourceId;
-
+    if (categoryId == "gallery") {
+        var ref = new Firebase("https://ustdb.firebaseio.com/nowU/feed_source");
+        ref.once("value", function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+                var key = childSnapshot.key();
+                if (sourceId == key) {
+                    $scope.galleryItem = childSnapshot.val();
+                }
+            });
+        });
+    }    
+    if (categoryId == "summary") {
+        var ref = new Firebase("https://ustdb.firebaseio.com/teamNames");
+        ref.once("value", function (snapshot) {
+            $scope.championShipItems = snapshot.val();
+            console.log($scope.championShipItems);
+        });
+    }
+    $scope.sportsName = $stateParams.sourceTitle;
+    $scope.categoryTitle = sourceTitle;
 
     $scope.scorelikeCount1 = function (params1, params2) {
-        var str = params1;        
+        var str = params1;
         $scope.count = params2;
 
         $scope.Items = {};
         $scope.eventName = {};
         $scope.userId = {};
-        $scope.prevCountlikesTeam1 = {};       
+        $scope.prevCountlikesTeam1 = {};
 
         var ref = new Firebase('https://ustdb.firebaseio.com/liveScore' + '/' + $scope.categoryTitle);
         // Retrieve new posts as they are added to our database
         ref.on("child_added", function (snapshot, prevChildKey) {
-            var newPost = snapshot.val();            
-            prevCountlikesTeam1 = newPost.likesTeam1;            
+            var newPost = snapshot.val();
+            prevCountlikesTeam1 = newPost.likesTeam1;
         });
 
         //$scope.EventUserMap = $firebaseArray(fireBaseData.refEventUserMap());
 
         var liveScoreItem = new Firebase('https://ustdb.firebaseio.com/liveScore' + '/' + $scope.categoryTitle + '/0');
-        
+
         liveScoreItem.update({
             "likesTeam1": prevCountlikesTeam1 + 1
-        });        
-        $scope.enableDisableAnchor = false;     
+        });
+        $scope.enableDisableAnchor = false;
     }
 
     $scope.scorelikeCount2 = function (params1, params2) {
@@ -446,7 +465,7 @@ angular.module('starter.controllers', [])
         $scope.feeds_LiveScore.$loaded()
            .then(function (result) {
                angular.forEach(result, function (liveScore) {
-                   if (liveScore.$id.toUpperCase() == sourceId.toUpperCase()) {
+                   if (liveScore.$id.toUpperCase() == sourceTitle.toUpperCase()) {
                        $scope.liveScore = liveScore;
                        // $rootScope.eventId = $scope.entry.eventId;
                    }
@@ -514,10 +533,9 @@ angular.module('starter.controllers', [])
                    }
                })
 
-               if(playerlist[0].title=="Cricket")
-               {
+               if (playerlist[0].title == "Cricket") {
                    if (playerlist[0].teams[0][0].TeamName == "Red") {
-                       $scope.playerlistitems =playerlist[0].teams[0][0].TeamList;
+                       $scope.playerlistitems = playerlist[0].teams[0][0].TeamList;
                    }
 
                }

@@ -185,7 +185,7 @@ angular.module('starter', [
      })
 
     .state('app.feed-entries', {
-        url: "/feed-entries/:categoryId/:sourceId",
+        url: "/feed-entries/:categoryId/:sourceId/:sourceTitle",
         views: {
             'menuContent': {
                 templateUrl: "views/app/feeds/feed-entries.html",

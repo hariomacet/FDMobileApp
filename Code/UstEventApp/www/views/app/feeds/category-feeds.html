@@ -1,54 +1,53 @@
 <ion-view class="category-feeds-view">
-  <ion-nav-title>
-    <span style="text-transform: capitalize;">{{categoryTitle}}</span>
-  </ion-nav-title>
-  <ion-content>
-    <div class="list category-feeds" ng-if="categoryTitle != 'survey'">
-      
-      <a ng-repeat="source in category_sources" class="item item-icon-right" ui-sref="app.feed-entries({categoryId: categoryId, sourceId: (source.title | slugify)})">
-        <div class="thumbnail-outer">
-          <pre-img ratio="_1_1" helper-class="">
-            <img class="thumbnail" ng-src="{{source.image}}" spinner-on-load>
-          </pre-img>
+    <ion-nav-title>
+        <span style="text-transform: capitalize;">{{categoryTitle}}</span>
+    </ion-nav-title>
+    <ion-content>
+        <div class="list category-feeds" ng-if="categoryTitle != 'survey'">
+
+            <a ng-repeat="source in category_sources" class="item item-icon-right"
+               ui-sref="app.feed-entries({categoryId: categoryId, sourceId: source.id, sourceTitle : (source.title | slugify)  })">
+                <div class="thumbnail-outer">
+                    <pre-img ratio="_1_1" helper-class="">
+                        <img class="thumbnail" ng-src="{{source.image}}" spinner-on-load>
+                    </pre-img>
+                </div>
+                <div>
+                    <span class="title">{{source.title}}</span>
+                    <p class="description">{{source.description}}</p>
+                </div>
+                <i class="icon ion-arrow-right-c"></i>
+            </a>
+
         </div>
-        <div>
-          <span class="title">{{source.title}}</span>
-          <p class="description">{{source.description}}</p>
-        </div>
-        <i class="icon ion-arrow-right-c"></i>
-      </a>
+
+        <div class="list category-feeds" ng-if="categoryTitle == 'survey'">
+            <!--<a ng-repeat="source in category_sources" class="item item-icon-right" ui-sref="app.survey-details({categoryId: categoryId,sourceId: (source.title | slugify)})">
+                <div class="thumbnail-outer">
+                    <pre-img ratio="_1_1" helper-class="">
+                        <img class="thumbnail" ng-src="{{source.image}}" spinner-on-load>
+                    </pre-img>
+                </div>
+                <div>
+                    <span class="title">{{source.title}}</span>
+                    <p class="description">{{source.description}}</p>
+                </div>
+                <i class="icon ion-arrow-right-c"></i>
+            </a>-->
+
+            <a ng-repeat="source in category_sources" class="item item-icon-right" ui-sref="app.survey({categoryId: categoryId,sourceId: (source.title | slugify)})">
+                <div class="thumbnail-outer">
+                    <pre-img ratio="_1_1" helper-class="">
+                        <img class="thumbnail" ng-src="{{source.image}}" spinner-on-load>
+                    </pre-img>
+                </div>
+                <div>
+                    <span class="title">{{source.title}}</span>
+                    <p class="description">{{source.description}}</p>
+                </div>
+                <i class="icon ion-arrow-right-c"></i>
+            </a>
+        </div>       
         
-    </div>
-
-      <div class="list category-feeds" ng-if="categoryTitle == 'survey'">      
-          <!--<a ng-repeat="source in category_sources" class="item item-icon-right" ui-sref="app.survey-details({categoryId: categoryId,sourceId: (source.title | slugify)})">
-              <div class="thumbnail-outer">
-                  <pre-img ratio="_1_1" helper-class="">
-                      <img class="thumbnail" ng-src="{{source.image}}" spinner-on-load>
-                  </pre-img>
-              </div>
-              <div>
-                  <span class="title">{{source.title}}</span>
-                  <p class="description">{{source.description}}</p>
-              </div>
-              <i class="icon ion-arrow-right-c"></i>
-          </a>-->
-
-          <a ng-repeat="source in category_sources" class="item item-icon-right" ui-sref="app.survey({categoryId: categoryId,sourceId: (source.title | slugify)})">
-              <div class="thumbnail-outer">
-                  <pre-img ratio="_1_1" helper-class="">
-                      <img class="thumbnail" ng-src="{{source.image}}" spinner-on-load>
-                  </pre-img>
-              </div>
-              <div>
-                  <span class="title">{{source.title}}</span>
-                  <p class="description">{{source.description}}</p>
-              </div>
-              <i class="icon ion-arrow-right-c"></i>
-          </a>
-          
-
-
-      </div>
-  </ion-content>
+    </ion-content>
 </ion-view>

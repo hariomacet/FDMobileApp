@@ -221,6 +221,7 @@ angular.module('starter.factories', [])
       var refNowU = new Firebase("https://ustdb.firebaseio.com/nowU");
       var refEventsList = new Firebase("https://ustdb.firebaseio.com/eventsList");
       var reftechnology = new Firebase("https://ustdb.firebaseio.com/technology");
+      var refsummary = new Firebase("https://ustdb.firebaseio.com/summary");
       var refCsr = new Firebase("https://ustdb.firebaseio.com/csrList");
       var eventNews = new Firebase("https://ustdb.firebaseio.com/eventsNews");
 
@@ -309,6 +310,10 @@ angular.module('starter.factories', [])
           refEventUserMap :function()
           {
               return refEventUserMap;
+          },
+          refsummary :function()
+          {
+              return refsummary;
           }
       };
 })
