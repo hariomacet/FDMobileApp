@@ -1,0 +1,39 @@
+﻿<ion-view class="feeds-categories-view">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+        <span>Admin DashBoard</span>
+    </ion-nav-title>
+    <ion-content>
+        <div class="row categories-list" ng-show="true">
+            <div class="col col-50" ng-if="userIsAdmin=='1' || userIsAdmin=='2'">
+                <a class="feed-category" ui-sref="app.sports-master">
+                    <pre-img ratio="_1_1" helper-class="square-image">
+                        <img class="category-image" src="img/feeds/sports.jpg" spinner-on-load>
+                    </pre-img>
+                    <div class="category-bg"></div>
+                    <span class="category-title">Sports Master</span>
+                </a>
+            </div>
+            <div class="col col-50" ng-if="userIsAdmin=='2'">
+                <a class="feed-category" ui-sref="app.schedule-master">
+                    <pre-img ratio="_1_1" helper-class="square-image">
+                        <img class="category-image" src="img/feeds/schedule.png" spinner-on-load>
+                    </pre-img>
+                    <div class="category-bg"></div>
+                    <span class="category-title">Schedule Master</span>
+                </a>
+            </div>
+            <div class="col col-50" ng-if="userIsAdmin=='2'">
+                <a class="feed-category" ui-sref="app.live-master">
+                    <pre-img ratio="_1_1" helper-class="square-image">
+                        <img class="category-image" src="img/feeds/live.jpeg" spinner-on-load>
+                    </pre-img>
+                    <div class="category-bg"></div>
+                    <span class="category-title">Move To Live</span>
+                </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

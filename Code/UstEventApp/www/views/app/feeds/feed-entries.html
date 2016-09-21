@@ -1,4 +1,4 @@
-<ion-view class="feed-entries-view"> <!--This is 3rd page-->
+<ion-view class="feed-entries-view">
     <ion-nav-title>
         <span  style="text-transform: capitalize;">{{categoryTitle}}</span>
     </ion-nav-title>
@@ -7,7 +7,9 @@
         <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
         </ion-refresher>
 
-        <div class="entries-list">            
+        <div class="entries-list">
+
+            
             <div ng-repeat="entry in liveScore" class="list card entry-item">
                   
                   <div class="row">
@@ -60,10 +62,13 @@
                 </div>
             </div>
         </div>
-                
-        <div class="entries-list">            
+
+        
+        <div class="entries-list">
             
-             <div ng-repeat="entry in feeds_MatchSchedule |filter:{sportsName:categoryTitle}" class="list card entry-item">                       
+            
+             <div ng-repeat="entry in feeds_MatchSchedule |filter:{sportsName:categoryTitle}" class="list card entry-item">
+                        
                  
 
                 <div class="row">
@@ -132,33 +137,6 @@
             </div>
         </div>
 
-        <!--For ChampionShip score-->
-        <div class="entries-list">
-
-            <div ng-repeat="item in championShipItems" class="list card entry-item">
-
-                <div class="row" style="background-color:{{item.TeamColor}};">                    
-                    <div class="col-2" style="color:white;margin-left:37%">
-                        {{ item.TeamName}}
-                    </div> 
-                        <!--<a class="feed-category"
-                            ui-sref="app.player-list({categoryId: entry.teamId1, sourceId: (entry.sportsName | slugify)})" style="color:white;"></a>-->
-                    
-                </div>
-
-                <div style="color:black;margin-left:45%">                    
-                    {{item.Rating}}
-                </div>
-            </div>
-        </div>
-
-        <!--For Gallery Images-->
-        <div class="list category-feeds">
-            <div class="row" ng-repeat="image in galleryItem.images" style="padding-bottom:25px">                
-                    <img ng-src="data:image/jpeg;base64,{{image}}" width="100%" />
-                    
-            </div>
-        </div>
 
     </ion-content>
 </ion-view>

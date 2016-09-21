@@ -150,7 +150,248 @@ angular.module('starter.controllers', [])
 
 
 })
+    //Admin
+.controller("MasterCtrl", function ($scope, $rootScope, $firebaseArray, fireBaseData) {
+    $scope.feeds_categories = [];
+    $scope.userIsAdmin = "";
+    var adminType = $rootScope.userIdPhone.userIsAdmin;
+    $scope.userIsAdmin = adminType;
+    // $scope.feeds_categories = $firebaseArray(fireBaseData.refDashBoardDetails());
 
+    //$http.get('feeds-categories.json').success(function (response) {
+    //    $scope.feeds_categories = response;
+    //});
+})
+.controller("ScheduleCtrl", function ($scope, $state, $firebaseArray, fireBaseData, $rootScope, $cordovaCalendar, $window) {
+    $scope.TeamNames = [];
+    $scope.SportsType = [];
+    $scope.v = {};
+    var isUpdate = false;
+    $scope.TeamNames = $firebaseArray(fireBaseData.refTeamNames());
+    $scope.SportsType = $firebaseArray(fireBaseData.refPlayerList());
+    $scope.doSaveSchedule = function (v) {
+        if (v.ScheduleDate == undefined) {
+            $scope.Ratingcolor = "Red";
+            $scope.Ratingborder = "solid";
+            return;
+        }
+        $scope.MatchSchedules = $firebaseArray(fireBaseData.refMatchSchedule());
+        $scope.MatchSchedules.$loaded()
+                    .then(function (MatchSchedules) {
+                        angular.forEach(MatchSchedules, function (shd, $index) {
+                            if (shd.sportsId == v.selectedSportId) {
+                                if ((shd.teamId1 == v.selectedTeamId && shd.teamId2 == v.selectedColor) || (shd.teamId2 == v.selectedTeamId && shd.teamId1 == v.selectedColor)) {
+                                    var ref = new Firebase('https://ustdb.firebaseio.com/matchSchedule/' + $index);
+                                    ref.update({
+                                        "matchTiming": v.ScheduleDate.toLocaleString()//.toDateString()
+                                    });
+                                    isUpdate = true;
+                                }
+                            }
+                        });
+                        if (isUpdate == false) {
+                            var schedulelength = MatchSchedules.length;
+                            var foundTeam1 = $scope.TeamNames.filter(function (team) { return team.TeamColor === v.selectedTeamId });
+                            var foundTeam2 = $scope.TeamNames.filter(function (team) { return team.TeamColor === v.selectedColor });
+                            $scope.SportsType.$loaded()
+                               .then(function (SportsType) {
+                                   angular.forEach(SportsType, function (sport) {
+                                       if (sport.id == v.selectedSportId) {
+                                           var refAdd = new Firebase('https://ustdb.firebaseio.com/matchSchedule/' + schedulelength);
+                                           refAdd.update({
+                                               "isActive": 1,
+                                               "matchTiming": v.ScheduleDate.toLocaleString(),//toDateString(),
+                                               "sportsId": v.selectedSportId,
+                                               "sportsName": sport.title,
+                                               "teamId1": v.selectedTeamId,
+                                               "teamId2": v.selectedColor,
+                                               "teamName1": foundTeam1[0].TeamName,
+                                               "teamName2": foundTeam2[0].TeamName,
+                                               "winingTeam": 'Yet to start'
+                                           });
+                                           $scope.Ratingcolor = "";
+                                           $scope.Ratingborder = "";
+                                       }
+                                   });
+                               });
+                        }
+                    });
+
+    };
+
+})
+.controller("SportsMasterCtrl", function ($scope, $state, $firebaseArray, fireBaseData, $rootScope) {
+    $scope.TeamNames = [];
+    $scope.userIsAdmin = "";
+    $scope.v = {};
+    $scope.TeamNames = $firebaseArray(fireBaseData.refTeamNames());
+    $scope.MatchSchedules = $firebaseArray(fireBaseData.refMatchSchedule());
+    //
+    $scope.LiveScore = $firebaseArray(fireBaseData.refLiveScore());
+    $scope.LiveScore.$loaded().then(function (LiveScore) {
+        angular.forEach(LiveScore, function (score) {
+            //if (score[0].team1.teamColor == x.selectedTeamId) {
+            $scope._Score1 = score[0].team1.TotalRuns
+            $scope._Overs1 = score[0].team1.currentOvers
+            $scope._wickets1 = score[0].team1.lostWickets
+            $scope._Score2 = score[0].team2.TotalRuns
+            $scope._Overs2 = score[0].team2.currentOvers
+            $scope._wickets2 = score[0].team2.lostWickets
+            //}
+        })
+    });
+    $scope.NewSchedules = [];
+    $scope.changeSport = function (x) {
+        $scope.NewSchedules = [];
+        $scope.MatchSchedules.$loaded().then(function (MatchSchedules) {
+            angular.forEach(MatchSchedules, function (schedule) {
+                if (schedule.sportsId == x.selectedSportId && schedule.isActive == '0') {
+                    $scope.NewSchedules.push(schedule)
+                }
+            })
+        });
+    };
+    $scope.changeTeam1 = function (x) {
+        $scope.NewSchedules = [];
+        $scope.MatchSchedules.$loaded().then(function (MatchSchedules) {
+            angular.forEach(MatchSchedules, function (schedule) {
+                if (schedule.sportsId == x.selectedSportId && schedule.isActive == '0' && schedule.teamId1 == x.selectedTeamId && schedule.teamId2 == x.selectedColor) {
+                    $scope.schDate = schedule.matchTiming;
+                }
+            })
+        });
+    };
+    var adminType = $rootScope.userIdPhone.userIsAdmin;
+    $scope.userIsAdmin = adminType;
+    if (adminType == 1) {
+        $scope.SportsCategorys = [];
+        $scope.mstetitle = "Score Master";
+        $scope.x = {};
+        $scope.SportsCategorys = $firebaseArray(fireBaseData.refPlayerList());
+
+    } else if (adminType == 2) {
+        $scope.mstetitle = "Rating Master";
+    }
+    $scope.doSaveScore = function (x) {
+        var foundTeam1 = $scope.TeamNames.filter(function (team) { return team.TeamColor === x.selectedTeamId });
+        var refTeam1 = fireBaseData.refLiveScoreTeam1();
+        refTeam1.update({
+            "TotalRuns": x.Score1 == null ? 0 : x.Score1,
+            "currentOvers": x.Overs1 == null ? 0 : x.Overs1,
+            "lostWickets": x.wickets1 == null ? 0 : x.wickets1,
+            "teamColor": x.selectedTeamId == null ? 0 : x.selectedTeamId,
+            "teamName": foundTeam1[0].TeamName,
+        });
+
+        var foundTeam2 = $scope.TeamNames.filter(function (team) { return team.TeamColor === x.selectedColor });
+        var refTeam2 = fireBaseData.refLiveScoreTeam2();
+        refTeam2.update({
+            "TotalRuns": x.Score2 == null ? 0 : x.Score2,
+            "currentOvers": x.Overs2 == null ? 0 : x.Overs2,
+            "lostWickets": x.wickets2 == null ? 0 : x.wickets2,
+            "teamColor": x.selectedColor == null ? 0 : x.selectedColor,
+            "teamName": foundTeam2[0].TeamName,
+        });
+    }
+    $scope.doSaveRating = function (v) {
+        if (v.Rating1 == undefined || v.Rating2 == undefined || v.Rating3 == undefined || v.Rating4 == undefined) {
+            $scope.Ratingcolor = "Red";
+            $scope.Ratingborder = "solid";
+            return;
+        }
+        $scope.Ratingcolor = "";
+        $scope.Ratingborder = "";
+        $scope.TeamNames.$loaded()
+                      .then(function (TeamNames) {
+                          angular.forEach(TeamNames, function (team, $index) {
+                              if (team.TeamId == 1) {
+                                  var ref = new Firebase('https://ustdb.firebaseio.com/teamNames' + '/' + 0);
+                                  ref.update({
+                                      "Rating": v.Rating1 == null ? 0 : v.Rating1
+                                  });
+                              };
+                              if (team.TeamId == 2) {
+                                  var ref = new Firebase('https://ustdb.firebaseio.com/teamNames' + '/' + 1);
+                                  ref.update({
+                                      "Rating": v.Rating2 == null ? 0 : v.Rating2
+                                  });
+                              };
+                              if (team.TeamId == 3) {
+                                  var ref = new Firebase('https://ustdb.firebaseio.com/teamNames' + '/' + 2);
+                                  ref.update({
+                                      "Rating": v.Rating3 == null ? 0 : v.Rating3
+                                  });
+                              };
+                              if (team.TeamId == 4) {
+                                  var ref = new Firebase('https://ustdb.firebaseio.com/teamNames' + '/' + 3);
+                                  ref.update({
+                                      "Rating": v.Rating4 == null ? 0 : v.Rating4
+                                  });
+                              };
+                              if (team.TeamId == 5) {
+                                  var ref = new Firebase('https://ustdb.firebaseio.com/teamNames' + '/' + 4);
+                                  ref.update({
+                                      "Rating": v.Rating5 == null ? 0 : v.Rating5
+                                  });
+                              };
+                          });
+                      });
+    };
+})
+// $window.alert(v.selectedSportId);
+.controller("SportsLiveCtrl", function ($scope, $state, $firebaseArray, fireBaseData, $rootScope, $window, $filter) {
+    $scope.MatchSchedules = $firebaseArray(fireBaseData.refMatchSchedule());
+    $scope.SportsType = $firebaseArray(fireBaseData.refPlayerList());
+    $scope.NewSchedules = [];
+    $scope.v = {};
+    $scope.SelectedSchedule = [];
+    $scope.SelectedTeam = ""
+
+    $scope.changedValue = function (v) {
+        $scope.SelectedTeam = ""
+        $scope.SelectedSchedule = [];
+        $scope.NewSchedules = [];
+        $scope.MatchSchedules.$loaded().then(function (MatchSchedules) {
+            angular.forEach(MatchSchedules, function (schedule) {
+                if (schedule.sportsId == v.selectedSportId && schedule.isActive == '1') {
+                    $scope.NewSchedules.push(schedule)
+                }
+            })
+        });
+    }
+    $scope.onLiveSelect = function (sche, v) {
+        $scope.SelectedTeam = ""
+        $scope.SelectedSchedule = [];
+        $scope.SelectedSchedule.push({ "TeamColor1": sche.teamId1, "TeamColor2": sche.teamId2 });
+
+    };
+    $scope.MoveToLive = function (v) {
+        if ($scope.SelectedSchedule.length == 0) {
+            $scope.SelectedTeam = "1"
+            return;
+        }
+        $scope.SelectedTeam = ""
+        angular.forEach($scope.MatchSchedules, function (shd, $index) {
+            if (shd.sportsId == v.selectedSportId) {
+                if (shd.teamId1 == $scope.SelectedSchedule[0].TeamColor1 && shd.teamId2 == $scope.SelectedSchedule[0].TeamColor2) {
+                    var ref = new Firebase('https://ustdb.firebaseio.com/matchSchedule/' + $index);
+                    ref.update({
+                        "isActive": '0'//.toDateString()
+                    });
+                }
+            }
+        });
+        $scope.NewSchedules = [];
+        $scope.MatchSchedules.$loaded().then(function (MatchSchedules) {
+            angular.forEach(MatchSchedules, function (schedule) {
+                if (schedule.sportsId == v.selectedSportId && schedule.isActive == '1') {
+                    $scope.NewSchedules.push(schedule)
+                }
+            })
+        });
+        $scope.SelectedSchedule = [];
+    };
+})
 
 .controller('SurveyDetailsCtrl', function ($scope, $state, $firebaseArray, fireBaseData, $rootScope) {
     $scope.surveyInfo = {};
@@ -307,13 +548,13 @@ angular.module('starter.controllers', [])
 
     $scope.categoryTitle = $stateParams.categoryId;
 
+
     $scope.categoryitem = $stateParams.categoryId == 'events2016' ? $firebaseArray(fireBaseData.refEventsList())
          : $stateParams.categoryId == 'sports' ? $firebaseArray(fireBaseData.refSportsList())
-        : $stateParams.categoryId == 'event-updates' ? $firebaseArray(fireBaseData.eventNews())
+        : $stateParams.categoryId == 'events-news' ? $firebaseArray(fireBaseData.eventNews())
         : $stateParams.categoryId == 'CSR' ? $firebaseArray(fireBaseData.refCsr())
-        : $stateParams.categoryId == 'summary' ? $firebaseArray(fireBaseData.refsummary())
-        : $stateParams.categoryId == 'survey' ? $firebaseArray(fireBaseData.refSurveyDashboard())
-        : $firebaseArray(fireBaseData.refNowU());
+        : $stateParams.categoryId == 'technology' ? $firebaseArray(fireBaseData.reftechnology())
+        : $stateParams.categoryId == 'survey' ? $firebaseArray(fireBaseData.refSurveyDashboard()) : $firebaseArray(fireBaseData.refNowU());
 
     $scope.categoryitem.$loaded()
              .then(function (categoryitem) {
@@ -370,38 +611,19 @@ angular.module('starter.controllers', [])
 
           })
 
-    //debugger;
+
     $scope.enableDisableAnchor = false;
 
     $scope.count = 0;
 
-    $scope.galleryItem = {};
-    $scope.championShipItems = {};
+
 
     var categoryId = $stateParams.categoryId,
-        sourceTitle = $stateParams.sourceTitle,
 			sourceId = $stateParams.sourceId;
+    $scope.sportsName = sourceId;
 
-    if (categoryId == "gallery") {
-        var ref = new Firebase("https://ustdb.firebaseio.com/nowU/feed_source");
-        ref.once("value", function (snapshot) {
-            snapshot.forEach(function (childSnapshot) {
-                var key = childSnapshot.key();
-                if (sourceId == key) {
-                    $scope.galleryItem = childSnapshot.val();
-                }
-            });
-        });
-    }    
-    if (categoryId == "summary") {
-        var ref = new Firebase("https://ustdb.firebaseio.com/teamNames");
-        ref.once("value", function (snapshot) {
-            $scope.championShipItems = snapshot.val();
-            console.log($scope.championShipItems);
-        });
-    }
-    $scope.sportsName = $stateParams.sourceTitle;
-    $scope.categoryTitle = sourceTitle;
+    $scope.categoryTitle = $stateParams.sourceId;
+
 
     $scope.scorelikeCount1 = function (params1, params2) {
         var str = params1;
@@ -465,7 +687,7 @@ angular.module('starter.controllers', [])
         $scope.feeds_LiveScore.$loaded()
            .then(function (result) {
                angular.forEach(result, function (liveScore) {
-                   if (liveScore.$id.toUpperCase() == sourceTitle.toUpperCase()) {
+                   if (liveScore.$id.toUpperCase() == sourceId.toUpperCase()) {
                        $scope.liveScore = liveScore;
                        // $rootScope.eventId = $scope.entry.eventId;
                    }

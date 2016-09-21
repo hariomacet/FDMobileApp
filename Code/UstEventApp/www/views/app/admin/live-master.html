@@ -1,0 +1,43 @@
+﻿<ion-view class="feeds-categories-view">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+        <span>Move To Live Master</span>
+    </ion-nav-title>
+    <ion-content>
+        <div ng-if="SelectedTeam=='1'">
+            <ul class="list">
+                <li class="item"><span style="font-weight:bold;color:red;">Required to select Sport and Team !!</span></li>
+            </ul>
+        </div>
+        <label class="item item-input item-select">
+            <span class="input-label">Sport Type</span>
+            <select class="form-control" ng-model="v.selectedSportId" ng-change="changedValue(v)" required>
+                <option ng-repeat="sport in SportsType" value="{{sport.id}}">{{sport.title}}</option>
+            </select>
+        </label>
+        <div ng-if="userIsAdmin=='2'">
+            <div>
+                <ul class="list">
+                    <li ng-repeat="sche in NewSchedules">
+                        <label class="item item-input item-select" style="background-color: #eaeaea;">
+                            <span class="input-label">Match Time</span>
+                            <span class="title">{{sche.matchTiming}}</span>
+                        </label>
+                        <div style="display: -webkit-box;">
+                            <span class="input-label" style="background-color:{{sche.teamId1}} !important;color:white;min-height: 55px;">{{ sche.teamName1 }} </span>
+                            <span class="input-label" style="background-color:{{sche.teamId2}} !important;color:white;min-height: 55px;">{{ sche.teamName2 }} </span>
+                            <ion-radio ng-model="v.choice" ng-value="{{$index}}" ng-change="onLiveSelect(sche,v)" ng-confirm-click="Are you sure you want to push live?">Select</ion-radio>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="item item-body bottom-content">
+                <button type="submit" class="button button-positive button-block" ng-click="MoveToLive(v)">
+                    Move To Live
+                </button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,1 +1,11 @@
 /* Empty. Add your own CSS if you like */
+.box-shadow {
+    text-align: center;
+    padding: 2px 1px;
+    color: wheat;
+    font-weight: bold;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+}
+.align-center {
+        text-align: center !important;
+}

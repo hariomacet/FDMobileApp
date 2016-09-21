@@ -1,0 +1,43 @@
+﻿<ion-view class="feeds-categories-view">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+        <span>Schedule Master</span>
+    </ion-nav-title>
+    <ion-content>
+        <div ng-if="userIsAdmin=='2'">
+            <label class="item item-input item-select">
+                <span class="input-label">Sport Type</span>
+                <select class="form-control" ng-model="v.selectedSportId" required>
+                    <option ng-repeat="sport in SportsType" value="{{sport.id}}">{{sport.title}}</option>
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <span class="input-label">Team Type A</span>
+                <select class="form-control" ng-model="v.selectedTeamId" required>
+                    <option ng-repeat="team in TeamNames" value="{{team.TeamColor}}">{{team.TeamName}}</option>
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <span class="input-label">Team Type B</span>
+                <select class="form-control" ng-model="v.selectedColor" required>
+                    <option ng-repeat="team in TeamNames" value="{{team.TeamColor}}">{{team.TeamName}}</option>
+                </select>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Create Schedule</span>
+                <input type="datetime-local" name="bdaytime" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}};width: 200px;" class="form-control" ng-model="v.ScheduleDate" value="1996-12-19T16:39:57">
+            </label>
+            <div class="row">
+                <div class="col">
+                    <div class="bottom-content" ng-if="v.selectedColor !=v.selectedTeamId && v.selectedColor !=null && v.selectedTeamId !=null">
+                        <button type="submit" class="button button-positive button-block" ng-click="doSaveSchedule(v)">
+                            Save Schedule
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

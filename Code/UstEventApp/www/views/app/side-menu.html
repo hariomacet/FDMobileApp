@@ -38,10 +38,18 @@
                     <i class="icon ion-wand"></i>
                     <h2 class="menu-text">Layouts</h2>
                 </ion-item>-->
-                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.miscellaneous" ng-if="userIsAdmin != '0'">
-                    <i class="icon ion-asterisk"></i>
-                    <h2  class="menu-text">Admin</h2>
-                </ion-item>
+                <div ng-if="userIsAdmin == '1'">
+                    <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.admin">
+                        <i class="icon ion-asterisk"></i>
+                        <h2 class="menu-text">Admin</h2>
+                    </ion-item>
+                </div>
+                <div ng-if="userIsAdmin == '2'">
+                    <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.admin">
+                        <i class="icon ion-asterisk"></i>
+                        <h2 class="menu-text">Super Admin</h2>
+                    </ion-item>
+                </div>
                 <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.forms">
                   <i class="icon ion-document"></i>
                   <h2 class="menu-text">Forms</h2>

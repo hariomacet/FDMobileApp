@@ -1,0 +1,120 @@
+﻿<ion-view class="feeds-categories-view">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+        <span>{{mstetitle}}</span>
+    </ion-nav-title>
+    <div ng-if="userIsAdmin == '2'">
+        <form name="rating_form" class="" novalidate ng-cloack>
+            <ion-content>
+                <div class="">
+                    <ul ng-repeat="team in TeamNames" >
+                        <li ng-if="team.TeamId==1">
+                            <label class="item item-input">
+                                <span class="input-label" style="background-color:{{team.TeamColor}} !important;color:white;min-width:150px;text-align: center;">{{ team.TeamName }}</span>
+                                <input type="number" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}}" class="form-control align-center" ng-model="v.Rating1" ng-init="v.Rating1=team.Rating" placeholder="Enter Rating" required />
+                            </label>
+                        </li>
+                        <li ng-if="team.TeamId==2">
+                            <label class="item item-input">
+                                <span class="input-label" style="background-color:{{team.TeamColor}} !important;color:white;min-width:150px;text-align: center;">{{ team.TeamName }}</span>
+                                <input type="number" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}}" class="form-control align-center" ng-model="v.Rating2" ng-init="v.Rating2=team.Rating" placeholder="Enter Rating" required />
+                            </label>
+                        </li>
+                        <li ng-if="team.TeamId==3">
+                            <label class="item item-input">
+                                <span class="input-label" style="background-color:{{team.TeamColor}} !important;color:white;min-width:150px;text-align: center;">{{ team.TeamName }}</span>
+                                <input type="number" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}}" class="form-control align-center" ng-model="v.Rating3" ng-init="v.Rating3=team.Rating" placeholder="Enter Rating" required />
+                            </label>
+                        </li>
+                        <li ng-if="team.TeamId==4">
+                            <label class="item item-input">
+                                <span class="input-label" style="background-color:{{team.TeamColor}} !important;color:white;min-width:150px;text-align: center;">{{ team.TeamName }}</span>
+                                <input type="number" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}}" class="form-control align-center" ng-model="v.Rating4" ng-init="v.Rating4=team.Rating" placeholder="Enter Rating" required />
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="item item-body bottom-content">
+                        <button type="submit" class="button button-positive button-block" ng-click="doSaveRating(v)">
+                            Save
+                        </button>
+                    </div>
+            </ion-content>
+        </form>
+    </div>
+    <div ng-if="userIsAdmin == '1'">
+        <form name="score_form" class="" novalidate ng-cloack>
+            <ion-content>
+                <label class="item item-input item-select">
+                    <span class="input-label">Sport Type</span>
+                    <select class="form-control" ng-model="x.selectedSportId" ng-change="changeSport(x)" required>
+                        <option ng-repeat="category in SportsCategorys" value="{{category.id}}">{{category.title}}</option>
+                    </select>
+                </label>
+                <label class="item item-input item-select">
+                    <span class="input-label">Team Type A</span>
+                    <select class="form-control" ng-model="x.selectedTeamId" required>
+                        <option ng-repeat="shedule in NewSchedules" value="{{shedule.teamId1}}">{{shedule.teamName1}}</option>
+                    </select>
+                </label>
+                <div ng-if="x.selectedSportId=='1'">
+                    <div class="row">
+                       <div class="col">
+                           <div style="background-color:{{x.selectedTeamId}} !important;" class="box-shadow">Team A</div>
+                       </div>
+                    </div>
+                    <label class="item item-input">
+                        <span class="input-label">Total Score</span>
+                        <input type="number" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}};text-align: center;" 
+                               class="form-control" ng-model="x.Score1" placeholder="Enter Score" ng-init="x.Score1=_Score1"  required />
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Current Over</span>
+                        <input type="number" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}};text-align: center;"
+                                class="form-control" ng-model="x.Overs1" placeholder="Enter Overs" ng-init="x.Overs1=_Overs1"  required />
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Lost of Wickets</span>
+                        <input type="number" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}};text-align: center;" 
+                               class="form-control" ng-model="x.wickets1" placeholder="Enter Overs" ng-init="x.wickets1=_wickets1"  required />
+                    </label>
+                </div>
+                <div ng-if="x.selectedSportId=='1'">
+                    <label class="item item-input item-select">
+                        <span class="input-label">Team Type B</span>
+                        <select class="form-control" ng-model="x.selectedColor" ng-change="changeTeam1(x)"  required>
+                            <option ng-repeat="shedule in NewSchedules" value="{{shedule.teamId2}}">{{shedule.teamName2}}</option>
+                        </select>
+                    </label>
+                    <div class="row">
+                        <div class="col">
+                            <div style="background-color:{{x.selectedColor}} !important;" class="box-shadow">Team B</div>
+                        </div>
+                    </div>
+                    <label class="item item-input">
+                        <span class="input-label">Total Score</span>
+                        <input type="number" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}};text-align: center;"
+                               class="form-control" ng-model="x.Score2" placeholder="Enter Score" ng-init="x.Score2=_Score2" required />
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Current Over</span>
+                        <input type="number" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}};text-align: center;" 
+                               class="form-control" ng-model="x.Overs2" placeholder="Enter Overs" ng-init="x.Overs2=_Overs2" required />
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Lost of Wickets</span>
+                        <input type="number" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}};text-align: center;"
+                                class="form-control" ng-model="x.wickets2" placeholder="Enter Overs" ng-init="x.wickets2=_wickets2" required />
+                    </label>
+                    <div class="bottom-content" ng-if="schDate !=null">
+                        <button type="submit" class="button button-positive button-block" ng-click="doSaveScore(x)">
+                            Save Score For [{{schDate}}]
+                        </button>
+                    </div>
+                </div>
+            </ion-content>
+        </form>
+    </div>
+</ion-view>

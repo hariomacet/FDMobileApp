@@ -123,8 +123,44 @@ angular.module('starter', [
             }
         }
     })
+//Admin
+    .state('app.admin', {
+        url: "/master",
+        views: {
+            'menuContent': {
+                templateUrl: "views/app/admin/master.html",
+                controller: 'MasterCtrl'
+            }
+        }
+    })
+    .state('app.sports-master', {
+        url: "/sports-master/:categoryId",
+        views: {
+            'menuContent': {
+                templateUrl: "views/app/admin/sports-master.html",
+                controller: 'SportsMasterCtrl'
+            }
+        }
+    })
+  .state('app.schedule-master', {
+      url: "/schedule-master",
+      views: {
+          'menuContent': {
+              templateUrl: "views/app/admin/schedule-master.html",
+              controller: 'ScheduleCtrl'
+          }
+      }
+  })
+ .state('app.live-master', {
+     url: "/live-master",
+     views: {
+         'menuContent': {
+             templateUrl: "views/app/admin/live-master.html",
+             controller: 'SportsLiveCtrl'
+         }
+     }
+ })
 
-  
 
 
 
@@ -140,7 +176,7 @@ angular.module('starter', [
 
 
 
- 
+
 
     //FEEDS
     .state('app.feeds-categories', {
@@ -185,7 +221,7 @@ angular.module('starter', [
      })
 
     .state('app.feed-entries', {
-        url: "/feed-entries/:categoryId/:sourceId/:sourceTitle",
+        url: "/feed-entries/:categoryId/:sourceId",
         views: {
             'menuContent': {
                 templateUrl: "views/app/feeds/feed-entries.html",
@@ -230,7 +266,7 @@ angular.module('starter', [
         }
     })
 
- 
+
 
          .state('app.survey', {
              url: "/survey",
