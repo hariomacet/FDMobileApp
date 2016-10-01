@@ -2,7 +2,8 @@
 /// <reference path="../views/app/feeds/questionModal.html" />
 angular.module('starter.controllers', [])
 
-.controller('AuthCtrl', function ($scope, $ionicConfig) {
+.controller('AuthCtrl', function ($scope, $ionicConfig, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, $ionicPlatform, $http) {
+
 
 })
 
@@ -12,6 +13,7 @@ angular.module('starter.controllers', [])
     $scope.userName = $rootScope.userIdPhone.UserName;
 
     $scope.userIsAdmin = $rootScope.userIdPhone.userIsAdmin;
+    $scope.userImage = $rootScope.userIdPhone.userImage;
     // listen for the event in the relevant $scope
     //$scope.$on('userDetailsbroadcast', function (event, data) {
     //    $scope.userName = data// 'Data to send'
@@ -19,12 +21,21 @@ angular.module('starter.controllers', [])
 })
 
 //LOGIN
-.controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $firebaseArray, fireBaseData) {
+.controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $firebaseArray, fireBaseData, $ionicLoading, ProgressBar) {
     $scope.user = {};
     $rootScope.userIdPhone = {};
     $scope.validUser = false;
+    //$scope.show = function () {
+    //    $ionicLoading.show({
+    //        template: '<p>Please wait...</p><ion-spinner icon="ripple"></ion-spinner>'
+    //    });
+    //};
 
+    //$scope.hide = function () {
+    //    $ionicLoading.hide();
+    //};
     $scope.doLogIn = function () {
+        ProgressBar.show($ionicLoading);
         $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
         $scope.userdetails.$loaded().then(function (userdetails) {
             var userlength = userdetails.length; // data is loaded here
@@ -35,30 +46,37 @@ angular.module('starter.controllers', [])
 
                         $scope.emailcolor = "Green";
                         $scope.validUser = true;
-
-
                         $rootScope.userIdPhone.userId = userdata.userId;
                         $rootScope.userIdPhone.UserName = userdata.userName;
-                        $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
-
                         $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
+                        $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
+                        $rootScope.userIdPhone.userImage = userdata.userImage;
+                        $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
+                        ProgressBar.hide();
                         $state.go('app.feeds-categories');
                         //$scope.$broadcast('userDetailsbroadcast', {
                         //    someProp: userdata.userName // send whatever you want
                         //});
 
                     } else {
+                        ProgressBar.hide()
                         $scope.emailcolor = "Red";
                         $scope.emailborder = "solid";
                     }
                 }
                 else if (userdata.userNumber == $scope.user.phone && userdata.pin == $scope.user.pin) {
                     $rootScope.userIdPhone.userId = userdata.userId;
+                    $rootScope.userIdPhone.UserName = userdata.userName;
                     $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
+                    $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
+                    $rootScope.userIdPhone.userImage = userdata.userImage;
+                    $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
                     //$scope.validUser = true;
+                    ProgressBar.hide();
                     $state.go('app.feeds-categories');
                 }
                 else {
+                    ProgressBar.hide();
                     $scope.phonecolor = "Red";
                     $scope.phoneborder = "solid";
                 }
@@ -85,31 +103,26 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('SignupCtrl', function ($scope, $state, $firebaseArray, fireBaseData) {
+.controller('SignupCtrl', function ($scope, $state, $firebaseArray, fireBaseData, $cordovaCamera, $rootScope, $cordovaFileTransfer, $ionicPopup, ProgressBar, $ionicLoading) {
     $scope.user = {};
-
     $scope.user.email = "";
     var checkEmailId = false;
     var checkPhonenumber = false;
     var dateNow = new Date();
-
+    $scope.userImages = [];
+    $scope.images = [];
+    //
     $scope.doSignUp = function () {
-
+        ProgressBar.show($ionicLoading);
         $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
-        //  var userlength = userdetails.__proto__.then.length;
         $scope.userdetails.$loaded().then(function (userdetails) {
-            var userlength = userdetails.length; // data is loaded here
-            angular.forEach(userdetails, function (userdata) {
-                angular.forEach(userdata, function (value, key) {
-                    if (key == 'userEmailId') {
-                        checkEmailId = angular.equals($scope.user.email, value) ? true : false;
-                    }
-                    if (key == 'userNumber') {
-                        checkPhonenumber = angular.equals($scope.user.phone, value) ? true : false;
-                    }
-                })
-            })
-            if (!checkEmailId && !checkPhonenumber) {
+            var foundUserEmail = $scope.userdetails.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.user.email.replace(/^\s+|\s+$/g, '') });
+            var foundUserPhone = $scope.userdetails.filter(function (user) { return user.userNumber == $scope.user.phone });
+            if (foundUserEmail.length > 0 || foundUserPhone.length > 0) {
+                $scope.user.UserExist = "Already Exists!!"
+                ProgressBar.hide();
+            } else {
+                $scope.user.UserExist = null;
                 $scope.saveuserdetails = userdetails.$add({
                     userName: $scope.user.name,
                     userId: $scope.user.userId,
@@ -119,36 +132,65 @@ angular.module('starter.controllers', [])
                     userIsAdmin: "0",
                     userIsActive: "1",
                     userCreateDate: dateNow.toDateString(),
-                    pin: $scope.user.pin
+                    pin: $scope.user.pin,
+                    userImage: $scope.userImages.length > 0 ? $scope.userImages[0] : ""
                 }).then(function (ref) {
+                    ProgressBar.hide();
                     console.log(ref);
                 }, function (error) {
                     console.log("Error:", error);
                 });
-                $state.go('app.feeds-categories');
+                $state.go('auth.login');
             }
-            else {
-                $scope.userExists = "Already Exists!!";
-                // return;
-            }
-        })
+        });
 
     };
-    // var ref = new Firebase("https://ustdb.firebaseio.com/userRegistration");
-    //$scope.userdetails.on("child_added", function (snapshot, prevChildKey) {
-    //    console.log(snapshot.val());
-    //}, function (errorObject) {
-    //    console.log("The read failed: " + errorObject);
-    //});
 
+    $scope.upload = function () {
+        // Image picker will load images according to these settings
+        $scope.images = [];
+        $scope.userImages = [];
 
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+            allowEdit: false,
+            encodingType: Camera.EncodingType.JPEG,
+            mediaType: Camera.MediaType.PICTURE,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
 
+        $cordovaCamera.getPicture(options).then(function (imageUri) {
+            $scope.images.push(imageUri);
+            encodeImageUri(imageUri, function (base64) {
+                $scope.userImages.push(base64);
+                //alert("data:image/jpeg;base64" + base64)
+            });
 
-    //  $scope.posts = $firebase(custDetails.child('surveyDetails')).$asArray();
+        }, function (err) {
+            // error
+        });
+    };
+    var encodeImageUri = function (imageUri, callback) {
+        var c = document.createElement('canvas');
+        var ctx = c.getContext("2d");
+        var img = new Image();
+        img.onload = function () {
+            c.width = this.width;
+            c.height = this.height;
+            ctx.drawImage(img, 0, 0);
 
-
-
-
+            if (typeof callback === 'function') {
+                var dataURL = c.toDataURL("image/jpeg");
+                callback(dataURL.slice(22, dataURL.length));
+            }
+        };
+        img.src = imageUri;
+    }
 })
     //Admin
 .controller("MasterCtrl", function ($scope, $rootScope, $firebaseArray, fireBaseData) {
@@ -393,122 +435,162 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('SurveyDetailsCtrl', function ($scope, $state, $firebaseArray, fireBaseData, $rootScope) {
-    $scope.surveyInfo = {};
-    $scope.surveyDetails = $firebaseArray(fireBaseData.refSurveyquestionaires());
-    // $scope.surveyresult = $firebaseArray(fireBaseData.refSurveyresult());
-    $scope.userFetchDetails = $firebaseArray(fireBaseData.refRegisteration());
-    $scope.surveyQ = $firebaseArray(fireBaseData.refSurveyquestions());
-
-    var phoneNumber = "";
-    $scope.surveyDetails.$loaded()
-                         .then(function (surveyDetails) {
-                             angular.forEach(surveyDetails, function (surveyitem) {
-                                 if (surveyitem.surveyActive == 1) {
-                                     $scope.surveyInfo = {
-                                         surveyid: surveyitem.surveyId
-                                         //userid: surveyitem.userId
-                                     }
-
-                                     //$scope.userFetchDetails.$loaded().then(function (userFetchDetails) {
-                                     //    angular.forEach(userFetchDetails, function (userdata) {
-                                     //        angular.forEach(userdata, function (item) {
-                                     //            if (item.userId == $scope.surveyInfo.userid) {
-                                     //                phoneNumber = item.userNumber;
-                                     //            }
-                                     //        })
-                                     //    })
-                                     //})
-                                     $scope.suveryQues = surveyitem.questionnaires[0];
-
-                                 }
-                             })
-                         });
-
-
-    var arraySurveyQuestions = [];
-    var item;
-    // $scope.surveyItemValues = {};
-    $scope.surveyQ.$loaded()
-                   .then(function (surveyQ) {
-                       angular.forEach(surveyQ, function (surveyitems) {
-                           if (surveyitems.surveyActive == 1) {
-                               //for (i in surveyitems)
-                               //{
-                               //    item = surveyitems[i];
-                               //}
-                               //$scope.surveyItemValues = surveyitems;
-                               arraySurveyQuestions.push(surveyitems);
-
-                               console.log(surveyitems);
-                           }
-                       })
-                       $scope.Surveylist = arraySurveyQuestions;
-                   });
-
-
-
-    $scope.surveyKeySelected = '';
-    $scope.submitSurvey = function (params) {
-
-
-
-
-        $scope.surveyresult = $firebaseArray(fireBaseData.refSurveyresult());
-        $scope.surveyresult.$loaded()
-                  .then(function (surveyresult) {
-                      $scope.surveyres = surveyresult.$add({
-                          questionId: $scope.surveyKeySelected,
-                          mobileNo: $rootScope.userIdPhone.PhoneNumber,  //GET VALUES ON LOGIN 
-                          surveyId: $scope.surveyInfo.surveyid,
-                          userId: $rootScope.userIdPhone.userId    //GET VALUES ON LOGIN 
-
-                      }).then(function (ref) {
-                          console.log(ref);
-                      }, function (error) {
-                          console.log("Error:", error);
-                      });
-                      $state.go('app.feeds-categories');
-                  }
-        )
-    }
-    //else {
-    //                $scope.userExists = "Already Exists!!";
-    //    // return;
-    //}
-
-
-
+.controller('SurveyMenuCtrl', function ($scope, $state, $firebaseArray, fireBaseData, $rootScope, $stateParams, ProgressBar, $ionicLoading, $interval) {
+    $scope.SurveyTitle = $stateParams.sourceId;
+    $scope.surveyFoods = [];
+    ProgressBar.show($ionicLoading);
+    $scope.s = {};
+    $scope._surveyFoods = $firebaseArray(fireBaseData.refsurveyFood());
+    $scope._surveyFoods.$loaded().then(function (_surveyFoods) {
+        angular.forEach(_surveyFoods, function (food) {
+            if (food.surveyActive == '1') {
+                $scope.surveyFoods.push(food);
+            }
+        })
+    });
+    $scope.Surveyresults = $firebaseArray(fireBaseData.refSurveyresult());
+    $scope.Surveyresults.$loaded().then(function (Surveyresults) {
+        angular.forEach(Surveyresults, function (result) {
+            if (result.userEmailId == $rootScope.userIdPhone.userEmailId) {
+                $scope.s.choice = result.surveyId;
+                $scope.isDisable = true;
+                ProgressBar.hide();
+            }
+        });
+    });
+    $scope.onFoodSelect = function (s) {
+        //alert(s.choice);
+    };
+    $scope.submitSurvey = function (s) {
+        if (s.choice != undefined) {
+            var referer = { 'surveyId': s.choice };
+            $state.go('app.survey-details', referer);
+        }
+    };
+    $interval(function () { ProgressBar.hide(); }, 5000, true);
 })
 
+.controller('SurveyDetailsCtrl', function ($scope, $state, $stateParams, $ionicModal, fireBaseData, $firebaseArray, $rootScope) {
+    $scope.Questions = [];
+    $scope.refSurveyDetails = $firebaseArray(fireBaseData.refSurveyDetails());
+    $scope.refSurveyDetails.$loaded().then(function (refSurveyDetails) {
+        angular.forEach(refSurveyDetails, function (srv) {
+            if (srv.surveyId == $stateParams.surveyId) {
+                angular.forEach(srv.questions, function (ques) {
+                    if (ques.isActive == '1') {
+                        $scope.Questions.push(ques);
+                    }
+                })
+            }
+        })
+    });
 
-    .controller('SurveyCtrl', function ($scope, $state, $stateParams, $ionicModal) {
-        $scope.SurveyTitle = $stateParams.sourceId;
-        $ionicModal.fromTemplateUrl('views/app/feeds/survey-details.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(
-               function (modal) {
-                   vm.modal = modal;
-                   vm.modal.show();
-               }
-               )
+    $scope.ratingArr = [{
+        value: 1,
+        icon: 'ion-ios-star-outline',
+        question: 1
+    }, {
+        value: 2,
+        icon: 'ion-ios-star-outline',
+        question: 2
+    }, {
+        value: 3,
+        icon: 'ion-ios-star-outline',
+        question: 3
+    }, {
+        value: 4,
+        icon: 'ion-ios-star-outline',
+        question: 4
+    }, {
+        value: 5,
+        icon: 'ion-ios-star-outline',
+        question: 5
+    }];
+    $scope.setRating = function (question, val) {
+        $scope.RatingSurvey = [];
+        soSetRating(val);
+        var obj = { 'questionid': question, 'ratingValue': val };
+        $scope.RatingSurvey.push(obj);
+    }
+    var soSetRating = function (val) {
+        var rtgs = $scope.ratingArr;
+        for (var i = 0; i < rtgs.length; i++) {
+            if (i < val) {
+                rtgs[i].icon = 'ion-ios-star';
+            } else {
+                rtgs[i].icon = 'ion-ios-star-outline';
+            }
+        };
+    };
+    $scope.v = {};
+    $scope.RatingSurvey = [];
+    var checkEmailId = false;
+    var checkPhoneNumber = false;
+    var surveylength = 0;
+    $scope.Surveyresults = $firebaseArray(fireBaseData.refSurveyresult());
+    $scope.Surveyresults.$loaded().then(function (Surveyresults) {
+        angular.forEach(Surveyresults, function (result) {
+            checkEmailId = angular.equals(result.userEmailId, $rootScope.userIdPhone.userEmailId) ? true : false;
+            checkPhoneNumber = angular.equals(result.phoneNumber, $rootScope.userIdPhone.PhoneNumber) ? true : false;
+            if (checkEmailId || checkPhoneNumber) {
+                if (result.surveyId == $stateParams.surveyId) {
+                    soSetRating(result.rating);
+                    $scope.v.choice = result.answerId;
+                    $scope.isDisable = true;
+                }
+                surveylength = result.$id;
+            }
+        })
     })
 
+    $scope.QuestionsId = [];
+    $scope.onAnsSelect = function (id) {
+        $scope.QuestionsId = [];
+        $scope.QuestionsId.push(id);
+    }
+    $scope.ratingsCallback = function (rating) {
+        alert('Selected rating is : ', rating);
+    };
+    //Save
+    $scope.doSaveSurvey = function (v) {
+        if ($scope.RatingSurvey.length > 0 && $scope.QuestionsId.length > 0) {
+            if (!checkEmailId || !checkPhoneNumber) {
+                surveylength = $scope.Surveyresults.length;
+            }
+            var refUpdate = new Firebase('"https://ustdb.firebaseio.com/surveyResults/' + surveylength);
+            refUpdate.update({
+                "surveyId": $stateParams.surveyId,
+                "userEmailId": $rootScope.userIdPhone.userEmailId,
+                "phoneNumber": $rootScope.userIdPhone.PhoneNumber,//toDateString(),
+                "rating": $scope.RatingSurvey[0].ratingValue,
+                "questionId": $scope.QuestionsId[0],
+                "answerId": v.choice
+            });
+        }
+    }
+
+    //$scope._surveyFoods = $firebaseArray(fireBaseData.refsurveyFood());
+
+    //$scope._surveyFoods.$loaded().then(function (_surveyFoods) {
+    //    angular.forEach(_surveyFoods, function (food) {
+    //        if (food.surveyActive == '1' && food.surveyId == $stateParams.surveyId) {
+    //            $scope.surveyFoods.push(food);
+    //        }
+    //    })
+    //});
 
 
-           // $state.go('app.feeds-categories');
+    //$ionicModal.fromTemplateUrl('views/app/survey/surveyMenu.html', {
+    //    scope: $scope,
+    //    animation: 'slide-in-up'
+    //}).then(function (modal) {
+    //    vm.modal = modal;
+    //    vm.modal.show();
+    //});
+    // var referer = { 'surveyType': $scope.SurveyTitle };
+    //$state.go('app.surveyMenu', referer);
 
-
-
-
-
-    //    function closeQuestionEditor() {
-    //    vm.modal.hide();
-    //    vm.modal.remove();
-
-    //    $ionicListDelegate.closeOptionButtons();
-    //}
+})    
 
 .controller('ForgotPasswordCtrl', function ($scope, $state) {
     $scope.recoverPassword = function () {
@@ -539,11 +621,26 @@ angular.module('starter.controllers', [])
     //    $scope.feeds_categories = response;
     //});
 })
+.controller('EventDetailsCtrl', function ($scope, $stateParams, $firebaseArray, fireBaseData) {
+    $scope.EventDetails = [];
+    $scope.eventName = $stateParams.sourceId;
+    $scope.EventsDetails = $firebaseArray(fireBaseData.refEventsDetails());
+    $scope.EventsDetails.$loaded().then(function (EventsDetails) {
+        angular.forEach(EventsDetails, function (event) {
+            if (event.eventId == $stateParams.categoryId) {
+                $scope.EventDetails.push(event);
+            }
+        });
+    });
+
+})
 
 //bring specific category providers
 .controller('CategoryFeedsCtrl', function ($scope, $http, $stateParams, $firebaseArray, fireBaseData) {
     $scope.category_sources = [];
     $scope.categoryitems = [];
+    $scope.special_sources = [];
+    $scope.other_sources = [];
     $scope.categoryId = $stateParams.categoryId;
 
     $scope.categoryTitle = $stateParams.categoryId;
@@ -551,32 +648,37 @@ angular.module('starter.controllers', [])
 
     $scope.categoryitem = $stateParams.categoryId == 'events2016' ? $firebaseArray(fireBaseData.refEventsList())
          : $stateParams.categoryId == 'sports' ? $firebaseArray(fireBaseData.refSportsList())
-        : $stateParams.categoryId == 'events-news' ? $firebaseArray(fireBaseData.eventNews())
+        : $stateParams.categoryId == 'event-updates' ? $firebaseArray(fireBaseData.eventNews())
         : $stateParams.categoryId == 'CSR' ? $firebaseArray(fireBaseData.refCsr())
-        : $stateParams.categoryId == 'technology' ? $firebaseArray(fireBaseData.reftechnology())
-        : $stateParams.categoryId == 'survey' ? $firebaseArray(fireBaseData.refSurveyDashboard()) : $firebaseArray(fireBaseData.refNowU());
+        : $stateParams.categoryId == 'summary' ? $firebaseArray(fireBaseData.refsummary())
+        : $stateParams.categoryId == 'survey' ? $firebaseArray(fireBaseData.refSurveyDashboard())
+        : $stateParams.categoryId == 'vote' ? $firebaseArray(fireBaseData.refVoteDashBoard())
+        : $firebaseArray(fireBaseData.refNowU());
 
     $scope.categoryitem.$loaded()
              .then(function (categoryitem) {
-                 // angular.forEach(categoryitem, function (categorylist) {
-                 //  if (surveyitem.surveyActive == 1) {
-                 // $scope.categoryTitle = categoryitem.title;
-                 //$scope.category_sources = categoryitem[0];
-
-                 if ($scope.categoryTitle != "survey") {
-                     $scope.category_sources = categoryitem[0];
-
+                 if ($scope.categoryTitle == "survey") {
+                     $scope.category_sources = categoryitem;
+                 }
+                 else if ($scope.categoryTitle == "vote") {
+                     $scope.category_sources = categoryitem;
+                 }
+                 else if ($scope.categoryTitle == "events2016") {
+                     angular.forEach(categoryitem, function (sport) {
+                         if (sport.type == 'sport' && sport.isActive == '1') {
+                             $scope.category_sources.push(sport)
+                         }
+                         if (sport.type == 'special' && sport.isActive == '1') {
+                             $scope.special_sources.push(sport)
+                         }
+                         if (sport.type == 'other' && sport.isActive == '1') {
+                             $scope.other_sources.push(sport)
+                         }
+                     })
                  }
                  else {
-                     $scope.category_sources = categoryitem;
-
+                     $scope.category_sources = categoryitem[0];
                  }
-
-
-
-
-
-
                  //  }
                  //   })
              });
@@ -618,12 +720,33 @@ angular.module('starter.controllers', [])
 
 
 
+    $scope.galleryItem = {};
+    $scope.championShipItems = {};
+
     var categoryId = $stateParams.categoryId,
+        sourceTitle = $stateParams.sourceTitle,
 			sourceId = $stateParams.sourceId;
-    $scope.sportsName = sourceId;
 
-    $scope.categoryTitle = $stateParams.sourceId;
-
+    if (categoryId == "gallery") {
+        var ref = new Firebase("https://ustdb.firebaseio.com/nowU/feed_source");
+        ref.once("value", function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+                var key = childSnapshot.key();
+                if (sourceId == key) {
+                    $scope.galleryItem = childSnapshot.val();
+                }
+            });
+        });
+    }
+    if (categoryId == "summary") {
+        var ref = new Firebase("https://ustdb.firebaseio.com/teamNames");
+        ref.once("value", function (snapshot) {
+            $scope.championShipItems = snapshot.val();
+            console.log($scope.championShipItems);
+        });
+    }
+    $scope.sportsName = $stateParams.sourceTitle;
+    $scope.categoryTitle = sourceTitle;
 
     $scope.scorelikeCount1 = function (params1, params2) {
         var str = params1;
@@ -687,7 +810,7 @@ angular.module('starter.controllers', [])
         $scope.feeds_LiveScore.$loaded()
            .then(function (result) {
                angular.forEach(result, function (liveScore) {
-                   if (liveScore.$id.toUpperCase() == sourceId.toUpperCase()) {
+                   if (liveScore.$id.toUpperCase() == sourceTitle.toUpperCase()) {
                        $scope.liveScore = liveScore;
                        // $rootScope.eventId = $scope.entry.eventId;
                    }
@@ -729,6 +852,68 @@ angular.module('starter.controllers', [])
 
         BookMarkService.bookmarkFeedPost(post);
     };
+})
+.controller("VoteEntriesCtrl", function ($scope, $stateParams, $rootScope, $firebaseArray, fireBaseData, $ionicPopup) {
+    $scope.Employees = $firebaseArray(fireBaseData.refEmpList());
+    $scope.v = {};
+    $scope.EmpVoteCounts = $firebaseArray(fireBaseData.refVoteCount());
+    $scope.EmpVoteCounts.$loaded().then(function (EmpVoteCounts) {
+        angular.forEach(EmpVoteCounts, function (emp) {
+            if (emp.voterId == $rootScope.userIdPhone.userEmailId) {
+                $scope.v.choice = emp.voteTo;
+                $scope.isDisable = true;
+
+            }
+        });
+    });
+
+
+    $scope.doSaveVote = function (v) {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Vote Confirmation',
+            template: 'please confirm your selection(Ok for confirm)?'
+        });
+        confirmPopup.then(function (res) {
+            if (res) {
+                $scope.isDisable = true;
+                $scope.saveEmpVoteCounts = $scope.EmpVoteCounts.$add({
+                    voterId: $rootScope.userIdPhone.userEmailId,
+                    voteTo: v.choice
+                }).then(function (ref) {
+                    console.log(ref);
+                }, function (error) {
+                    console.log("Error:", error);
+                });
+                $scope.Employees.$loaded().then(function (Employees) {
+                    angular.forEach(Employees, function (emp, value) {
+                        if (emp.empId == v.choice) {
+                            var ref = new Firebase('https://ustdb.firebaseio.com/employeeList/' + value);
+                            ref.update({
+                                "totalVote": emp.totalVote == undefined ? 1 : parseInt(emp.totalVote) + 1
+                            });
+                        };
+                    });
+                });
+            }
+        });
+    }
+
+})
+.controller("VoteMastereCtrl", function ($scope, $stateParams, $rootScope, $firebaseArray, fireBaseData) {
+    $scope.EmployeesData = [];
+    $scope.Employees = $firebaseArray(fireBaseData.refEmpList());
+    $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
+    $scope.userdetails.$loaded().then(function (userdetails) {
+        var total = parseInt(userdetails.length)
+        $scope.Employees.$loaded().then(function (Employees) {
+            angular.forEach(Employees, function (emp) {
+                var div = parseInt(emp.totalVote) * 100 / total
+
+                var obj = { 'empColor': emp.empColor, 'empId': emp.empId, 'empName': emp.empName, 'totalVote': emp.totalVote, 'empPercent': div }
+                $scope.EmployeesData.push(obj);
+            });
+        })
+    });
 })
 
 //PLAYER LIST CONTROLLER
@@ -812,4 +997,84 @@ angular.module('starter.controllers', [])
         });
 
     };
+})
+
+.controller("ProfileSettingCtrl", function ($scope, $rootScope, $firebaseArray, fireBaseData, $cordovaCamera, $cordovaFileTransfer, $ionicLoading, ProgressBar, $interval) {
+    $scope.images = [];    
+    $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
+    $scope.userdetails.$loaded().then(function (userdetails) {
+        angular.forEach(userdetails, function (value, key) {
+            if (value.userEmailId == $rootScope.userIdPhone.userEmailId && value.userImage != undefined) {
+                $scope.images.push("data:image/jpeg;base64" + value.userImage)
+            }
+        });
+    });
+    //Upload Image by Base64
+    $scope.Uploadimages = [];
+
+    $scope.ChangeImage = function () {
+        // Image picker will load images according to these settings
+        $scope.images = [];
+        $scope.Uploadimages = [];
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+            allowEdit: false,
+            encodingType: Camera.EncodingType.JPEG,
+            mediaType: Camera.MediaType.PICTURE,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function (imageUri) {
+            $scope.images.push(imageUri);
+            encodeImageUri(imageUri, function (base64) {
+                $scope.Uploadimages.push(base64);
+                //alert("data:image/jpeg;base64" + base64)
+            });
+
+        }, function (err) {
+            // error
+        });
+    };
+    //Update Profile
+    $scope.doUpdateProfile = function () {
+        ProgressBar.show($ionicLoading);
+        if ($scope.Uploadimages.length > 0) {
+            $scope.userdetails.$loaded().then(function (userdetails) {
+                angular.forEach(userdetails, function (value, key) {
+                    if (value.userEmailId == $rootScope.userIdPhone.userEmailId) {
+                        var refUpdate = new Firebase("https://ustdb.firebaseio.com/userRegistration/" + value.$id);
+                        refUpdate.update({
+                            "userImage": $scope.Uploadimages[0].toLocaleString()
+                        });
+                    }
+                });
+            });
+            $scope.success == "1";
+        }
+        $interval(function () { ProgressBar.hide(); }, 8000, true);
+
+
+    };
+    var encodeImageUri = function (imageUri, callback) {
+        var c = document.createElement('canvas');
+        var ctx = c.getContext("2d");
+        var img = new Image();
+        img.onload = function () {
+            c.width = this.width;
+            c.height = this.height;
+            ctx.drawImage(img, 0, 0);
+
+            if (typeof callback === 'function') {
+                var dataURL = c.toDataURL("image/jpeg");
+                callback(dataURL.slice(22, dataURL.length));
+            }
+        };
+        img.src = imageUri;
+    }
 });
+

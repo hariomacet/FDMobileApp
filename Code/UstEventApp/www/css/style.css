@@ -9,3 +9,32 @@
 .align-center {
         text-align: center !important;
 }
+
+.icon .ion-ios-star {
+    font-size: 50px !important;
+}
+
+.spinner svg {
+    width: 100px;
+    height: 100px;
+    stroke: #ffffff;
+    fill: #c10370;
+    background-color: transparent;
+}
+
+.progress-bar {
+    width: 50%;
+    background-color: rebeccapurple;
+    height: 30px;
+    color: white;
+    font-weight: bold;
+
+}
+
+.progress {
+    background-color: rgba(17, 193, 243, 0.33);
+    vertical-align: middle;
+    text-align: center;
+    color: #000;
+    font-weight: bold;
+}

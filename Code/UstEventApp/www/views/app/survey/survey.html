@@ -1,0 +1,26 @@
+﻿<ion-view class="bookmarks-view">
+    <ion-nav-title>
+        <span>Survey Details</span>
+    </ion-nav-title>
+    <ion-content>
+        <ion-scroll direction="y" style="max-height:500px">
+            <div class="card">
+                <div class="item item-text-wrap" data-ng-repeat="items in surveyFoods">
+                    <ion-radio ng-model="s.choice" ng-value="items.surveyId" ng-change="onFoodSelect(s)">
+                        <div><h2>{{items.surveyPidHeader}}</h2></div>
+                        <div><h3>{{items.surveyPidDesc}}</h3></div>
+                        <div data-ng-repeat="datafoodType in items.sFoodType">
+                            <h4>{{datafoodType.sHeader}}</h4>
+                            <h5>{{datafoodType.sCDesc}}</h5>
+                        </div>
+                    </ion-radio>
+                </div>
+            </div>
+        </ion-scroll>
+        <div class="item item-body bottom-content">
+            <button type="submit" class="button button-positive button-block" ng-click="submitSurvey(s)">
+                Chose One
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

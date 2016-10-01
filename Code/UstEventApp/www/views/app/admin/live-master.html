@@ -28,7 +28,7 @@
                         <div style="display: -webkit-box;">
                             <span class="input-label" style="background-color:{{sche.teamId1}} !important;color:white;min-height: 55px;">{{ sche.teamName1 }} </span>
                             <span class="input-label" style="background-color:{{sche.teamId2}} !important;color:white;min-height: 55px;">{{ sche.teamName2 }} </span>
-                            <ion-radio ng-model="v.choice" ng-value="{{$index}}" ng-change="onLiveSelect(sche,v)" ng-confirm-click="Are you sure you want to push live?">Select</ion-radio>
+                            <ion-radio ng-model="v.choice" ng-value="{{$index}}" ng-change="onLiveSelect(sche,v)">Select</ion-radio>
                         </div>
                     </li>
                 </ul>

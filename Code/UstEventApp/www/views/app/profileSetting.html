@@ -1,0 +1,32 @@
+﻿<ion-view class="signup-view auth-view" cache-view="false">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+        <span>User Profile</span>
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-camera" ng-click="ChangeImage()"></button>
+    </ion-nav-buttons>
+    <ion-content scroll="false">
+        <div ng-if="success=='1'">
+            <ul class="list">
+                <li class="item"><span style="font-weight:bold;color:forestgreen;">Update Sussessfully!!</span></li>
+            </ul>
+        </div>
+        <div class="col" ng-if="images.length>0">
+            <form name="profile_form" class="" novalidate>
+                <div class="item item-body">
+                    <span ng-repeat="img in images" class="col">
+                        <img ng-src="{{img}}" class="full-image" />
+                    </span>
+                </div>
+                <div class="item item-body bottom-content col" style="min-width:300px;">
+                    <button type="submit" class="button button-assertive button-block" ng-click="doUpdateProfile()">
+                        Update Profile
+                    </button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

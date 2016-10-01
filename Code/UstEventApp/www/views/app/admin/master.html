@@ -34,6 +34,16 @@
                     <span class="category-title">Move To Live</span>
                 </a>
             </div>
+            <div class="col col-50" ng-if="userIsAdmin=='2'">
+                <a class="feed-category" ui-sref="app.vote-master">
+                    <pre-img ratio="_1_1" helper-class="square-image">
+                        <img class="category-image" src="img/feeds/vote-icon.jpg" spinner-on-load>
+                    </pre-img>
+                    <div class="category-bg"></div>
+                    <span class="category-title">Vote Count</span>
+                </a>
+            </div>
+
         </div>
     </ion-content>
 </ion-view>

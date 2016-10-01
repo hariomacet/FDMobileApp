@@ -1,42 +1,57 @@
 <ion-view class="signup-view auth-view" cache-view="false">
-  <ion-content scroll="false">
-    <div class="row">
-      <div class="col col-center">
-        <div class="card sign-up-container">
-          <form name="signup_form" class="" novalidate>
-            <div class="item item-body">
-                <label class="item item-input">
-                    <input type="text" placeholder="User Name" name="user_name"  ng-model="user.name" required>
-                </label>
-              <label class="item item-input">
-                <input type="email" placeholder="Email" name="user_email" ng-model="user.email" required>
-              </label>
-                <label class="item item-input">
-                    <input type="text" placeholder="Uid" name="user_uid" ng-model="user.userId" required>
-                </label>
-              <label class="item item-input" show-hide-container>
-                <input type="password" placeholder="Password" name="user_password" ng-model="user.password" required show-hide-input>
-              </label>
-                <label class="item item-input">
-                    <input type="text" placeholder="Phone number" name="user_phno" ng-model="user.phone" required>
-                </label>
-                <label class="item item-input">
-                    <input type="text" placeholder="Pin" name="user_pin" ng-model="user.pin" required>
-                </label>
+    <ion-content scroll="true">
+        <div class="row">
+            <div class="col col-center">
+                <div class="card sign-up-container">
+                    <form name="signup_form" class="" novalidate>
+                        <div class="item item-body">
+                            <label class="item" ng-if="user.UserExist !=null">
+                                <span class="title" style="color:red;">{{user.UserExist}}</span>
+                            </label>
+                            <label class="item item-input">
+                                <input type="text" placeholder="User Name" name="user_name" ng-model="user.name" required>
+                            </label>
+                            <label class="item item-input">
+                                <input type="email" placeholder="Email" name="user_email" ng-model="user.email" required>
+                            </label>
+                            <label class="item item-input">
+                                <input type="text" placeholder="Uid" name="user_uid" ng-model="user.userId" required>
+                            </label>
+                            <label class="item item-input" show-hide-container>
+                                <input type="password" placeholder="Password" name="user_password" ng-model="user.password" required show-hide-input>
+                            </label>
+                            <label class="item item-input">
+                                <input type="number" placeholder="Phone number" maxlength="10" name="user_phno" ng-model="user.phone" required>
+                            </label>
+                            <label class="item item-input">
+                                <input type="text" placeholder="Pin" maxlength="6" name="user_pin" ng-model="user.pin" required>
+                            </label>
+                            <label class="item item-input">
+                                <span class="input-label">Upload Pic</span>
+                                <span ng-repeat="img in images" class="col">
+                                    <img ng-src="{{img}}" width="50" height="50" />
+                                </span>
+                                <span style="text-align:right;" class="col">
+                                    <button class="button button-icon icon ion-camera" ng-click="upload()"></button>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="item item-body bottom-content">
+                            <button type="submit" class="button button-assertive button-block" ng-click="doSignUp()" ng-disabled="signup_form.$invalid">
+                                Sign Up
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="alternative-actions">
+                    <a class="log-in button button-small button-clear button-light" ui-sref="auth.login">
+                        Log In
+                    </a>
+                </div>
             </div>
-            <div class="item item-body bottom-content">
-              <button type="submit" class="button button-assertive button-block" ng-click="doSignUp()" ng-disabled="signup_form.$invalid">
-                Sign Up
-              </button>
-            </div>
-          </form>
         </div>
-        <div class="alternative-actions">
-          <a class="log-in button button-small button-clear button-light" ui-sref="auth.login">
-            Log In
-          </a>
-        </div>
-      </div>
+    </ion-content>
+    <div class="tabs" style="background-color: #ddd;">
+        <div class="title">@ <span style="color:#ff0000">UST</span><span style="color: #a7a5a5;"> Global</span> All rights reserved.</div>
     </div>
-  </ion-content>
 </ion-view>

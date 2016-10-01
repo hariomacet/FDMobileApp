@@ -1,0 +1,43 @@
+﻿<ion-view class="survey-details-view">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+        <span>Food Survey</span>
+        <!--<i class="icon ion-ios-plus" ng-click=""> ADD ITEMS</i>-->
+    </ion-nav-title>
+    <ion-content scroll="true">
+        <form name="survey_form" class="" novalidate>
+            <div class="card">
+                <div ng-repeat="q in Questions">
+                    <div class="item item-divider item-text-wrap">
+                        <div ng-if="q.Type=='rating'" class="item-icon-left">
+                            <i class="icon ion-ios-star"></i>
+                            {{q.Q}}
+                        </div>
+                        <div ng-if="q.Type=='question'" class="item-icon-left">
+                            <i class="icon ion-help-circled"></i>
+                            {{q.Q}}
+                        </div>
+                    </div>
+                    <div class="item item-text-wrap" ng-if="q.Type=='rating'">
+                        <a href="javascript:" ng-repeat="r in ratingArr" class="padding" style="text-decoration:none;">
+                            <i class="icon {{r.icon}}" ng-click="setRating(q.questionId,r.value)" style="font-size:35px;"></i>
+                        </a>
+                    </div>
+                    <div class="item" ng-if="q.Type=='question'">
+                        <ion-list>
+                            <ion-radio ng-repeat="ans in q.answer" ng-model="v.choice" ng-value="ans.chooseId" ng-change="onAnsSelect(q.questionId)"
+                                       name="{{q.questionId}}" ng-disabled="isDisable">{{ans.choose}}</ion-radio>
+                        </ion-list>
+                    </div>
+                </div>
+                <div class="item item-body bottom-content">
+                    <button type="submit" class="button button-positive button-block" ng-click="doSaveSurvey(v)">
+                        Save Survey
+                    </button>
+                </div>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

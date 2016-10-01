@@ -198,13 +198,25 @@ angular.module('starter.factories', [])
     };
 })
 
+.factory('ProgressBar', ['$ionicLoading', function ($ionicLoading) {
+    return {
+        show: function () {
+            $ionicLoading.show({
+                template: '<p>Please wait...</p><ion-spinner icon="ripple"></ion-spinner>'
+            });
+        },
+        hide: function () {
+            $ionicLoading.hide();
+        }
+    }
+}])
+
 
 .factory('fireBaseData', function ($FirebaseObject) {
     var refRegisteration = new Firebase("https://ustdb.firebaseio.com/userRegistration");
     var refSurveyresult = new Firebase("https://ustdb.firebaseio.com/surveyResults");
-    var refSurveyquestionaires = new Firebase("https://ustdb.firebaseio.com/surveyDetails");
-    var refSurveyquestions = new Firebase("https://ustdb.firebaseio.com/surveyFood");
-
+    var refSurveyDetails = new Firebase("https://ustdb.firebaseio.com/surveyDetails");
+    var refsurveyFood = new Firebase("https://ustdb.firebaseio.com/surveyFood");
     var refDashBoardDetails = new Firebase("https://ustdb.firebaseio.com/dashBoard");
     var refSportsList = new Firebase("https://ustdb.firebaseio.com/sportsList");
     var refNowU = new Firebase("https://ustdb.firebaseio.com/nowU");
@@ -212,23 +224,20 @@ angular.module('starter.factories', [])
     var reftechnology = new Firebase("https://ustdb.firebaseio.com/technology");
     var refCsr = new Firebase("https://ustdb.firebaseio.com/csrList");
     var eventNews = new Firebase("https://ustdb.firebaseio.com/eventsNews");
-
+    var refsummary = new Firebase("https://ustdb.firebaseio.com/summary");
     var refSportsTeamMembers = new Firebase("https://ustdb.firebaseio.com/sportsTeamMembers");
     var refTeamNames = new Firebase("https://ustdb.firebaseio.com/teamNames");
-    //  var refTeamMembers = new Firebase("https://ustdb.firebaseio.com/teamMembers");
-
     var refSurveyDashboard = new Firebase("https://ustdb.firebaseio.com/surveyDashBoard");
-
     var refMatchSchedule = new Firebase("https://ustdb.firebaseio.com/matchSchedule");
-
-
     var refPlayerList = new Firebase("https://ustdb.firebaseio.com/sportsList/feed_source/");
-
     var refLiveScore = new Firebase("https://ustdb.firebaseio.com/liveScore");
     var refLiveScoreTeam1 = new Firebase("https://ustdb.firebaseio.com/liveScore/cricket/0/team1");
     var refLiveScoreTeam2 = new Firebase("https://ustdb.firebaseio.com/liveScore/cricket/0/team2");
-
     var refEventUserMap = new Firebase("https://ustdb.firebaseio.com/eventUserMapping");
+    var refVoteDashBoard = new Firebase("https://ustdb.firebaseio.com/voteDashBoard");
+    var refEmpList = new Firebase("https://ustdb.firebaseio.com/employeeList");
+    var refVoteCount = new Firebase("https://ustdb.firebaseio.com/empVoteCount");
+    var refEventsDetails = new Firebase("https://ustdb.firebaseio.com/eventDetails");
 
     return {
         refRegisteration: function () {
@@ -243,12 +252,12 @@ angular.module('starter.factories', [])
         refSurveyresult: function () {
             return refSurveyresult;
         },
-        refSurveyquestionaires: function () {
+        refSurveyDetails: function () {
             // return refSurveyquestionaires
-            return refSurveyquestionaires;
+            return refSurveyDetails;
         },
-        refSurveyquestions: function () {
-            return refSurveyquestions;
+        refsurveyFood: function () {
+            return refsurveyFood;
         },
         refDashBoardDetails: function () {
             return refDashBoardDetails;
@@ -302,14 +311,50 @@ angular.module('starter.factories', [])
         },
         refEventUserMap: function () {
             return refEventUserMap;
+        },
+        refsummary: function () {
+            return refsummary;
+        },
+        refVoteDashBoard: function () {
+            return refVoteDashBoard;
+        },
+        refEmpList: function () {
+            return refEmpList;
+        },
+        refVoteCount: function () {
+            return refVoteCount;
+        },
+        refEventsDetails: function () {
+            return refEventsDetails;
         }
     };
 })
-
 .filter('currentdate', ['$filter', function ($filter) {
     return function () {
         return $filter('date')(new Date(), 'yyyy-MM-dd');
     };
 }])
-
+.filter('orderByDesc', function () {
+    return function (items, field, reverse) {
+        // Build array
+        var filtered = [];
+        for (var key in items) {
+            if (field === 'key')
+                filtered.push(key);
+            else
+                filtered.push(items[key]);
+        }
+        // Sort array
+        filtered.sort(function (a, b) {
+            if (field === 'key')
+                return (a > b ? 1 : -1);
+            else
+                return (a[field] > b[field] ? 1 : -1);
+        });
+        // Reverse array
+        if (reverse)
+            filtered.reverse();
+        return filtered;
+    };
+})
 ;

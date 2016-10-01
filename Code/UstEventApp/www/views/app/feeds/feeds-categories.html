@@ -7,15 +7,15 @@
   </ion-nav-title>
   <ion-content>
     <div class="row categories-list" ng-show="true">
-      <div ng-repeat="category in feeds_categories" class="col col-50">
-        <a class="feed-category" ui-sref="app.category-feeds({categoryId: (category.title | slugify)})">
-          <pre-img ratio="_1_1" helper-class="square-image">
-            <img class="category-image" ng-src="{{category.image}}" spinner-on-load>
-          </pre-img>
-          <div class="category-bg"></div>
-          <span class="category-title">{{category.title}}</span>
-        </a>
-      </div>
+        <div ng-repeat="category in feeds_categories" class="col col-50" ng-if="category.title !='Gallery'">
+            <a class="feed-category" ui-sref="app.category-feeds({categoryId: (category.title | slugify)})">
+                <pre-img ratio="_1_1" helper-class="square-image">
+                    <img class="category-image" ng-src="{{category.image}}" spinner-on-load>
+                </pre-img>
+                <div class="category-bg"></div>
+                <span class="category-title">{{category.title}}</span>
+            </a>
+        </div>
     </div>
 
       <!--<div class="row categories-list" ng-show="false">

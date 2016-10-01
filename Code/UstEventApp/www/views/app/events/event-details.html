@@ -1,0 +1,111 @@
+﻿<ion-view class="survey-details-view">
+    <ion-nav-title>
+        <span style="text-transform: capitalize;">{{eventName}} Details</span>
+        <!--<i class="icon ion-ios-plus" ng-click=""> ADD ITEMS</i>-->
+    </ion-nav-title>
+</ion-view>
+<ion-modal-view>
+    <form name="event_form" class="" novalidate>
+        <ion-content>
+            <div class="card" ng-if="EventDetails[0].type =='S'">
+                <div ng-repeat="event in EventDetails">
+                    <div ng-if="event.schedule.length>0">
+                        <div class="item item-divider item-text-wrap">
+                            <div class="item-icon-left">
+                                <i class="icon ion-ios-time"></i>
+                                Schedule Details
+                            </div>
+                        </div>
+                        <div class="item item-text-wrap">
+                            <p ng-repeat="s in event.schedule">
+                                <i class="icon ion-android-arrow-dropright"></i>
+                                <b>Date:</b> {{s.date}}<br />
+                                <b>Time:</b> {{s.time}}<br />
+                                <b>AT:</b> {{s.place}}
+                            </p>
+                        </div>
+                    </div>
+                    <div ng-if="event.bonus.length>0">
+                        <div class="item item-divider item-text-wrap">
+                            <div class="item-icon-left">
+                                <i class="icon ion-cube"></i>
+                                Bonus Details
+                            </div>
+                        </div>
+                        <div class="item item-text-wrap">
+                            <p ng-repeat="b in event.bonus">
+                                <i class="icon ion-android-arrow-dropright"></i>
+                                {{b.point}}
+                            </p>
+                        </div>
+                    </div>
+                    <div ng-if="event.rule.length>0">
+                        <div class="item item-divider item-text-wrap">
+                            <div class="item-icon-left">
+                                <i class="icon ion-ionic"></i>
+                                Rule Details
+                            </div>
+                        </div>
+                        <div class="item item-text-wrap">
+                            <p ng-repeat="b in event.rule">
+                                <i class="icon ion-android-arrow-dropright"></i>
+                                {{b.detail}}
+                            </p>
+                        </div>
+                    </div>
+                    <div ng-if="event.terms.length>0">
+                        <div class="item item-divider item-text-wrap">
+                            <div class="item-icon-left">
+                                <i class="icon ion-ios-wineglass"></i>
+                                Terms & Conditions
+                            </div>
+                        </div>
+                        <div class="item item-text-wrap">
+                            <p ng-repeat="b in event.terms">
+                                <i class="icon ion-android-arrow-dropright"></i>
+                                {{b.term}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" ng-if="EventDetails[0].type =='F'">
+                <div ng-repeat="event in EventDetails">
+                    <div ng-if="event.schedule.length>0">
+                        <div class="item item-divider item-text-wrap">
+                            <h4>
+                                <i class="icon ion-ios-time"></i>
+                                Schedule Details
+                            </h4>
+                        </div>
+                        <div class="item item-text-wrap">
+                            <p ng-repeat="s in event.schedule">
+                                <b>Date:</b> {{s.date}}<br />
+                                <b>Time:</b> {{s.time}}<br />
+                                <b>AT:</b> {{s.place}}
+                            </p>
+                        </div>
+                    </div>
+                    <div ng-if="event.rule.length>0">
+                        <div ng-repeat="b in event.rule">
+                            <div class="item item-divider item-text-wrap">
+                                <h4>
+                                    <i class="icon ion-android-arrow-dropright"></i>
+                                    {{b.program}}
+                                </h4>
+                            </div>
+                            <div class="item item-text-wrap">
+                                <p>
+                                    <b>Time & Duration:</b> {{b._time}}<br />
+                                    <b>Anchor:</b> {{b.anchor}}<br />
+                                    <b>Details:</b> {{b.details}}<br />
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </ion-content>
+    </form>
+</ion-modal-view>

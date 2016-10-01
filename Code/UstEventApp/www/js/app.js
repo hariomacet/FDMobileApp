@@ -146,7 +146,7 @@ angular.module('starter', [
       url: "/schedule-master",
       views: {
           'menuContent': {
-              templateUrl: "views/app/admin/schedule-master.html",
+              templateUrl: "views/app/admin/schedule-Master.html",
               controller: 'ScheduleCtrl'
           }
       }
@@ -160,6 +160,16 @@ angular.module('starter', [
          }
      }
  })
+        .state('app.vote-master', {
+            url: "/vote-master",
+            views: {
+                'menuContent': {
+                    templateUrl: "views/app/admin/vote-master.html",
+                    controller: 'VoteMastereCtrl'
+                }
+            }
+        })
+
 
 
 
@@ -199,6 +209,16 @@ angular.module('starter', [
         }
     })
 
+    .state('app.vote-entries', {
+        url: "/vote-entries/:categoryId",
+        views: {
+            'menuContent': {
+                templateUrl: "views/app/feeds/vote-entries.html",
+                controller: 'VoteEntriesCtrl'
+            }
+        }
+    })
+
     .state('app.player-list', {
         url: "/player-list/:categoryId/:sourceId",
         views: {
@@ -210,18 +230,47 @@ angular.module('starter', [
     })
 
      .state('app.survey-details', {
-         url: "/survey-details/:sourceId",
+         url: "/survey-details/:surveyId",
          views: {
              'menuContent': {
-                 templateUrl: "views/app/feeds/survey-details.html",
-                 controller: 'SurveyCtrl'
+                 templateUrl: "views/app/survey/survey-details.html",
+                 controller: 'SurveyDetailsCtrl'
              }
          }
 
      })
+    .state('app.event-details', {
+        url: "/event-details?categoryId&sourceId",
+        views: {
+            'menuContent': {
+                templateUrl: "views/app/events/event-details.html",
+                controller: 'EventDetailsCtrl'
+            }
+        }
+
+    })
+     .state('app.survey', {
+         url: "/survey/:sourceId",
+         views: {
+             'menuContent': {
+                 templateUrl: "views/app/survey/survey.html",
+                 controller: 'SurveyCtrl'
+             }
+         }
+     })
+
+    .state('app.surveyMenu', {
+        url: "/surveyMenu/::categoryId/:sourceId",
+        views: {
+            'menuContent': {
+                templateUrl: "views/app/survey/surveyMenu.html",
+                controller: 'SurveyMenuCtrl'
+            }
+        }
+    })
 
     .state('app.feed-entries', {
-        url: "/feed-entries/:categoryId/:sourceId",
+        url: "/feed-entries/:categoryId/:sourceId/:sourceTitle",
         views: {
             'menuContent': {
                 templateUrl: "views/app/feeds/feed-entries.html",
@@ -247,6 +296,17 @@ angular.module('starter', [
         }
     })
 
+     .state('app.profileSetting', {
+         url: "/profileSetting",
+         views: {
+             'menuContent': {
+                 templateUrl: "views/app/profileSetting.html",
+                 controller: 'ProfileSettingCtrl'
+             }
+         }
+     })
+
+
     .state('app.forms', {
         url: "/forms",
         views: {
@@ -265,19 +325,6 @@ angular.module('starter', [
             }
         }
     })
-
-
-
-         .state('app.survey', {
-             url: "/survey",
-             views: {
-                 'menuContent': {
-                     templateUrl: "views/app/survey.html",
-                     controller: 'SurveyDetailsCtrl'
-                 }
-             }
-         })
-
 
       .state('app.enter-comments', {
           url: "/enter-comments",
