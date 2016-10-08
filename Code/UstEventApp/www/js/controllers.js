@@ -1138,7 +1138,7 @@ angular.module('starter.controllers', [])
         });
     }
 })
-.controller('PushMasterCtrl', function ($scope, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, $ionicPlatform, $http) {
+.controller('PushMasterCtrl', function ($scope, $cordovaDialogs, $cordovaMedia, $cordovaToast, $ionicPlatform, $http) {
     $scope.notifications = [];
     $ionicPlatform.ready(function (device) {
 
@@ -1160,19 +1160,19 @@ angular.module('starter.controllers', [])
             }
         }
 
-        $cordovaPush.register(config).then(function (result) {
-            console.log("Register success " + result);
+        //$cordovaPush.register(config).then(function (result) {
+        //    console.log("Register success " + result);
 
-            $cordovaToast.showShortCenter('Registered for push notifications');
-            $scope.registerDisabled = true;
-            // ** NOTE: Android regid result comes back in the pushNotificationReceived, only iOS returned here
-            if (ionic.Platform.isIOS()) {
-                $scope.regId = result;
-                storeDeviceToken("ios");
-            }
-        }, function (err) {
-            console.log("Register error " + err)
-        });
+        //    $cordovaToast.showShortCenter('Registered for push notifications');
+        //    $scope.registerDisabled = true;
+        //    // ** NOTE: Android regid result comes back in the pushNotificationReceived, only iOS returned here
+        //    if (ionic.Platform.isIOS()) {
+        //        $scope.regId = result;
+        //        storeDeviceToken("ios");
+        //    }
+        //}, function (err) {
+        //    console.log("Register error " + err)
+        //});
     }
     // Notification Received
     $scope.$on('$cordovaPush:notificationReceived', function (event, notification) {

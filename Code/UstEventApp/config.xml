@@ -66,7 +66,6 @@ An Mobile Application which provides news updates to UST global employees
   <plugin name="cordova-plugin-extension" spec="^1.1.4" />
   <plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
   <plugin name="de.appplant.cordova.plugin.email-composer" spec="https://github.com/katzer/cordova-plugin-email-composer.git" />
-  <plugin name="com.phonegap.plugins.PushPlugin" spec="https://github.com/phonegap-build/PushPlugin.git" />
   <plugin name="com.ionic.keyboard" spec="https://github.com/driftyco/ionic-plugins-keyboard.git" />
   <plugin name="cordova-plugin-geolocation" spec="^1.0.1" />
   <plugin name="cordova-plugin-splashscreen" spec="^2.1.0" />
