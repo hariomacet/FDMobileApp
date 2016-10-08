@@ -1,0 +1,11 @@
+﻿{
+ "android": {
+     "release": {
+         "keystore":"ust.keystore",
+         "storePassword":"ust123",
+         "alias":"ust",
+         "password":"ust123",
+         "keystoreType":""
+       }
+   }
+}

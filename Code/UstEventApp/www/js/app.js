@@ -171,6 +171,24 @@ angular.module('starter', [
         })
 
 
+        .state('app.event-master', {
+            url: "/event-master",
+            views: {
+                'menuContent': {
+                    templateUrl: "views/app/admin/event-master.html",
+                    controller: 'EventMastereCtrl'
+                }
+            }
+        })
+.state('app.push-master', {
+    url: "/push-master",
+    views: {
+        'menuContent': {
+            templateUrl: "views/app/admin/push-master.html",
+            controller: 'PushMasterCtrl'
+        }
+    }
+})
 
 
 

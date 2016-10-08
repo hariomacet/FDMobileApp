@@ -1,8 +1,16 @@
 ﻿<ion-view class="bookmarks-view">
     <ion-nav-title>
-        <span>{{SurveyTitle}} Menue</span>
+        <span class="transform">{{SurveyTitle}} Menu</span>
     </ion-nav-title>
     <ion-content scroll="true">
+        <div class="list">
+            <div class="item item-divider item-text-wrap">
+                <div class="item-icon-left">
+                    <i class="icon ion-ios-star assertive"></i>
+                    Pick your favorite
+                </div>
+            </div>
+        </div>
         <ion-scroll zooming="true" direction="y" style="max-height: 80%;">
             <div class="card">
                 <div class="item item-text-wrap" data-ng-repeat="items in surveyFoods">
@@ -17,9 +25,14 @@
                 </div>
             </div>
         </ion-scroll>
-        <div class="item item-body bottom-content">
+        <div class="item item-body bottom-content" ng-if="isActive=='0' && isAdmin=='2'">
+            <button type="submit" class="button button-positive button-block" ng-click="doActive(s)">
+                Acivate Review
+            </button>
+        </div>
+        <div class="item item-body bottom-content" ng-if="isActive=='1'">
             <button type="submit" class="button button-positive button-block" ng-click="submitSurvey(s)">
-                Chose One
+                Please Review
             </button>
         </div>
     </ion-content>

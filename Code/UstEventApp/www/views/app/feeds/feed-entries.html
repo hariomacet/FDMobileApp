@@ -74,14 +74,13 @@
                 <div class="row">
                   
                     <div class="col-34" style="background-color:{{entry.teamId1}} !important;color:white; text-align:center">
-                        <a class="feed-category" ui-sref="app.player-list({categoryId: entry.teamId1, sourceId: (entry.sportsName | slugify)})" style="color:white;">{{ entry.teamId1}}</a>
-                      
+                        <a class="feed-category" ui-sref="app.player-list({categoryId: entry.teamId1, sourceId: (entry.sportsName | slugify)})" style="color:white;">{{ entry.teamName1}}</a>                      
                     </div>
                     <div class="col-25" style="text-align:center;">
                         Vs
                     </div>
                     <div class="col-34" style="background-color:{{entry.teamId2}} !important;color:white;text-align:center">
-                        <a class="feed-category" ui-sref="app.player-list({categoryId: entry.teamId2, sourceId: (entry.sportsName | slugify)})" style="color:white;">{{ entry.teamId2}}</a>                      
+                        <a class="feed-category" ui-sref="app.player-list({categoryId: entry.teamId2, sourceId: (entry.sportsName | slugify)})" style="color:white;">{{ entry.teamName2}}</a>
                     </div>
                 </div>
 
@@ -138,7 +137,7 @@
         </div>
 
         <!--For ChampionShip score-->
-        <div class="entries-list">
+        <div class="entries-list" ng-if="championShipItems.length>0">
 
             <div ng-repeat="item in championShipItems" class="list card entry-item">
 
@@ -147,7 +146,7 @@
                         {{ item.TeamName}}
                     </div>
                     <!--<a class="feed-category"
-                    ui-sref="app.player-list({categoryId: entry.teamId1, sourceId: (entry.sportsName | slugify)})" style="color:white;"></a>-->
+                ui-sref="app.player-list({categoryId: entry.teamId1, sourceId: (entry.sportsName | slugify)})" style="color:white;"></a>-->
 
                 </div>
 
@@ -156,7 +155,32 @@
                 </div>
             </div>
         </div>
-
+        <ion-slide-box ng-if="ScoreDetails.length>0">
+            <ion-slide ng-repeat="s in ScoreDetails">
+                <div>
+                    <div class="row" style="padding:0px;text-align:center;">
+                        <div class="col" style="padding:1px;"><span class="item item-text-wrap" style="background-color:{{s.teamColor}} !important;color:white;padding:10px;">{{s.teamName}}</span></div>
+                    </div>
+                    <div class="row" style="padding:1px">
+                        <div class="col-50"><span class="item item-text-wrap" style="background-color:#d28787;color:white;padding:5px;">Sport Name</span></div>
+                        <div class="col-25"><span class="item item-text-wrap" style="background-color:#d58a8a;color:white;padding:5px;">Score</span></div>
+                        <div class="col-25"><span class="item item-text-wrap" style="background-color:#d28787;color:white;padding:5px;">Points</span></div>
+                    </div>
+                    <div ng-repeat="score in s.teamScore">
+                        <div class="row" ng-if="$index%2==0" style="padding:1px;">
+                            <div class="col-50"><span class="item item-text-wrap" style="background-color:#b6e4f8;padding:5px;">{{score.sportsName}}</span></div>
+                            <div class="col-25"><span class="item item-text-wrap" style="background-color:#B6E4F5 !important;height:104%;padding:5px;">{{score.score}}</span></div>
+                            <div class="col-25"><span class="item item-text-wrap" style="background-color:#b6e4f8 !important;height:104%;padding:5px;">{{score.bonuspoints}}</span></div>
+                        </div>
+                        <div class="row" ng-if="$index%2 ==1" style="padding:1px;">
+                            <div class="col-50"><span class="item item-text-wrap" style="background-color:#a4d1e4;padding:5px;">{{score.sportsName}}</span></div>
+                            <div class="col-25"><span class="item item-text-wrap" style="background-color:#a7d5e8 !important;height: 104%;padding:5px;">{{score.score}}</span></div>
+                            <div class="col-25"><span class="item item-text-wrap" style="background-color:#a4d1e4 !important;height: 104%;padding:5px;">{{score.bonuspoints}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </ion-slide>
+        </ion-slide-box>
         <!--For Gallery Images-->
         <div class="list category-feeds">
             <div class="row" ng-repeat="image in galleryItem.images" style="padding-bottom:25px">

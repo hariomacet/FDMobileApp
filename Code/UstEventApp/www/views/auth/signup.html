@@ -1,6 +1,6 @@
 <ion-view class="signup-view auth-view" cache-view="false">
-    <ion-content scroll="true">
-        <div class="row">
+    <ion-content scroll="true" style="max-height:90%">
+        <div class="">
             <div class="col col-center">
                 <div class="card sign-up-container">
                     <form name="signup_form" class="" novalidate>
@@ -21,12 +21,34 @@
                                 <input type="password" placeholder="Password" name="user_password" ng-model="user.password" required show-hide-input>
                             </label>
                             <label class="item item-input">
-                                <input type="number" placeholder="Phone number" maxlength="10" name="user_phno" ng-model="user.phone" required>
+                                <input type="number" placeholder="Phone No. (max 11 digit)" maxlength="11" name="user_phno" ng-model="user.phone" required>
                             </label>
                             <label class="item item-input">
-                                <input type="text" placeholder="Pin" maxlength="6" name="user_pin" ng-model="user.pin" required>
+                                <input type="number" placeholder="Pin (max 4 digit)" maxlength="4" name="user_pin" ng-model="user.pin" required>
+                            </label>
+                            <label class="item item-input item-select">
+                                <div class="input-label"><i class="icon ion-help-circled"></i></div>
+                                <select ng-model="user.selectedId" style="max-width:88% !important;" required>
+                                    <option ng-repeat="q in securityQ" value="{{q.id}}">{{q.question}}</option>
+                                </select>
                             </label>
                             <label class="item item-input">
+                                <input type="text" placeholder="Your Answer (max 20 chars)" maxlength="20" name="user_ans" ng-model="user.answer" class="col" required>
+                            </label>
+                                                        <div class="row">
+                                <label class="col col-33 input-label" style="background-color:#a189ea;color:white;font-weight:bold;">{{user.rendom}}</label>
+                                <div class="col-20" style="margin-top: 3%;">
+                                    <a class="item item-icon-left" ng-click="doChange()">
+                                        <i class="icon ion-ios-refresh assertive"></i>
+                                    </a>
+                                </div>
+                                <div class="col-50">
+                                    <label class="item item-input">
+                                        <input type="text" placeholder="Captcha" maxlength="6" name="user_captch" ng-model="user.captch" required>
+                                    </label>
+                                </div>
+                            </div>
+                            <!--<label class="item item-input">
                                 <span class="input-label">Upload Pic</span>
                                 <span ng-repeat="img in images" class="col">
                                     <img ng-src="{{img}}" width="50" height="50" />
@@ -34,7 +56,7 @@
                                 <span style="text-align:right;" class="col">
                                     <button class="button button-icon icon ion-camera" ng-click="upload()"></button>
                                 </span>
-                            </label>
+                            </label>-->
                         </div>
                         <div class="item item-body bottom-content">
                             <button type="submit" class="button button-assertive button-block" ng-click="doSignUp()" ng-disabled="signup_form.$invalid">

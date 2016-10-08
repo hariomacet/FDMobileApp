@@ -25,15 +25,7 @@ angular.module('starter.controllers', [])
     $scope.user = {};
     $rootScope.userIdPhone = {};
     $scope.validUser = false;
-    //$scope.show = function () {
-    //    $ionicLoading.show({
-    //        template: '<p>Please wait...</p><ion-spinner icon="ripple"></ion-spinner>'
-    //    });
-    //};
 
-    //$scope.hide = function () {
-    //    $ionicLoading.hide();
-    //};
     $scope.doLogIn = function () {
         ProgressBar.show($ionicLoading);
         $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
@@ -109,10 +101,28 @@ angular.module('starter.controllers', [])
     var checkEmailId = false;
     var checkPhonenumber = false;
     var dateNow = new Date();
+    var getRandomSpan = function () {
+        var str = "";                                         // String result
+        for (var i = 0; i < 6; i++) {                             // Loop `len` times
+            var rand = Math.floor(Math.random() * 62);        // random: 0..61
+            var charCode = rand += rand > 9 ? (rand < 36 ? 55 : 61) : 48; // Get correct charCode
+            str += String.fromCharCode(charCode);             // add Character to str
+        }
+        return str;
+    };
+    $scope.user.rendom = getRandomSpan();
     $scope.userImages = [];
     $scope.images = [];
     //
+    //refSecurityQuestion
+    $scope.securityQ = $firebaseArray(fireBaseData.refSecurityQuestion());
+
+    $scope.doChange = function () {
+        $scope.user.rendom = getRandomSpan();
+    };
+
     $scope.doSignUp = function () {
+        var isSignUp = true;
         ProgressBar.show($ionicLoading);
         $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
         $scope.userdetails.$loaded().then(function (userdetails) {
@@ -121,7 +131,14 @@ angular.module('starter.controllers', [])
             if (foundUserEmail.length > 0 || foundUserPhone.length > 0) {
                 $scope.user.UserExist = "Already Exists!!"
                 ProgressBar.hide();
-            } else {
+                isSignUp = false;
+            }
+            else if ($scope.user.rendom != $scope.user.captch) {
+                $scope.user.UserExist = "Worng  captcha!!"
+                ProgressBar.hide();
+                isSignUp = false;
+            }
+            else if (isSignUp) {
                 $scope.user.UserExist = null;
                 $scope.saveuserdetails = userdetails.$add({
                     userName: $scope.user.name,
@@ -133,14 +150,24 @@ angular.module('starter.controllers', [])
                     userIsActive: "1",
                     userCreateDate: dateNow.toDateString(),
                     pin: $scope.user.pin,
+                    questionId: $scope.user.selectedId,
+                    answer: $scope.user.answer,
+                    captcha: $scope.user.rendom,
                     userImage: $scope.userImages.length > 0 ? $scope.userImages[0] : ""
                 }).then(function (ref) {
                     ProgressBar.hide();
-                    console.log(ref);
+                    // An alert dialog
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Confirmation!!',
+                        template: 'Signup successfull'
+                    });
+                    alertPopup.then(function (res) {
+                        $state.go('auth.login');
+                    });
                 }, function (error) {
                     console.log("Error:", error);
                 });
-                $state.go('auth.login');
+
             }
         });
 
@@ -435,10 +462,11 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('SurveyMenuCtrl', function ($scope, $state, $firebaseArray, fireBaseData, $rootScope, $stateParams, ProgressBar, $ionicLoading, $interval) {
+.controller('SurveyMenuCtrl', function ($scope, $state, $firebaseArray, fireBaseData, $rootScope, $stateParams, ProgressBar, $ionicLoading, $interval, $ionicPopup) {
     $scope.SurveyTitle = $stateParams.sourceId;
     $scope.surveyFoods = [];
     ProgressBar.show($ionicLoading);
+    $scope.isAdmin = $rootScope.userIdPhone.userIsAdmin;
     $scope.s = {};
     $scope._surveyFoods = $firebaseArray(fireBaseData.refsurveyFood());
     $scope._surveyFoods.$loaded().then(function (_surveyFoods) {
@@ -446,6 +474,10 @@ angular.module('starter.controllers', [])
             if (food.surveyActive == '1') {
                 $scope.surveyFoods.push(food);
             }
+            else if (food.$id === 'admin') {
+                $scope.isActive = food.isActive;
+            }
+
         })
     });
     $scope.Surveyresults = $firebaseArray(fireBaseData.refSurveyresult());
@@ -459,8 +491,42 @@ angular.module('starter.controllers', [])
         });
     });
     $scope.onFoodSelect = function (s) {
-        //alert(s.choice);
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Food Confirmation?',
+            template: 'Please confirm your selection (Ok to confirm)?'
+        });
+        confirmPopup.then(function (res) {
+            if (res) {
+                $scope.Surveyresults.$loaded().then(function (Surveyresults) {
+                    surveylength = $scope.Surveyresults.length;
+                    var refUpdate = new Firebase('https://ustdb.firebaseio.com/surveyResults/' + surveylength);
+                    refUpdate.update({
+                        "surveyId": s.choice,
+                        "userEmailId": $rootScope.userIdPhone.userEmailId,
+                        "phoneNumber": $rootScope.userIdPhone.PhoneNumber,//toDateString(),
+                        "rating": "",
+                        "questionId": "",
+                        "answerId": ""
+                    });
+                });
+                $scope.isDisable = true;
+            }
+        });
+
     };
+    $scope.doActive = function (s) {
+        $scope._surveyFoods.$loaded().then(function (_surveyFoods) {
+            angular.forEach(_surveyFoods, function (food) {
+                if (food.$id === 'admin') {
+                    var refSurveyUpdate = new Firebase('https://ustdb.firebaseio.com/surveyFood/' + food.$id);
+                    refSurveyUpdate.update({
+                        "isActive": 1
+                    });
+                }
+            })
+        });
+    }
+
     $scope.submitSurvey = function (s) {
         if (s.choice != undefined) {
             var referer = { 'surveyId': s.choice };
@@ -470,7 +536,7 @@ angular.module('starter.controllers', [])
     $interval(function () { ProgressBar.hide(); }, 5000, true);
 })
 
-.controller('SurveyDetailsCtrl', function ($scope, $state, $stateParams, $ionicModal, fireBaseData, $firebaseArray, $rootScope) {
+.controller('SurveyDetailsCtrl', function ($scope, $state, $stateParams, $ionicModal, fireBaseData, $firebaseArray, $rootScope, $ionicPopup) {
     $scope.Questions = [];
     $scope.refSurveyDetails = $firebaseArray(fireBaseData.refSurveyDetails());
     $scope.refSurveyDetails.$loaded().then(function (refSurveyDetails) {
@@ -533,7 +599,7 @@ angular.module('starter.controllers', [])
             checkEmailId = angular.equals(result.userEmailId, $rootScope.userIdPhone.userEmailId) ? true : false;
             checkPhoneNumber = angular.equals(result.phoneNumber, $rootScope.userIdPhone.PhoneNumber) ? true : false;
             if (checkEmailId || checkPhoneNumber) {
-                if (result.surveyId == $stateParams.surveyId) {
+                if (result.surveyId == $stateParams.surveyId && result.answerId != '') {
                     soSetRating(result.rating);
                     $scope.v.choice = result.answerId;
                     $scope.isDisable = true;
@@ -557,16 +623,32 @@ angular.module('starter.controllers', [])
             if (!checkEmailId || !checkPhoneNumber) {
                 surveylength = $scope.Surveyresults.length;
             }
-            var refUpdate = new Firebase('"https://ustdb.firebaseio.com/surveyResults/' + surveylength);
-            refUpdate.update({
-                "surveyId": $stateParams.surveyId,
-                "userEmailId": $rootScope.userIdPhone.userEmailId,
-                "phoneNumber": $rootScope.userIdPhone.PhoneNumber,//toDateString(),
-                "rating": $scope.RatingSurvey[0].ratingValue,
-                "questionId": $scope.QuestionsId[0],
-                "answerId": v.choice
+            $scope.Surveyresults.$loaded().then(function (Surveyresults) {
+                angular.forEach(Surveyresults, function (surv) {
+                    if (surv.userEmailId == $rootScope.userIdPhone.userEmailId && surv.phoneNumber == $rootScope.userIdPhone.PhoneNumber) {
+
+                        var refUpdate = new Firebase('https://ustdb.firebaseio.com/surveyResults/' + surv.$id);
+                        refUpdate.update({
+                            "surveyId": $stateParams.surveyId,
+                            "userEmailId": $rootScope.userIdPhone.userEmailId,
+                            "phoneNumber": $rootScope.userIdPhone.PhoneNumber,//toDateString(),
+                            "rating": $scope.RatingSurvey[0].ratingValue,
+                            "questionId": $scope.QuestionsId[0],
+                            "answerId": v.choice
+                        });
+                    }
+                });
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Confirmation!!',
+                    template: 'Thanks for review'
+                });
+                alertPopup.then(function (res) {
+                    $scope.isDisable = true;
+                });
             });
+
         }
+
     }
 
     //$scope._surveyFoods = $firebaseArray(fireBaseData.refsurveyFood());
@@ -590,15 +672,59 @@ angular.module('starter.controllers', [])
     // var referer = { 'surveyType': $scope.SurveyTitle };
     //$state.go('app.surveyMenu', referer);
 
-})    
-
-.controller('ForgotPasswordCtrl', function ($scope, $state) {
-    $scope.recoverPassword = function () {
-        $state.go('app.feeds-categories');
-    };
-
-    $scope.user = {};
 })
+
+    .controller('ForgotPasswordCtrl', function ($scope, $state, $stateParams, $firebaseArray, fireBaseData, $ionicPopup, ProgressBar, $ionicLoading) {
+        $scope.x = {};
+        $scope.securityQ = $firebaseArray(fireBaseData.refSecurityQuestion());
+        $scope.recoverPassword = function (x) {
+            ProgressBar.show($ionicLoading);
+            $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
+            $scope.userdetails.$loaded().then(function (userdetails) {
+                var foundUserEmail = $scope.userdetails.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.x.email.replace(/^\s+|\s+$/g, '') });
+                var foundUserPhone = $scope.userdetails.filter(function (user) { return user.pin == $scope.x.pin });
+                var security = $scope.userdetails.filter(function (user) { return user.answer == $scope.x.answer });
+                if (foundUserEmail.length > 0 || foundUserPhone.length > 0) {
+                    if (security.length > 0) {
+                        if ($scope.x.password == $scope.x.rePassword) {
+                            angular.forEach(userdetails, function (u) {
+                                if (u.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.x.email.replace(/^\s+|\s+$/g, '')) {
+                                    ProgressBar.hide();
+                                    var refUpdate = new Firebase('https://ustdb.firebaseio.com/userRegistration/' + u.$id);
+                                    refUpdate.update({
+                                        "userPassword": $scope.x.password
+                                    });
+                                    var alertPopup = $ionicPopup.alert({
+                                        title: 'Confirmation!!',
+                                        template: 'Reset password successfull'
+                                    });
+                                    alertPopup.then(function (res) {
+                                        $scope.x.UserExist = "";
+                                        $state.go('auth.login');
+                                    });
+                                }
+                            });
+                        } else {
+                            ProgressBar.hide();
+                            $scope.x.UserExist = "Not match password";
+                        }
+
+                    } else {
+                        ProgressBar.hide();
+                        $scope.x.UserExist = "Incorrect answer";
+                    }
+
+                } else {
+                    ProgressBar.hide();
+                    $scope.x.UserExist = "Worng mail or pin ";
+                }
+            });
+
+
+        };
+
+        $scope.user = {};
+    })
 
 
 .controller('FeedCommentsCtrl', function ($state, $scope, $stateParams, $rootScope) {
@@ -721,7 +847,7 @@ angular.module('starter.controllers', [])
 
 
     $scope.galleryItem = {};
-    $scope.championShipItems = {};
+    //$scope.championShipItems = {};
 
     var categoryId = $stateParams.categoryId,
         sourceTitle = $stateParams.sourceTitle,
@@ -739,11 +865,19 @@ angular.module('starter.controllers', [])
         });
     }
     if (categoryId == "summary") {
+        if ($stateParams.sourceTitle != "teams-score-card") {
         var ref = new Firebase("https://ustdb.firebaseio.com/teamNames");
-        ref.once("value", function (snapshot) {
-            $scope.championShipItems = snapshot.val();
-            console.log($scope.championShipItems);
-        });
+        //ref.once("value", function (snapshot) {
+        //    $scope.championShipItems = snapshot.val();
+        //    console.log($scope.championShipItems);
+            //});
+        $scope.championShipItems = $firebaseArray(fireBaseData.refTeamNames());
+
+    } else {
+        $scope.ScoreDetails = $firebaseArray(fireBaseData.refScoreCard());
+            //screen.lockOrientation('portrait');
+    }
+
     }
     $scope.sportsName = $stateParams.sourceTitle;
     $scope.categoryTitle = sourceTitle;
@@ -915,7 +1049,243 @@ angular.module('starter.controllers', [])
         })
     });
 })
+.controller("EventMastereCtrl", function ($scope, $stateParams, $firebaseArray, fireBaseData, $ionicPopup) {
+    $scope.v = {};
+    $scope.Events = $firebaseArray(fireBaseData.refEventsList());
+    $scope.doSaveEvent = function (v) {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Event Confirmation',
+            template: 'please confirm your selection(Ok for confirm)?'
+        });
+        confirmPopup.then(function (res) {
+            if (res) {
+                $scope.Events.$loaded().then(function (Events) {
+                    angular.forEach(Events, function (evt, value) {
+                        if (evt.eventId == v.choice) {
+                            var refUpdate = new Firebase("https://ustdb.firebaseio.com/eventsList/" + evt.$id);
+                            if (evt.isActive == '1') {
+                                refUpdate.update({
+                                    "isActive": 0
+                                });
+                            }
+                            else if (evt.isActive == '0') {
+                                refUpdate.update({
+                                    "isActive": 1
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+        })
+    }
+    $scope.slideHasChanged = function (index) {
 
+    }
+    //Event Details
+    $scope.x = {};
+    $scope._EventDetails = $firebaseArray(fireBaseData.refEventsDetails());
+    $scope._EventDetails.$loaded().then(function (_EventDetails) {
+        angular.forEach(_EventDetails, function (value, index) {
+            if (value.eventId == 'ev05') {
+                $scope.EventDetails = value;
+            }
+        })
+    })
+    $scope.doSaveEventDetails = function (x) {
+        var myPopup = $ionicPopup.show({
+            template: '<div class="list"><label class="item item-input"><input type="text" ng-model="x.program" placeholder="Enter Program"></label>' +
+              '<label class="item item-input"><input type="text"  ng-model="x.schedule" placeholder="Enter Duration"></label>' +
+              '<label class=""><ion-checkbox ng-model="x.isActive">isActive</ion-checkbox></label></div>',
+            title: 'Change Program and Duration',
+            subTitle: 'Please use normal things',
+            scope: $scope,
+            buttons: [{ text: 'Cancel' }, {
+                text: '<b>Save</b>',
+                type: 'button-positive',
+                onTap: function (e) {
+                    if (x.program == null || x.schedule == null) {
+                        e.preventDefault();
+                    } else {
+                        if (x.isActive) {
+                            updateDeatils(x.choice, 1, x.program, x.schedule)
+                        } else {
+                            updateDeatils(x.choice, 0, x.program, x.schedule)
+                        }
+                    }
+                }
+            }]
+        });
+    }
+    var updateDeatils = function (id, isActive, program, duration) {
+        $scope._EventDetails.$loaded().then(function (_EventDetails) {
+            angular.forEach(_EventDetails, function (value, index) {
+                if (value.eventId == 'ev05') {
+                    angular.forEach(value.rule, function (r, indx) {
+                        if (r.ruleId == id) {
+                            var refUpdate = new Firebase("https://ustdb.firebaseio.com/eventDetails/" + value.$id + "/rule/" + indx);
+                            refUpdate.update({
+                                "_time": duration,
+                                "program": program,
+                                "isActive": isActive
+                            });
+                        }
+
+                    });
+
+                }
+            });
+        });
+    }
+})
+.controller('PushMasterCtrl', function ($scope, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, $ionicPlatform, $http) {
+    $scope.notifications = [];
+    $ionicPlatform.ready(function (device) {
+
+    });
+    // Register
+    $scope.register = function () {
+        var config = null;
+
+        if (ionic.Platform.isAndroid()) {
+            config = {
+                "senderID": "AIzaSyBby4-mWKy07Mg-C0MvqgfFMWnOZAVMyhY" // REPLACE THIS WITH YOURS FROM GCM CONSOLE - also in the project URL like: https://console.developers.google.com/project/434205989073
+            };
+        }
+        else if (ionic.Platform.isIOS()) {
+            config = {
+                "badge": "true",
+                "sound": "true",
+                "alert": "true"
+            }
+        }
+
+        $cordovaPush.register(config).then(function (result) {
+            console.log("Register success " + result);
+
+            $cordovaToast.showShortCenter('Registered for push notifications');
+            $scope.registerDisabled = true;
+            // ** NOTE: Android regid result comes back in the pushNotificationReceived, only iOS returned here
+            if (ionic.Platform.isIOS()) {
+                $scope.regId = result;
+                storeDeviceToken("ios");
+            }
+        }, function (err) {
+            console.log("Register error " + err)
+        });
+    }
+    // Notification Received
+    $scope.$on('$cordovaPush:notificationReceived', function (event, notification) {
+        console.log(JSON.stringify([notification]));
+        if (ionic.Platform.isAndroid()) {
+            handleAndroid(notification);
+        }
+        else if (ionic.Platform.isIOS()) {
+            handleIOS(notification);
+            $scope.$apply(function () {
+                $scope.notifications.push(JSON.stringify(notification.alert));
+            })
+        }
+    });
+    // Android Notification Received Handler
+    function handleAndroid(notification) {
+        // ** NOTE: ** You could add code for when app is in foreground or not, or coming from coldstart here too
+        //             via the console fields as shown.
+        console.log("In foreground " + notification.foreground + " Coldstart " + notification.coldstart);
+        if (notification.event == "registered") {
+            $scope.regId = notification.regid;
+            storeDeviceToken("android");
+        }
+        else if (notification.event == "message") {
+            $cordovaDialogs.alert(notification.message, "Push Notification Received");
+            $scope.$apply(function () {
+                $scope.notifications.push(JSON.stringify(notification.message));
+            })
+        }
+        else if (notification.event == "error")
+            $cordovaDialogs.alert(notification.msg, "Push notification error event");
+        else $cordovaDialogs.alert(notification.event, "Push notification handler - Unprocessed Event");
+    }
+    function handleIOS(notification) {
+        // The app was already open but we'll still show the alert and sound the tone received this way. If you didn't check
+        // for foreground here it would make a sound twice, once when received in background and upon opening it from clicking
+        // the notification when this code runs (weird).
+        if (notification.foreground == "1") {
+            // Play custom audio if a sound specified.
+            if (notification.sound) {
+                var mediaSrc = $cordovaMedia.newMedia(notification.sound);
+                mediaSrc.promise.then($cordovaMedia.play(mediaSrc.media));
+            }
+
+            if (notification.body && notification.messageFrom) {
+                $cordovaDialogs.alert(notification.body, notification.messageFrom);
+            }
+            else $cordovaDialogs.alert(notification.alert, "Push Notification Received");
+
+            if (notification.badge) {
+                $cordovaPush.setBadgeNumber(notification.badge).then(function (result) {
+                    console.log("Set badge success " + result)
+                }, function (err) {
+                    console.log("Set badge error " + err)
+                });
+            }
+        }
+            // Otherwise it was received in the background and reopened from the push notification. Badge is automatically cleared
+            // in this case. You probably wouldn't be displaying anything at this point, this is here to show that you can process
+            // the data in this situation.
+        else {
+            if (notification.body && notification.messageFrom) {
+                $cordovaDialogs.alert(notification.body, "(RECEIVED WHEN APP IN BACKGROUND) " + notification.messageFrom);
+            }
+            else $cordovaDialogs.alert(notification.alert, "(RECEIVED WHEN APP IN BACKGROUND) Push Notification Received");
+        }
+    }
+    // type:  Platform type (ios, android etc)
+    function storeDeviceToken(type) {
+        // Create a random userid to store with it
+        var user = { user: 'user' + Math.floor((Math.random() * 10000000) + 1), type: type, token: $scope.regId };
+        console.log("Post token for registered device with data " + JSON.stringify(user));
+
+        $http.post('http://192.168.1.16:8000/subscribe', JSON.stringify(user))
+            .success(function (data, status) {
+                console.log("Token stored, device is successfully subscribed to receive push notifications.");
+            })
+            .error(function (data, status) {
+                console.log("Error storing device token." + data + " " + status)
+            }
+        );
+    }
+
+    // Removes the device token from the db via node-pushserver API unsubscribe (running locally in this case).
+    // If you registered the same device with different userids, *ALL* will be removed. (It's recommended to register each
+    // time the app opens which this currently does. However in many cases you will always receive the same device token as
+    // previously so multiple userids will be created with the same token unless you add code to check).
+    function removeDeviceToken() {
+        var tkn = { "token": $scope.regId };
+        $http.post('http://192.168.1.16:8000/unsubscribe', JSON.stringify(tkn))
+            .success(function (data, status) {
+                console.log("Token removed, device is successfully unsubscribed and will not receive push notifications.");
+            })
+            .error(function (data, status) {
+                console.log("Error removing device token." + data + " " + status)
+            }
+        );
+    }
+
+
+    // ** Instead, just remove the device token from your db and stop sending notifications **
+    $scope.unregister = function () {
+        console.log("Unregister called");
+        removeDeviceToken();
+        $scope.registerDisabled = false;
+        //need to define options here, not sure what that needs to be but this is not recommended anyway
+        //        $cordovaPush.unregister(options).then(function(result) {
+        //            console.log("Unregister success " + result);//
+        //        }, function(err) {
+        //            console.log("Unregister error " + err)
+        //        });
+    }
+})
 //PLAYER LIST CONTROLLER
 .controller('PlayerListCtrl', function ($scope, $stateParams, $http, $firebaseArray, fireBaseData, $q, $state) {
     $scope.feeds_PlayerList = $firebaseArray(fireBaseData.refPlayerList());
@@ -1000,7 +1370,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller("ProfileSettingCtrl", function ($scope, $rootScope, $firebaseArray, fireBaseData, $cordovaCamera, $cordovaFileTransfer, $ionicLoading, ProgressBar, $interval) {
-    $scope.images = [];    
+    $scope.images = [];
     $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
     $scope.userdetails.$loaded().then(function (userdetails) {
         angular.forEach(userdetails, function (value, key) {

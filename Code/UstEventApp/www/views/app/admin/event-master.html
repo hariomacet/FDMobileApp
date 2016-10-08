@@ -1,0 +1,42 @@
+﻿<ion-view class="feeds-categories-view">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+        <span>Events Planer</span>
+    </ion-nav-title>
+    <ion-content has-bouncing="false" scroll="true">
+        <ion-slide-box on-slide-changed="slideHasChanged($index)">
+            <ion-slide>
+                <ion-list>
+                    <div ng-repeat="evt in Events">
+                        <div ng-if="evt.isActive=='0'" class="col" style="display: -webkit-box;">
+                            <span class="input-label col col-75" style="background-color:#f6137b !important;color:white;">{{evt.eventName}} </span>
+                            <ion-radio ng-model="v.choice" ng-value="evt.eventId" class="col item-radio" ng-change="doSaveEvent(v);" icon="ion-ios-minus-empty">InActive </ion-radio>
+                        </div>
+                        <div ng-if="evt.isActive=='1'" class="col" style="display: -webkit-box;">
+                            <span class="input-label col col-75" style="background-color:#068e4b !important;color:white;">{{evt.eventName}} </span>
+                            <ion-radio ng-model="v.choice" ng-value="evt.eventId" class="col item-radio" ng-change="doSaveEvent(v);" icon="ion-ios-minus-empty">Active </ion-radio>
+                        </div>
+                    </div>
+                </ion-list>
+            </ion-slide>
+            <ion-slide>
+                <ion-slide>
+                    <ion-list>
+                        <div ng-repeat="r in EventDetails.rule">
+                            <div ng-if="r.isActive=='0'" class="col" style="display: -webkit-box;">
+                                <span class="input-label col col-75" style="background-color:#ff6a00 !important;color:white;">{{r._time}} </span>
+                                <ion-radio ng-model="x.choice" ng-value="r.ruleId" class="col item-radio" ng-change="doSaveEventDetails(x);" icon="ion-ios-minus-empty">InActive </ion-radio>
+                            </div>
+                            <div ng-if="r.isActive=='1'" class="col" style="display: -webkit-box;">
+                                <span class="input-label col col-75" style="background-color:#139005 !important;color:white;">{{r._time}} </span>
+                                <ion-radio ng-model="x.choice" ng-value="r.ruleId" class="col item-radio" ng-change="doSaveEventDetails(x);" icon="ion-ios-minus-empty">Active </ion-radio>
+                            </div>
+                        </div>
+                    </ion-list>
+                </ion-slide>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+</ion-view>
