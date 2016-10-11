@@ -15,6 +15,7 @@ angular.module('starter', [
   'starter.directives',
   'starter.filters',
   'starter.services',
+  'starter.beaconServices',
   'starter.factories',
   'starter.config',
   //'starter.views',

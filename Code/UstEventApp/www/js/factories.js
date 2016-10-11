@@ -241,6 +241,8 @@ angular.module('starter.factories', [])
     var refSecurityQuestion = new Firebase("https://ustdb.firebaseio.com/securityQuestion");
     var refScoreCard = new Firebase("https://ustdb.firebaseio.com/scoreCard");
 
+      var refFdRegusers = new Firebase("https://ustdb.firebaseio.com/fdRegisteredUsers");
+
     return {
         refRegisteration: function () {
             return refRegisteration;
@@ -334,6 +336,9 @@ angular.module('starter.factories', [])
         },
         refScoreCard: function () {
             return refScoreCard;
+        },
+        refFdRegusers: function () {
+            return refFdRegusers;
         }
     };
 })

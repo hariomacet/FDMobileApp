@@ -739,14 +739,54 @@ angular.module('starter.controllers', [])
 
 // FEED
 //brings all feed categories
-.controller('FeedsCategoriesCtrl', function ($scope, $http, $firebaseArray, fireBaseData) {
+.controller('FeedsCategoriesCtrl', function ($scope, $http, $firebaseArray, fireBaseData, beacon, $rootScope) {
     $scope.feeds_categories = [];
     $scope.feeds_categories = $firebaseArray(fireBaseData.refDashBoardDetails());
+
+    $scope.username = $rootScope.userIdPhone.UserName;
+    $scope.userId = $rootScope.userIdPhone.userId;
+    //Apps runs in background
+    cordova.plugins.backgroundMode.enable();
+
+
+    $scope.$on('beaconEventRecieved', function (event, args) {
+        $scope.events.push(args.event);
+        // $scope.beaconEnter = event
+        if (args.event.eventType === "Enter") {
+            // ADDED NEW 
+            if (args.event.beaconName === "First beacon") {
+                // CODE GOES HERE 
+                $scope.fdRegusers = $firebaseArray(fireBaseData.refFdRegusers());
+                $scope.fdRegusers.$loaded().then(function (regUsers) {
+                    angular.forEach(regUsers, function (itemVal) {
+                        $scope.userIdEquals = angular.equals($scope.userId, itemVal.userId);
+                        if (!$scope.userIdEquals) {
+                            $scope.saveReguserdetails = $scope.fdRegusers.$add({
+                                userName: $scope.username,
+                                userId: $scope.userId
+                            }).then(function (fdRegusers) {
+                                //   console.log(ref);
+                            }, function (error) {
+                                //console.log("Error:", error);
+                            });
+                        }
+                    })
+                })
+
+            }
+
+        }
+        else {
+            $scope.beaconValue = "No Beacon around";
+        }
+        $scope.$apply();
+    });
 
     //$http.get('feeds-categories.json').success(function (response) {
     //    $scope.feeds_categories = response;
     //});
 })
+
 .controller('EventDetailsCtrl', function ($scope, $stateParams, $firebaseArray, fireBaseData) {
     $scope.EventDetails = [];
     $scope.eventName = $stateParams.sourceId;
