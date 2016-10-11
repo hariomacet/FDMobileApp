@@ -43,7 +43,24 @@
                     <span class="category-title">Vote Count</span>
                 </a>
             </div>
-
+            <div class="col col-50" ng-if="userIsAdmin=='2'">
+                <a class="feed-category" ui-sref="app.event-master">
+                    <pre-img ratio="_1_1" helper-class="square-image">
+                        <img class="category-image" src="img/feeds/event-icon.jpg" spinner-on-load>
+                    </pre-img>
+                    <div class="category-bg"></div>
+                    <span class="category-title">Event Master</span>
+                </a>
+            </div>
+            <div class="col col-50" ng-if="userIsAdmin=='2'">
+                <a class="feed-category" ui-sref="app.push-master">
+                    <pre-img ratio="_1_1" helper-class="square-image">
+                        <img class="category-image" src="img/feeds/notification-logo.jpg" spinner-on-load>
+                    </pre-img>
+                    <div class="category-bg"></div>
+                    <span class="category-title">Push Master</span>
+                </a>
+            </div>
         </div>
     </ion-content>
 </ion-view>

@@ -3,33 +3,31 @@
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
     <ion-nav-title>
-        <span>Food Survey</span>
+        <span class="transform">Food Survey</span>
         <!--<i class="icon ion-ios-plus" ng-click=""> ADD ITEMS</i>-->
     </ion-nav-title>
     <ion-content scroll="true">
         <form name="survey_form" class="" novalidate>
-            <div class="card">
+            <div class="list">
                 <div ng-repeat="q in Questions">
                     <div class="item item-divider item-text-wrap">
                         <div ng-if="q.Type=='rating'" class="item-icon-left">
-                            <i class="icon ion-ios-star"></i>
+                            <i class="icon ion-ios-star assertive"></i>
                             {{q.Q}}
                         </div>
                         <div ng-if="q.Type=='question'" class="item-icon-left">
-                            <i class="icon ion-help-circled"></i>
+                            <i class="icon ion-help-circled assertive"></i>
                             {{q.Q}}
                         </div>
                     </div>
                     <div class="item item-text-wrap" ng-if="q.Type=='rating'">
                         <a href="javascript:" ng-repeat="r in ratingArr" class="padding" style="text-decoration:none;">
-                            <i class="icon {{r.icon}}" ng-click="setRating(q.questionId,r.value)" style="font-size:35px;"></i>
+                            <i class="icon {{r.icon}} assertive" ng-click="setRating(q.questionId,r.value)" style="font-size:35px;" calss=""></i>
                         </a>
                     </div>
                     <div class="item" ng-if="q.Type=='question'">
-                        <ion-list>
-                            <ion-radio ng-repeat="ans in q.answer" ng-model="v.choice" ng-value="ans.chooseId" ng-change="onAnsSelect(q.questionId)"
-                                       name="{{q.questionId}}" ng-disabled="isDisable">{{ans.choose}}</ion-radio>
-                        </ion-list>
+                        <ion-radio ng-repeat="ans in q.answer" ng-model="v.choice" ng-value="ans.chooseId" ng-change="onAnsSelect(q.questionId)"
+                                   name="{{q.questionId}}" ng-disabled="isDisable">{{ans.choose}}</ion-radio>
                     </div>
                 </div>
                 <div class="item item-body bottom-content">

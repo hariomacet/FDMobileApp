@@ -238,6 +238,8 @@ angular.module('starter.factories', [])
     var refEmpList = new Firebase("https://ustdb.firebaseio.com/employeeList");
     var refVoteCount = new Firebase("https://ustdb.firebaseio.com/empVoteCount");
     var refEventsDetails = new Firebase("https://ustdb.firebaseio.com/eventDetails");
+    var refSecurityQuestion = new Firebase("https://ustdb.firebaseio.com/securityQuestion");
+    var refScoreCard = new Firebase("https://ustdb.firebaseio.com/scoreCard");
 
     return {
         refRegisteration: function () {
@@ -326,6 +328,12 @@ angular.module('starter.factories', [])
         },
         refEventsDetails: function () {
             return refEventsDetails;
+        },
+        refSecurityQuestion: function () {
+            return refSecurityQuestion;
+        },
+        refScoreCard: function () {
+            return refScoreCard;
         }
     };
 })
