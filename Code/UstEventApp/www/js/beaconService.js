@@ -12,7 +12,6 @@
           initialise: function () {
               // Request permission from user to access location info.
               window.cordova.plugins.locationManager.requestAlwaysAuthorization();
-
               var delegate = new window.cordova.plugins.locationManager.Delegate();
               delegate.didDetermineStateForRegion = onDidDetermineStateForRegion;
               delegate.didStartMonitoringForRegion = onDidStartMonitoringForRegion;

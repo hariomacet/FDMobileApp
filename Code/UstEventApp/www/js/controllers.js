@@ -45,6 +45,11 @@ angular.module('starter.controllers', [])
                         $rootScope.userIdPhone.userImage = userdata.userImage;
                         $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
                         ProgressBar.hide();
+                        
+
+
+
+
                         $state.go('app.feeds-categories');
                         //$scope.$broadcast('userDetailsbroadcast', {
                         //    someProp: userdata.userName // send whatever you want
@@ -159,7 +164,7 @@ angular.module('starter.controllers', [])
                     // An alert dialog
                     var alertPopup = $ionicPopup.alert({
                         title: 'Confirmation!!',
-                        template: 'Signup successfull'
+                        template: 'Signup successful'
                     });
                     alertPopup.then(function (res) {
                         $state.go('auth.login');
@@ -741,12 +746,11 @@ angular.module('starter.controllers', [])
 //brings all feed categories
 .controller('FeedsCategoriesCtrl', function ($scope, $http, $firebaseArray, fireBaseData, beacon, $rootScope) {
     $scope.feeds_categories = [];
+    $scope.events = [];
     $scope.feeds_categories = $firebaseArray(fireBaseData.refDashBoardDetails());
 
     $scope.username = $rootScope.userIdPhone.UserName;
     $scope.userId = $rootScope.userIdPhone.userId;
-    //Apps runs in background
-    cordova.plugins.backgroundMode.enable();
 
 
     $scope.$on('beaconEventRecieved', function (event, args) {
@@ -757,13 +761,16 @@ angular.module('starter.controllers', [])
             if (args.event.beaconName === "First beacon") {
                 // CODE GOES HERE 
                 $scope.fdRegusers = $firebaseArray(fireBaseData.refFdRegusers());
+                $scope.CurrentDate = new Date();
                 $scope.fdRegusers.$loaded().then(function (regUsers) {
                     angular.forEach(regUsers, function (itemVal) {
-                        $scope.userIdEquals = angular.equals($scope.userId, itemVal.userId);
-                        if (!$scope.userIdEquals) {
+                        //  $scope.userIdEquals = angular.equals($scope.userId.trim(), itemVal.userId.trim());
+                        //   if (!$scope.userIdEquals) {
+                        if ($scope.userId != itemVal.userId) {
                             $scope.saveReguserdetails = $scope.fdRegusers.$add({
-                                userName: $scope.username,
-                                userId: $scope.userId
+                                userName: $rootScope.userIdPhone.UserName,
+                                userId: $rootScope.userIdPhone.userId,
+                                lastRegistered: $scope.CurrentDate
                             }).then(function (fdRegusers) {
                                 //   console.log(ref);
                             }, function (error) {
@@ -781,6 +788,8 @@ angular.module('starter.controllers', [])
         }
         $scope.$apply();
     });
+
+
 
     //$http.get('feeds-categories.json').success(function (response) {
     //    $scope.feeds_categories = response;
@@ -906,17 +915,17 @@ angular.module('starter.controllers', [])
     }
     if (categoryId == "summary") {
         if ($stateParams.sourceTitle != "teams-score-card") {
-        var ref = new Firebase("https://ustdb.firebaseio.com/teamNames");
-        //ref.once("value", function (snapshot) {
-        //    $scope.championShipItems = snapshot.val();
-        //    console.log($scope.championShipItems);
+            var ref = new Firebase("https://ustdb.firebaseio.com/teamNames");
+            //ref.once("value", function (snapshot) {
+            //    $scope.championShipItems = snapshot.val();
+            //    console.log($scope.championShipItems);
             //});
-        $scope.championShipItems = $firebaseArray(fireBaseData.refTeamNames());
+            $scope.championShipItems = $firebaseArray(fireBaseData.refTeamNames());
 
-    } else {
-        $scope.ScoreDetails = $firebaseArray(fireBaseData.refScoreCard());
+        } else {
+            $scope.ScoreDetails = $firebaseArray(fireBaseData.refScoreCard());
             //screen.lockOrientation('portrait');
-    }
+        }
 
     }
     $scope.sportsName = $stateParams.sourceTitle;
