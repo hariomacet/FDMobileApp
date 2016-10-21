@@ -55,7 +55,8 @@ angular.module('starter.directives', [])
 				// 	c.$setValidity('valid-pin', data.isValid);
 				// }).error(function(data, status, headers, cfg) {
 				// 	c.$setValidity('valid-pin', false);
-				// });
+			    // });
+                //code change
 				if(pinValue=="12345")
 				{
 					c.$setValidity('valid-pin', true);
