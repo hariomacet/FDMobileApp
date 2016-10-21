@@ -1,0 +1,50 @@
+﻿<ion-view class="bookmarks-view">
+    <ion-nav-title>
+        <span class="transform">Kulim Attendence</span>
+    </ion-nav-title>
+    <ion-content scroll="true">
+        <ion-scroll zooming="true" direction="y" style="max-height: 80%;">
+            <div class="list">
+                <div ng-repeat="a in kulimTypeA">
+                    <div class="item item-icon-left item-divider">
+                        <span class="item-text-wrap"><i class="icon ion-ios-star assertive"></i><h4>{{a.question}}</h4></span>
+                        <h5 class="assertive">&#42; {{a.remark}}</h5>
+                    </div>
+                    <label class="item item-input">
+                        <span class="input-label">Date</span>
+                        <input type="date" placeholder="Select date" style="border-color:{{Ratingcolor}} !important;border : {{Ratingborder}};" ng-model="v.fromDate" value="1996-12-19">
+                    </label>
+                </div>
+                <div ng-repeat="b in kulimTypeB">
+                    <div class="item item-toggle">
+                        To Kulim (Bus/Car)
+                        <label class="toggle">
+                            <input type="checkbox" ng-model="v.choice1">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="item item-toggle">
+                        From Kulim (Bus/Car)
+                        <label class="toggle">
+                            <input type="checkbox" ng-model="v.choice2">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <!--<label class="item item-input item-stacked-label">
+                        <span class="input-label">From Date</span>
+                        <input type="date" placeholder="Select date" style="border-color:{{Ratingcolor2}} !important;border : {{Ratingborder2}};" ng-model="v.fromDate" value="1996-12-19">
+                    </label>-->
+                </div>
+            </div>
+        </ion-scroll>
+        <div class="item item-body bottom-content">
+            <button type="submit" class="button button-positive button-block" ng-click="doSave(v)" ng-disabled="isDisable">
+                Save
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

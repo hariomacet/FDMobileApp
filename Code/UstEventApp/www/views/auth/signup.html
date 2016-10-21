@@ -21,10 +21,10 @@
                                 <input type="password" placeholder="Password" name="user_password" ng-model="user.password" required show-hide-input>
                             </label>
                             <label class="item item-input">
-                                <input type="number" placeholder="Phone No. (max 11 digit)" maxlength="11" name="user_phno" ng-model="user.phone" required>
+                                <input type="number" placeholder="Phone No. (11 digit)" maxlength="11" name="user_phno" ng-model="user.phone" required>
                             </label>
                             <label class="item item-input">
-                                <input type="number" placeholder="Pin (max 4 digit)" maxlength="4" name="user_pin" ng-model="user.pin" required>
+                                <input type="number" placeholder="Pin (4 digit)" maxlength="4" name="user_pin" ng-model="user.pin" required>
                             </label>
                             <label class="item item-input item-select">
                                 <div class="input-label"><i class="icon ion-help-circled"></i></div>
@@ -35,7 +35,7 @@
                             <label class="item item-input">
                                 <input type="text" placeholder="Your Answer (max 20 chars)" maxlength="20" name="user_ans" ng-model="user.answer" class="col" required>
                             </label>
-                                                        <div class="row">
+                            <div class="row">
                                 <label class="col col-33 input-label" style="background-color:#a189ea;color:white;font-weight:bold;">{{user.rendom}}</label>
                                 <div class="col-20" style="margin-top: 3%;">
                                     <a class="item item-icon-left" ng-click="doChange()">

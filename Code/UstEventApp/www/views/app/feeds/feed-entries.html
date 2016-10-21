@@ -1,19 +1,14 @@
 <ion-view class="feed-entries-view">
     <ion-nav-title>
-        <span  style="text-transform: capitalize;">{{categoryTitle}}</span>
+        <span style="text-transform: capitalize;">{{categoryTitle}}</span>
     </ion-nav-title>
     <ion-content>
         <!-- Refresh to get the new posts -->
         <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
         </ion-refresher>
-
         <div class="entries-list">
-
-            
             <div ng-repeat="entry in liveScore" class="list card entry-item">
-                  
-                  <div class="row">
-
+                <div class="row">
                     <div class="col-34" style="background-color:{{entry.team1.teamColor}} !important;color:white; text-align:center">
                         <a class="feed-category" ui-sref="app.player-list({categoryId: entry.team1.teamName, sourceId: (sportsName | slugify)})" style="color:white;">{{ entry.team1.teamName}}</a>
                     </div>
@@ -24,57 +19,46 @@
                         <a class="feed-category" ui-sref="app.player-list({categoryId: entry.team2.teamName, sourceId: (sportsName | slugify)})" style="color:white;">{{ entry.team2.teamName}}</a>
                     </div>
                 </div>
-
                 <div class="entry-content item item-text-wrap">
                     <!--Match Schedule-->
                     <div class="row" ng-if="sportsName=='cricket'">
                         <div class="col-34" style="text-align:center">
-                          {{entry.team1.TotalRuns}}/{{entry.team1.lostWickets}}  &nbsp;({{entry.team1.currentOvers}}.{{entry.team1.balls}})
+                            {{entry.team1.TotalRuns}}/{{entry.team1.lostWickets}}  &nbsp;({{entry.team1.currentOvers}}.{{entry.team1.balls}})
                         </div>
                         <div class="col-25" style="text-align:center;">
-                            
+
                         </div>
                         <div class="col-34" style="text-align:center">
-                            {{entry.team2.TotalRuns}}/{{entry.team2.lostWickets}}  &nbsp;({{entry.team2.currentOvers}}.{{entry.team2.balls}})   
+                            {{entry.team2.TotalRuns}}/{{entry.team2.lostWickets}}  &nbsp;({{entry.team2.currentOvers}}.{{entry.team2.balls}})
                         </div>
-                        
+
                         <!--<p class="entry-excerpt" dynamic-anchor-fix ng-bind-html="entry.winningTeam | rawHtml"></p>-->
                     </div>
                     <div class="card">
                         <div class="item item-text-wrap">
                             Winning Team:<span style="color:orangered;text-transform: capitalize;text-align:center">{{entry.winningTeam}}</span>
                         </div>
-                       
+
                     </div>
-                    
-                   
+
 
                     <div class="entry-actions row">
                         <div class="actions col col-center col-66">
-                            <a href="" ng-click="scorelikeCount1()" ng-disabled={{!enableDisableAnchor}}  class="subdued">{{entry.likesTeam1}} <i class="icon ion-thumbsup"></i> Cheers</a>
+                            <a href="" ng-click="scorelikeCount1()" ng-disabled={{!enableDisableAnchor}} class="subdued">{{entry.likesTeam1}} <i class="icon ion-thumbsup"></i> Cheers</a>
                         </div>
                         <div class="read-more col col-center col-33">
                             <!--<a href="#" class="subdued">5 Comments</a>-->
                             <a href="" ng-click="scorelikeCount2()" class="subdued">{{entry.likesTeam2}} <i class="icon ion-thumbsup"></i> Cheers</a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
-        
         <div class="entries-list">
-            
-            
-             <div ng-repeat="entry in feeds_MatchSchedule |filter:{sportsName:categoryTitle}" class="list card entry-item">
-                        
-                 
-
+            <div ng-repeat="entry in feeds_MatchSchedule |filter:{sportsName:categoryTitle}" class="list card entry-item">
                 <div class="row">
-                  
                     <div class="col-34" style="background-color:{{entry.teamId1}} !important;color:white; text-align:center">
-                        <a class="feed-category" ui-sref="app.player-list({categoryId: entry.teamId1, sourceId: (entry.sportsName | slugify)})" style="color:white;">{{ entry.teamName1}}</a>                      
+                        <a class="feed-category" ui-sref="app.player-list({categoryId: entry.teamId1, sourceId: (entry.sportsName | slugify)})" style="color:white;">{{ entry.teamName1}}</a>
                     </div>
                     <div class="col-25" style="text-align:center;">
                         Vs
@@ -83,11 +67,10 @@
                         <a class="feed-category" ui-sref="app.player-list({categoryId: entry.teamId2, sourceId: (entry.sportsName | slugify)})" style="color:white;">{{ entry.teamName2}}</a>
                     </div>
                 </div>
-
                 <div class="entry-content item item-text-wrap">
                     Match Schedule
                     <p class="entry-excerpt" dynamic-anchor-fix ng-bind-html="entry.matchTiming | rawHtml"></p>
-                   
+
                     <div class="entry-actions row">
                         <div class="actions col col-center col-66">
                             <a href="" ng-click="schedulelikeCount()" class="subdued">{{scheduleLCount}} Like</a>
@@ -95,16 +78,12 @@
                         <div class="read-more col col-center col-33">
                             <a href="" ng-click="schedulecommentsCount()" class="subdued">{{scheduleCCount}} Comments</a>
                         </div>
-                      
-
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- Template -->
         <div class="entries-list">
-
             <div ng-repeat="entry in feed.entries" class="list card entry-item">
                 <div class="entry-heading item item-text-wrap">
                     <h2 class="entry-title" ng-bind-html="entry.title | rawHtml"></h2>
@@ -135,29 +114,24 @@
                 </div>
             </div>
         </div>
-
         <!--For ChampionShip score-->
         <div class="entries-list" ng-if="championShipItems.length>0">
-
             <div ng-repeat="item in championShipItems" class="list card entry-item">
-
                 <div class="row" style="background-color:{{item.TeamColor}};">
                     <div class="col-2" style="color:white;margin-left:37%">
                         {{ item.TeamName}}
                     </div>
                     <!--<a class="feed-category"
-                ui-sref="app.player-list({categoryId: entry.teamId1, sourceId: (entry.sportsName | slugify)})" style="color:white;"></a>-->
-
+                    ui-sref="app.player-list({categoryId: entry.teamId1, sourceId: (entry.sportsName | slugify)})" style="color:white;"></a>-->
                 </div>
-
                 <div style="color:black;margin-left:45%">
                     {{item.Rating}}
                 </div>
             </div>
         </div>
         <ion-slide-box ng-if="ScoreDetails.length>0">
-            <ion-slide ng-repeat="s in ScoreDetails">
-                <div>
+                <ion-slide ng-repeat="s in ScoreDetails">
+                <div >
                     <div class="row" style="padding:0px;text-align:center;">
                         <div class="col" style="padding:1px;"><span class="item item-text-wrap" style="background-color:{{s.teamColor}} !important;color:white;padding:10px;">{{s.teamName}}</span></div>
                     </div>
@@ -178,17 +152,14 @@
                             <div class="col-25"><span class="item item-text-wrap" style="background-color:#a4d1e4 !important;height: 104%;padding:5px;">{{score.bonuspoints}}</span></div>
                         </div>
                     </div>
-                </div>
-            </ion-slide>
+                    </div>
+                </ion-slide>
         </ion-slide-box>
         <!--For Gallery Images-->
         <div class="list category-feeds">
             <div class="row" ng-repeat="image in galleryItem.images" style="padding-bottom:25px">
                 <img ng-src="data:image/jpeg;base64,{{image}}" width="100%" />
-
             </div>
         </div>
-
-
     </ion-content>
 </ion-view>

@@ -1,7 +1,7 @@
 ﻿angular.module('starter.NotificationService', [])
     .service('RequestsService', ['$http', '$q', RequestsService]);
     function RequestsService($http, $q) {
-        var base_url = 'http://a1dc8db8.ngrok.io';
+        var base_url = 'http://37bdf75a.ngrok.io';
         function register(device_token) {
             var deferred = $q.defer();
             //$ionicLoading.show();

@@ -13,12 +13,13 @@ angular.module('starter.controllers', [])
     $scope.userName = $rootScope.userIdPhone.UserName;
 
     $scope.userIsAdmin = $rootScope.userIdPhone.userIsAdmin;
-    $scope.userImage = $rootScope.userIdPhone.userImage;
+   $scope.userImage = $rootScope.userIdPhone.userImage;
     // listen for the event in the relevant $scope
     //$scope.$on('userDetailsbroadcast', function (event, data) {
     //    $scope.userName = data// 'Data to send'
     //});
 })
+
 
 //LOGIN
 .controller('LoginCtrl', function ($scope, $state, $templateCache, $q, $rootScope, $firebaseArray, fireBaseData, $ionicLoading, ProgressBar) {
@@ -30,55 +31,89 @@ angular.module('starter.controllers', [])
         ProgressBar.show($ionicLoading);
         $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
         $scope.userdetails.$loaded().then(function (userdetails) {
-            var userlength = userdetails.length; // data is loaded here
-            angular.forEach(userdetails, function (userdata) {
-                //  angular.forEach(userdata, function (item) {
-                if ($scope.user.email != '') {
-                    if (userdata.userEmailId == $scope.user.email && userdata.userPassword == $scope.user.password) {
-
-                        $scope.emailcolor = "Green";
-                        $scope.validUser = true;
-                        $rootScope.userIdPhone.userId = userdata.userId;
-                        $rootScope.userIdPhone.UserName = userdata.userName;
-                        $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
-                        $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
-                        $rootScope.userIdPhone.userImage = userdata.userImage;
-                        $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
-                        ProgressBar.hide();
-                        
-
-
-
-
-                        $state.go('app.feeds-categories');
-                        //$scope.$broadcast('userDetailsbroadcast', {
-                        //    someProp: userdata.userName // send whatever you want
-                        //});
-
-                    } else {
-                        ProgressBar.hide()
-                        $scope.emailcolor = "Red";
-                        $scope.emailborder = "solid";
-                    }
-                }
-                else if (userdata.userNumber == $scope.user.phone && userdata.pin == $scope.user.pin) {
+            var foundUser = $scope.userdetails.filter(function (user) {
+                return user.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.user.email.replace(/^\s+|\s+$/g, '') || user.userNumber == $scope.user.phone
+            });
+            if (foundUser.length > 0) {
+                var userdata = foundUser[0];
+                if (userdata.userPassword == $scope.user.password) {
+                    $scope.emailcolor = "Green";
+                    $scope.validUser = true;
                     $rootScope.userIdPhone.userId = userdata.userId;
                     $rootScope.userIdPhone.UserName = userdata.userName;
                     $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
                     $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
                     $rootScope.userIdPhone.userImage = userdata.userImage;
                     $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
-                    //$scope.validUser = true;
-                    ProgressBar.hide();
+                    ProgressBar.hide()
+                    $state.go('app.feeds-categories');
+                }
+                else if (userdata.pin == $scope.user.pin) {
+                    $scope.emailcolor = "Green";
+                    $scope.validUser = true;
+                    $rootScope.userIdPhone.userId = userdata.userId;
+                    $rootScope.userIdPhone.UserName = userdata.userName;
+                    $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
+                    $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
+                    $rootScope.userIdPhone.userImage = userdata.userImage;
+                    $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
+                    ProgressBar.hide()
                     $state.go('app.feeds-categories');
                 }
                 else {
-                    ProgressBar.hide();
-                    $scope.phonecolor = "Red";
-                    $scope.phoneborder = "solid";
+                    ProgressBar.hide()
+                    $scope.emailcolor = "Red";
+                    $scope.emailborder = "solid";
                 }
-                // })
-            })
+            }
+            else {
+                ProgressBar.hide()
+                $scope.emailcolor = "Red";
+                $scope.emailborder = "solid";
+            }
+            /* angular.forEach(userdetails, function (userdata) {
+                   //  angular.forEach(userdata, function (item) {
+                   if ($scope.user.email != '') {
+                       if (userdata.userEmailId == $scope.user.email && userdata.userPassword == $scope.user.password) {
+   
+                           $scope.emailcolor = "Green";
+                           $scope.validUser = true;
+                           $rootScope.userIdPhone.userId = userdata.userId;
+                           $rootScope.userIdPhone.UserName = userdata.userName;
+                           $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
+                           $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
+                           $rootScope.userIdPhone.userImage = userdata.userImage;
+                           $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
+                           //$state.go('app.feeds-categories');
+   
+                           //$scope.$broadcast('userDetailsbroadcast', {
+                           //    someProp: userdata.userName // send whatever you want
+                           //});
+   
+                       } else {
+                           ProgressBar.hide()
+                           $scope.emailcolor = "Red";
+                           $scope.emailborder = "solid";
+                       }
+                   }
+                   else if (userdata.userNumber == $scope.user.phone && userdata.pin == $scope.user.pin) {
+                       $rootScope.userIdPhone.userId = userdata.userId;
+                       $rootScope.userIdPhone.UserName = userdata.userName;
+                       $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
+                       $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
+                       $rootScope.userIdPhone.userImage = userdata.userImage;
+                       $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
+                       //$scope.validUser = true;
+                       ProgressBar.hide();
+                       //$state.go('app.feeds-categories');
+                   }
+                   else {
+                       ProgressBar.hide();
+                       $scope.phonecolor = "Red";
+                       $scope.phoneborder = "solid";
+                   }
+                   // })
+               })*/
         })
         //if ($scope.validUser == true) {
         //    $state.go('app.feeds-categories');
@@ -158,7 +193,7 @@ angular.module('starter.controllers', [])
                     questionId: $scope.user.selectedId,
                     answer: $scope.user.answer,
                     captcha: $scope.user.rendom,
-                    userImage: $scope.userImages.length > 0 ? $scope.userImages[0] : ""
+                    userImage: $scope.userImages.length > 0 ? $scope.userImages[0] : "" // COMMENTED BY PRAVEEN AS SUGGESTED BY SANDEEP 
                 }).then(function (ref) {
                     ProgressBar.hide();
                     // An alert dialog
@@ -466,7 +501,187 @@ angular.module('starter.controllers', [])
         $scope.SelectedSchedule = [];
     };
 })
+.controller("kulimCtrl", function ($scope, $rootScope, $ionicPopup, $firebaseArray, fireBaseData, ProgressBar, $ionicLoading, $interval, $ionicPopup) {
+    ProgressBar.show($ionicLoading);
+    $scope.v = {};
+    $scope.kulimTypeA = [];
+    $scope.kulimTypeB = [];
+    $scope.kulimTypeC = [];
+    $scope.Kulim = $firebaseArray(fireBaseData.refkulim());
+    $scope.Kulim.$loaded().then(function (Kulim) {
+        angular.forEach(Kulim, function (att) {
+            if (att.type === 'a') {
+                $scope.kulimTypeA.push(att);
+            }
+            else if (att.type === 'b') {
+                $scope.kulimTypeB.push(att);
+            }
+            else {
+                $scope.kulimTypeC.push(att);
+            }
+        });
+    });
+    var currentDate = moment(new Date()).format('YYYY-MM-DD');
+    $scope.Attendence = $firebaseArray(fireBaseData.refAttendance());
+    $scope.Attendence.$loaded().then(function (Attendence) {
+        var foundUserEmail = $scope.Attendence.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $rootScope.userIdPhone.userEmailId.replace(/^\s+|\s+$/g, '') });
+        angular.forEach(foundUserEmail, function (attendence) {
+            var creationDate = moment(attendence.creationDate).format('YYYY-MM-DD');
+            if (creationDate == currentDate) {
+                $scope._date = attendence.fromDate;
+                $scope.id = attendence.$id;
+                $scope.count = attendence.checkingCount;
+                $scope.v.choice1 = attendence.modeTo == "Bus" ? false : true;
+                $scope.v.choice2 = attendence.modeFrom == "Bus" ? false : true;
+            }
+            if (attendence.checkingCount == 2 && creationDate == currentDate) {
+                $scope.isDisable = true;
+                ProgressBar.hide();
+            }
+        })
+    })
+    $interval(function () { ProgressBar.hide(); }, 5000, true);
+    $scope.doSave = function (v) {
+        if (v.fromDate == undefined) {
+            $scope.Ratingcolor = "Red";
+            $scope.Ratingborder = "solid";
+            return;
+        }
+        var _updatedDate = moment($scope._date).format('YYYY-MM-DD');
+        var _fixDate = moment(v.fromDate).format('YYYY-MM-DD');
+        if (_fixDate != _updatedDate) {
+            $scope.Ratingcolor = "Red";
+            $scope.Ratingborder = "solid";
+            return;
+        }
+        $scope.Attendence.$loaded().then(function (Attendence) {
+            var len = $scope.id == undefined ? Attendence.length : $scope.id;
+            var refAdd = new Firebase('https://ustdb.firebaseio.com/attendance/' + len);
+            refAdd.update({
+                "isActive": 1,
+                "creationDate": new Date().toLocaleString(),//toDateString(),
+                "modeTo": v.choice1 ? 'Car' : 'Bus',
+                "modeFrom": v.choice2 ? 'Car' : 'Bus',
+                "fromDate": v.fromDate.toLocaleString(),
+                "uid": $rootScope.userIdPhone.userId,
+                "userEmailId": $rootScope.userIdPhone.userEmailId.replace(/^\s+|\s+$/g, ''),
+                "checkingCount": $scope.count == undefined ? 1 : parseInt($scope.count) + 1
+            });
+            $scope.Ratingcolor = "";
+            $scope.Ratingborder = "";
+            var alertPopup = $ionicPopup.alert({
+                title: 'Confirmation!!',
+                template: 'Your entry is recorded'
+            });
+            alertPopup.then(function (res) {
+                $scope.isDisable = true;
+            });
+        });
+    }
+})
+.controller("ustQuizCtrl", function ($scope, $rootScope, $firebaseArray, fireBaseData, $ionicPopup, $interval, $ionicSlideBoxDelegate, ProgressBar, $ionicLoading, $state) {
+    ProgressBar.show($ionicLoading);
+    $scope.v = {};
+    var count = 0;
+    $scope.startDate = moment(new Date()).format('YYYY-MM-DD, h:mm:ss a');
+    $interval(function () {
+        if (count == 0) {
+            $ionicSlideBoxDelegate.update();
+            ProgressBar.hide();
+            count++;
+            $scope.startDate = moment(new Date()).format('YYYY-MM-DD, h:mm:ss a');
+        }
+    }, 3000, true);
+    $scope.ustAnswerQuiz = $firebaseArray(fireBaseData.refUstQuizAnswer());
+    $scope.ustAnswerQuiz.$loaded().then(function (ustAnswerQuiz) {
+        var foundUserEmail = $scope.ustAnswerQuiz.filter(function (user, $index) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $rootScope.userIdPhone.userEmailId.replace(/^\s+|\s+$/g, '') });
+        $scope.index = foundUserEmail.length == 0 ? ustAnswerQuiz.length : foundUserEmail[0].$id;
 
+        if (foundUserEmail.length > 0) {
+            var inputDate = moment(foundUserEmail[0].startDate).format('YYYY-MM-DD');
+            var currenttDate = moment(new Date()).format('YYYY-MM-DD');
+            if (inputDate == currenttDate) {
+                $scope.isDisabled = true;
+            } else {
+                ustQuizAnswer($scope.index);
+            }
+        } else {
+            ustQuizAnswer($scope.index);
+        }
+    });
+    var ustQuizAnswer = function (index) {
+        var refAdd = new Firebase('https://ustdb.firebaseio.com/ustQuizAnswer/' + index);
+        refAdd.update({
+            "startDate": $scope.startDate,//toLocaleString(),
+            "endDate": $scope.startDate,
+            "answerId1": "",
+            "answerId2": "",
+            "answerId3": "",
+            "duration": 0,
+            "uid": $rootScope.userIdPhone.userId,
+            "userEmailId": $rootScope.userIdPhone.userEmailId.replace(/^\s+|\s+$/g, ''),
+            "quizCount": 1
+        });
+    }
+    var ustQuizAnswer1 = function (index, ans1, duration) {
+        var refAdd = new Firebase('https://ustdb.firebaseio.com/ustQuizAnswer/' + index);
+        refAdd.update({
+            "answerId1": ans1,
+            "duration": duration,
+            "quizCount": 1
+        });
+    }
+    var ustQuizAnswer2 = function (index, ans2, duration) {
+        var refAdd = new Firebase('https://ustdb.firebaseio.com/ustQuizAnswer/' + index);
+        refAdd.update({
+            "answerId2": ans2,
+            "duration": duration,
+            "quizCount": 1
+        });
+    }
+    var ustQuizAnswer3 = function (index, ans3, duration) {
+        var refAdd = new Firebase('https://ustdb.firebaseio.com/ustQuizAnswer/' + index);
+        refAdd.update({
+            "answerId3": ans3,
+            "duration": duration,
+            "quizCount": 1
+        });
+    }
+    $scope.ustQuizs = $firebaseArray(fireBaseData.refUstQuiz());
+    //$scope.isDisabled = true;
+    $scope.finished = function () {
+        $state.go('app.feeds-categories');
+    }
+    $scope.doSaveQuiz = function (ans, ques) {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Ans Confirmation?',
+            template: 'Please confirm your selection (Ok to confirm)?'
+        });
+        confirmPopup.then(function (res) {
+            if (res) {
+                var endDate = moment(new Date()).format('YYYY-MM-DD,h:mm:ss a');
+                var diff = moment(endDate).unix() - moment($scope.startDate).unix();
+                if (ques.$id == 0) {
+                    ustQuizAnswer1($scope.index, ans, diff);
+                } else if (ques.$id == 1) {
+                    ustQuizAnswer2($scope.index, ans, diff);
+
+                } else if (ques.$id == 2) {
+                    ustQuizAnswer3($scope.index, ans, diff);
+                }
+                //var x = moment.unix(diff).format('hh:mm:ss')
+                //$scope.$on('timer-tick', function (event, args) {
+                //    if (ques.$id == 0) {
+                //        var sec = args.millis / 1000;
+                //       // alert(args.millis);
+                //        count++;
+                //    }
+                //});
+            }
+        });
+    }
+
+})
 .controller('SurveyMenuCtrl', function ($scope, $state, $firebaseArray, fireBaseData, $rootScope, $stateParams, ProgressBar, $ionicLoading, $interval, $ionicPopup) {
     $scope.SurveyTitle = $stateParams.sourceId;
     $scope.surveyFoods = [];
@@ -744,15 +959,12 @@ angular.module('starter.controllers', [])
 
 // FEED
 //brings all feed categories
-.controller('FeedsCategoriesCtrl', function ($scope, $http, $firebaseArray, fireBaseData, beacon, $rootScope) {
-    $scope.feeds_categories = [];
-    $scope.events = [];
-    $scope.feeds_categories = $firebaseArray(fireBaseData.refDashBoardDetails());
+.controller('FeedsCategoriesCtrl', function ($scope, $http, $firebaseArray, fireBaseData, $rootScope, ProgressBar, $ionicLoading, beacon) {
 
     $scope.username = $rootScope.userIdPhone.UserName;
     $scope.userId = $rootScope.userIdPhone.userId;
-
-
+    $scope.events = [];
+    var flag = true;
     $scope.$on('beaconEventRecieved', function (event, args) {
         $scope.events.push(args.event);
         // $scope.beaconEnter = event
@@ -761,23 +973,28 @@ angular.module('starter.controllers', [])
             if (args.event.beaconName === "First beacon") {
                 // CODE GOES HERE 
                 $scope.fdRegusers = $firebaseArray(fireBaseData.refFdRegusers());
-                $scope.CurrentDate = new Date();
+                var CurrentDate = new Date();
                 $scope.fdRegusers.$loaded().then(function (regUsers) {
                     angular.forEach(regUsers, function (itemVal) {
                         //  $scope.userIdEquals = angular.equals($scope.userId.trim(), itemVal.userId.trim());
                         //   if (!$scope.userIdEquals) {
-                        if ($scope.userId != itemVal.userId) {
-                            $scope.saveReguserdetails = $scope.fdRegusers.$add({
-                                userName: $rootScope.userIdPhone.UserName,
-                                userId: $rootScope.userIdPhone.userId,
-                                lastRegistered: $scope.CurrentDate
-                            }).then(function (fdRegusers) {
-                                //   console.log(ref);
-                            }, function (error) {
-                                //console.log("Error:", error);
-                            });
+                        if ($rootScope.userIdPhone.userId == itemVal.userId) {
+                            flag = false;
                         }
+
                     })
+                    if (flag) {
+                        $scope.saveReguserdetails = $scope.fdRegusers.$add({
+                            userName: $rootScope.userIdPhone.UserName,
+                            userId: $rootScope.userIdPhone.userId,
+                            lastRegistered: CurrentDate.toLocaleString()
+                        }).then(function (fdRegusers) {
+                            //   console.log(ref);
+                        }, function (error) {
+                            //console.log("Error:", error);
+                        });
+                    }
+                    flag = true;
                 })
 
             }
@@ -791,6 +1008,32 @@ angular.module('starter.controllers', [])
 
 
 
+
+
+
+    $scope.feeds_categories = [];
+
+    ProgressBar.show($ionicLoading);
+    $scope.feeds_categorie = $firebaseArray(fireBaseData.refDashBoardDetails());
+    $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
+    $scope.userdetails.$loaded().then(function (userdetails) {
+        var foundUserEmail = $scope.userdetails.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $rootScope.userIdPhone.userEmailId.replace(/^\s+|\s+$/g, '') });
+        $scope.feeds_categorie.$loaded().then(function (feeds_categorie) {
+            angular.forEach(feeds_categorie, function (categorie) {
+                if (categorie.title == 'Attendance') {
+                    if (foundUserEmail[0].isKulim == true) {
+                        $scope.feeds_categories.push(categorie);
+                    }
+                } else {
+                    $scope.feeds_categories.push(categorie);
+                }
+            });
+            ProgressBar.hide();
+        });
+
+
+
+    });
     //$http.get('feeds-categories.json').success(function (response) {
     //    $scope.feeds_categories = response;
     //});
@@ -823,17 +1066,25 @@ angular.module('starter.controllers', [])
 
     $scope.categoryitem = $stateParams.categoryId == 'events2016' ? $firebaseArray(fireBaseData.refEventsList())
          : $stateParams.categoryId == 'sports' ? $firebaseArray(fireBaseData.refSportsList())
-        : $stateParams.categoryId == 'event-updates' ? $firebaseArray(fireBaseData.eventNews())
-        : $stateParams.categoryId == 'CSR' ? $firebaseArray(fireBaseData.refCsr())
-        : $stateParams.categoryId == 'summary' ? $firebaseArray(fireBaseData.refsummary())
-        : $stateParams.categoryId == 'survey' ? $firebaseArray(fireBaseData.refSurveyDashboard())
-        : $stateParams.categoryId == 'vote' ? $firebaseArray(fireBaseData.refVoteDashBoard())
-        : $firebaseArray(fireBaseData.refNowU());
+         : $stateParams.categoryId == 'event-updates' ? $firebaseArray(fireBaseData.eventNews())
+         : $stateParams.categoryId == 'CSR' ? $firebaseArray(fireBaseData.refCsr())
+         : $stateParams.categoryId == 'summary' ? $firebaseArray(fireBaseData.refsummary())
+         : $stateParams.categoryId == 'survey' ? $firebaseArray(fireBaseData.refSurveyDashboard())
+         : $stateParams.categoryId == 'vote' ? $firebaseArray(fireBaseData.refVoteDashBoard())
+         : $stateParams.categoryId == 'attendance' ? $firebaseArray(fireBaseData.refSurveyDashboard())
+         : $firebaseArray(fireBaseData.refNowU());
 
     $scope.categoryitem.$loaded()
              .then(function (categoryitem) {
                  if ($scope.categoryTitle == "survey") {
-                     $scope.category_sources = categoryitem;
+                     angular.forEach(categoryitem, function (item) {
+                         if (item.type == 'survey') {
+                             $scope.category_sources.push(item)
+                         }
+                     })
+                 }
+                 else if ($scope.categoryTitle == "attendance") {
+                     $scope.category_sources.push(categoryitem[1]);
                  }
                  else if ($scope.categoryTitle == "vote") {
                      $scope.category_sources = categoryitem;
@@ -916,9 +1167,9 @@ angular.module('starter.controllers', [])
     if (categoryId == "summary") {
         if ($stateParams.sourceTitle != "teams-score-card") {
             var ref = new Firebase("https://ustdb.firebaseio.com/teamNames");
-            //ref.once("value", function (snapshot) {
-            //    $scope.championShipItems = snapshot.val();
-            //    console.log($scope.championShipItems);
+            // ref.once("value", function (snapshot) {
+            // $scope.championShipItems = snapshot.val();
+            //console.log($scope.championShipItems);
             //});
             $scope.championShipItems = $firebaseArray(fireBaseData.refTeamNames());
 
@@ -1187,7 +1438,7 @@ angular.module('starter.controllers', [])
         });
     }
 })
-.controller('PushMasterCtrl', function ($scope, $cordovaDialogs, $cordovaMedia, $cordovaToast, $ionicPlatform, $http) {
+.controller('PushMasterCtrl', function ($scope, $cordovaPush, $cordovaDialogs, $cordovaMedia, $cordovaToast, $ionicPlatform, $http, GCM_SENDER_ID, $rootScope) {
     $scope.notifications = [];
     $ionicPlatform.ready(function (device) {
 
@@ -1198,7 +1449,7 @@ angular.module('starter.controllers', [])
 
         if (ionic.Platform.isAndroid()) {
             config = {
-                "senderID": "AIzaSyBby4-mWKy07Mg-C0MvqgfFMWnOZAVMyhY" // REPLACE THIS WITH YOURS FROM GCM CONSOLE - also in the project URL like: https://console.developers.google.com/project/434205989073
+                "senderID": "424911415232" // REPLACE THIS WITH YOURS FROM GCM CONSOLE - also in the project URL like: https://console.developers.google.com/project/424911415232
             };
         }
         else if (ionic.Platform.isIOS()) {
@@ -1208,20 +1459,20 @@ angular.module('starter.controllers', [])
                 "alert": "true"
             }
         }
-
-        //$cordovaPush.register(config).then(function (result) {
-        //    console.log("Register success " + result);
-
-        //    $cordovaToast.showShortCenter('Registered for push notifications');
-        //    $scope.registerDisabled = true;
-        //    // ** NOTE: Android regid result comes back in the pushNotificationReceived, only iOS returned here
-        //    if (ionic.Platform.isIOS()) {
-        //        $scope.regId = result;
-        //        storeDeviceToken("ios");
-        //    }
-        //}, function (err) {
-        //    console.log("Register error " + err)
-        //});
+        if (window.plugins && window.plugins.pushNotification) {
+            $cordovaPush.register(config).then(function (result) {
+                console.log("Register success " + result);
+                $cordovaToast.showShortCenter('Registered for push notifications');
+                $scope.registerDisabled = true;
+                // ** NOTE: Android regid result comes back in the pushNotificationReceived, only iOS returned here
+                if (ionic.Platform.isIOS()) {
+                    $scope.regId = result;
+                    storeDeviceToken("ios");
+                }
+            }, function (err) {
+                console.log("Register error " + err)
+            });
+        }
     }
     // Notification Received
     $scope.$on('$cordovaPush:notificationReceived', function (event, notification) {

@@ -7,12 +7,13 @@
             <div class="item item-divider item-text-wrap">
                 <div class="item-icon-left">
                     <i class="icon ion-ios-star assertive"></i>
-                    Pick your favorite
+                   Pick your favorite
                 </div>
             </div>
         </div>
         <ion-scroll zooming="true" direction="y" style="max-height: 80%;">
             <div class="card">
+
                 <div class="item item-text-wrap" data-ng-repeat="items in surveyFoods">
                     <ion-radio ng-model="s.choice" ng-value="items.surveyId" ng-change="onFoodSelect(s)" ng-disabled="isDisable">
                         <div><h2>{{items.surveyPidHeader}}</h2></div>
@@ -25,13 +26,13 @@
                 </div>
             </div>
         </ion-scroll>
-        <div class="item item-body bottom-content" ng-if="isActive=='0' && isAdmin=='2'">
+          <div class="item item-body bottom-content" ng-if="isActive=='0' && isAdmin=='2'">
             <button type="submit" class="button button-positive button-block" ng-click="doActive(s)">
                 Acivate Review
             </button>
         </div>
         <div class="item item-body bottom-content" ng-if="isActive=='1'">
-            <button type="submit" class="button button-positive button-block" ng-click="submitSurvey(s)">
+            <button type="submit" class="button button-positive button-block" ng-click="submitSurvey(s)" >
                 Please Review
             </button>
         </div>

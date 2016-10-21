@@ -1,0 +1,25 @@
+﻿<ion-view class="bookmarks-view">
+    <ion-nav-title>
+        <span class="transform">
+            UST Quiz&nbsp; <span class="badge badge-assertive" style="background-color:#127d59;">
+              <timer interval="1000" countdown="64" finish-callback="finished()">{{countdown}}</timer>
+            </span>
+        </span>
+    </ion-nav-title>
+    <ion-content scroll="false">
+        <ion-slide-box active-slide="currentIndex">
+            <ion-slide ng-repeat="quiz in ustQuizs">
+                <div class="item item-icon-left item-divider">
+                    <span class="item-text-wrap"><i class="icon ion-ios-help assertive"></i><h4>{{quiz.question}}</h4></span>
+                    <h5 class="assertive">&#42; {{quiz.remark}}</h5>
+                </div>
+                <div ng-disabled="isDisabled">
+                    <ion-list>
+                        <ion-radio ng-repeat="ans in quiz.option" ng-model="$parent.selected" ng-value="ans.answerId" class="col item-radio" 
+                                   ng-change="doSaveQuiz('{{ans.answerId}}',quiz);"icon="ion-checkmark-circled assertive" ng-disabled="isDisabled">{{ans.answer}}</ion-radio>
+                    </ion-list>
+                </div>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+</ion-view>

@@ -11,7 +11,8 @@ angular.module('starter.factories', [])
 .factory('NodePushServer', function ($http) {
     // Configure push notifications server address
     // 		- If you are running a local push notifications server you can test this by setting the local IP (on mac run: ipconfig getifaddr en1)
-    var push_server_address = "http://192.168.1.102:8000";
+   // "http://192.168.1.102:8000";
+    var push_server_address = "http://127.0.0.1:4040";
 
     return {
         // Stores the device token in a db using node-pushserver
@@ -21,11 +22,11 @@ angular.module('starter.factories', [])
             var user = {
                 user: 'user' + Math.floor((Math.random() * 10000000) + 1),
                 type: type,
-                token: regId
+                token: regId                
             };
             console.log("Post token for registered device with data " + JSON.stringify(user));
 
-            $http.post(push_server_address + '/subscribe', JSON.stringify(user))
+            $http.post(push_server_address + '/Subscribe', JSON.stringify(user))
             .success(function (data, status) {
                 console.log("Token stored, device is successfully subscribed to receive push notifications.");
             })
@@ -240,7 +241,10 @@ angular.module('starter.factories', [])
     var refEventsDetails = new Firebase("https://ustdb.firebaseio.com/eventDetails");
     var refSecurityQuestion = new Firebase("https://ustdb.firebaseio.com/securityQuestion");
     var refScoreCard = new Firebase("https://ustdb.firebaseio.com/scoreCard");
-
+    var refkulim = new Firebase("https://ustdb.firebaseio.com/kulimAttendence");
+    var refAttendance = new Firebase("https://ustdb.firebaseio.com/attendance");
+    var refUstQuiz = new Firebase("https://ustdb.firebaseio.com/ustQuiz");
+    var refUstQuizAnswer = new Firebase("https://ustdb.firebaseio.com/ustQuizAnswer");
       var refFdRegusers = new Firebase("https://ustdb.firebaseio.com/fdRegisteredUsers");
 
     return {
@@ -337,6 +341,10 @@ angular.module('starter.factories', [])
         refScoreCard: function () {
             return refScoreCard;
         },
+	 refkulim: function () {return refkulim;},
+        refAttendance: function () {return refAttendance;},
+        refUstQuiz: function () { return refUstQuiz; },
+        refUstQuizAnswer: function () { return refUstQuizAnswer; },
         refFdRegusers: function () {
             return refFdRegusers;
         }

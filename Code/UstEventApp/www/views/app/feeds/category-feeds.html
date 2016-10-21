@@ -4,7 +4,7 @@
     </ion-nav-title>
     <ion-content>
         <div class="list category-feeds" ng-if="categoryTitle != 'survey' 
-             && categoryTitle != 'vote' && categoryTitle != 'events2016' ">
+             && categoryTitle != 'vote' && categoryTitle != 'events2016' && categoryTitle != 'attendance'" >
             <a ng-repeat="source in category_sources" class="item item-icon-right"
                ui-sref="app.feed-entries({categoryId: categoryId, sourceId: source.id, sourceTitle : (source.title | slugify)  })">
                 <div class="thumbnail-outer">
@@ -18,7 +18,6 @@
                 </div>
                 <i class="icon ion-arrow-right-c"></i>
             </a>
-
         </div>
         <div class="list category-feeds" ng-if="categoryTitle == 'events2016'">
             <div ng-if="category_sources.length>0">
@@ -91,8 +90,8 @@
                 </a>
             </div>
         </div>
-        <div class="list category-feeds" ng-if="categoryTitle == 'survey'">
-            <a ng-repeat="source in category_sources" class="item item-icon-right" ui-sref="app.surveyMenu({categoryId: categoryId,sourceId: (source.title | slugify)})">
+        <div class="list category-feeds" ng-if="categoryTitle == 'survey' || categoryTitle == 'attendance'">
+            <a ng-repeat="source in category_sources" class="item item-icon-right" ui-sref="app.{{source.url}}({categoryId: categoryId,sourceId: (source.title | slugify)})">
                 <div class="thumbnail-outer">
                     <pre-img ratio="_1_1" helper-class="">
                         <img class="thumbnail" ng-src="{{source.image}}" spinner-on-load>

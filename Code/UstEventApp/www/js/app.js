@@ -30,6 +30,7 @@ angular.module('starter', [
   'ionic.contrib.ui.tinderCards',
   'youtube-embed',
   'firebase',
+  'timer',
 ])
 
 .run(function ($ionicPlatform, PushNotificationsService, $rootScope, $ionicConfig, $timeout) {
@@ -166,26 +167,24 @@ angular.module('starter', [
          }
      }
  })
-        .state('app.vote-master', {
-            url: "/vote-master",
-            views: {
-                'menuContent': {
-                    templateUrl: "views/app/admin/vote-master.html",
-                    controller: 'VoteMastereCtrl'
-                }
-            }
-        })
-
-
-        .state('app.event-master', {
-            url: "/event-master",
-            views: {
-                'menuContent': {
-                    templateUrl: "views/app/admin/event-master.html",
-                    controller: 'EventMastereCtrl'
-                }
-            }
-        })
+.state('app.vote-master', {
+    url: "/vote-master",
+    views: {
+        'menuContent': {
+            templateUrl: "views/app/admin/vote-master.html",
+            controller: 'VoteMastereCtrl'
+        }
+    }
+})
+.state('app.event-master', {
+    url: "/event-master",
+    views: {
+        'menuContent': {
+            templateUrl: "views/app/admin/event-master.html",
+            controller: 'EventMastereCtrl'
+        }
+    }
+})
 .state('app.push-master', {
     url: "/push-master",
     views: {
@@ -292,7 +291,24 @@ angular.module('starter', [
             }
         }
     })
-
+ .state('app.kulim-attendance', {
+     url: "/surveyMenu/::categoryId/:sourceId",
+     views: {
+         'menuContent': {
+             templateUrl: "views/app/survey/kulim-attendance.html",
+             controller: 'kulimCtrl'
+         }
+     }
+ })
+.state('app.ust-quiz', {
+    url: "/surveyMenu/::categoryId/:sourceId",
+    views: {
+        'menuContent': {
+            templateUrl: "views/app/survey/ust-quiz.html",
+            controller: 'ustQuizCtrl'
+        }
+    }
+})
     .state('app.feed-entries', {
         url: "/feed-entries/:categoryId/:sourceId/:sourceTitle",
         views: {

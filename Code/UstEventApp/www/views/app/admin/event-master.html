@@ -22,20 +22,18 @@
                 </ion-list>
             </ion-slide>
             <ion-slide>
-                <ion-slide>
-                    <ion-list>
-                        <div ng-repeat="r in EventDetails.rule">
-                            <div ng-if="r.isActive=='0'" class="col" style="display: -webkit-box;">
-                                <span class="input-label col col-75" style="background-color:#ff6a00 !important;color:white;">{{r._time}} </span>
-                                <ion-radio ng-model="x.choice" ng-value="r.ruleId" class="col item-radio" ng-change="doSaveEventDetails(x);" icon="ion-ios-minus-empty">InActive </ion-radio>
-                            </div>
-                            <div ng-if="r.isActive=='1'" class="col" style="display: -webkit-box;">
-                                <span class="input-label col col-75" style="background-color:#139005 !important;color:white;">{{r._time}} </span>
-                                <ion-radio ng-model="x.choice" ng-value="r.ruleId" class="col item-radio" ng-change="doSaveEventDetails(x);" icon="ion-ios-minus-empty">Active </ion-radio>
-                            </div>
+                <ion-list>
+                    <div ng-repeat="r in EventDetails.rule">
+                        <div ng-if="r.isActive=='0'" class="col" style="display: -webkit-box;">
+                            <span class="input-label col col-75" style="background-color:#ff6a00 !important;color:white;">{{r._time}} </span>
+                            <ion-radio ng-model="x.choice" ng-value="r.ruleId" class="col item-radio" ng-change="doSaveEventDetails(x);" icon="ion-ios-minus-empty">InActive </ion-radio>
                         </div>
-                    </ion-list>
-                </ion-slide>
+                        <div ng-if="r.isActive=='1'" class="col" style="display: -webkit-box;">
+                            <span class="input-label col col-75" style="background-color:#139005 !important;color:white;">{{r._time}} </span>
+                            <ion-radio ng-model="x.choice" ng-value="r.ruleId" class="col item-radio" ng-change="doSaveEventDetails(x);" icon="ion-ios-minus-empty">Active </ion-radio>
+                        </div>
+                    </div>
+                </ion-list>
             </ion-slide>
         </ion-slide-box>
     </ion-content>

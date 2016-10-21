@@ -10,7 +10,10 @@
         <form name="survey_form" class="" novalidate>
             <div class="list">
                 <div ng-repeat="q in Questions">
-                    <div class="item item-divider item-text-wrap">
+                    <div class="item item-icon-left item-divider">
+                        <span class="item-text-wrap"><i class="icon ion-ios-help assertive"></i><h4>{{q.Q}}</h4></span>
+                    </div>
+                    <!--<div class="item item-divider item-text-wrap">
                         <div ng-if="q.Type=='rating'" class="item-icon-left">
                             <i class="icon ion-ios-star assertive"></i>
                             {{q.Q}}
@@ -19,7 +22,7 @@
                             <i class="icon ion-help-circled assertive"></i>
                             {{q.Q}}
                         </div>
-                    </div>
+                    </div>-->
                     <div class="item item-text-wrap" ng-if="q.Type=='rating'">
                         <a href="javascript:" ng-repeat="r in ratingArr" class="padding" style="text-decoration:none;">
                             <i class="icon {{r.icon}} assertive" ng-click="setRating(q.questionId,r.value)" style="font-size:35px;" calss=""></i>
