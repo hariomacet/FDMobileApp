@@ -46,7 +46,7 @@ angular.module('starter', [
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
-        cordova.plugins.backgroundMode.enable();
+       // cordova.plugins.backgroundMode.enable();
         PushNotificationsService.register();
     });
 
