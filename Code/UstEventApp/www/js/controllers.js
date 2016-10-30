@@ -595,7 +595,12 @@ angular.module('starter.controllers', [])
     $scope.ustAnswerQuiz = $firebaseArray(fireBaseData.refUstQuizAnswer());
     $scope.ustAnswerQuiz.$loaded().then(function (ustAnswerQuiz) {
         var foundUserEmail = $scope.ustAnswerQuiz.filter(function (user, $index) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $rootScope.userIdPhone.userEmailId.replace(/^\s+|\s+$/g, '') });
-        $scope.index = foundUserEmail.length == 0 ? ustAnswerQuiz.length : foundUserEmail[0].$id;
+
+        // Code is commented and bug is fixed as it was overriding the quiz answers of other users --Praveen 10/30/2016
+        // $scope.index = foundUserEmail.length == 0 ? ustAnswerQuiz.length : foundUserEmail[0].$id;
+        $scope.index = foundUserEmail.length == 0 ? (ustAnswerQuiz.length >0 ? parseInt(_.last(ustAnswerQuiz).$id, 10)+1 : 0) : foundUserEmail[0].$id;
+
+        
 
         if (foundUserEmail.length > 0) {
             var inputDate = moment(foundUserEmail[0].startDate).format('YYYY-MM-DD');
@@ -611,6 +616,7 @@ angular.module('starter.controllers', [])
     });
     var ustQuizAnswer = function (index) {
         var refAdd = new Firebase('https://ustdb.firebaseio.com/ustQuizAnswer/' + index);
+        //var refAdd = $firebaseArray(refAddObject);
         refAdd.update({
             "startDate": $scope.startDate,//toLocaleString(),
             "endDate": $scope.startDate,
