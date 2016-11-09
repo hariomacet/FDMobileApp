@@ -19,7 +19,6 @@ angular.module('starter', [
   'starter.factories',
   'starter.core',
   'starter.sessions',
-  'starter.NotificationService',
   'starter.config',
   //'starter.views',
   'underscore',
@@ -33,7 +32,7 @@ angular.module('starter', [
   'timer',
 ])
 
-.run(function ($ionicPlatform, PushNotificationsService, $rootScope, $ionicConfig, $timeout) {
+.run(function ($ionicPlatform, $rootScope, $ionicConfig, $timeout) {
 
     $ionicPlatform.on("deviceready", function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -46,8 +45,8 @@ angular.module('starter', [
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
-        cordova.plugins.backgroundMode.enable();
-        PushNotificationsService.register();
+       // cordova.plugins.backgroundMode.enable();
+        
     });
 
     // This fixes transitions for transparent background views
@@ -74,7 +73,7 @@ angular.module('starter', [
     });
 
     $ionicPlatform.on("resume", function () {
-        PushNotificationsService.register();
+     
     });
 
 })
@@ -122,14 +121,14 @@ angular.module('starter', [
     })
 
     //MISCELLANEOUS
-    .state('app.miscellaneous', {
-        url: "/miscellaneous",
-        views: {
-            'menuContent': {
-                templateUrl: "views/app/miscellaneous/miscellaneous.html"
-            }
-        }
-    })
+    //.state('app.miscellaneous', {
+    //    url: "/miscellaneous",
+    //    views: {
+    //        'menuContent': {
+    //            templateUrl: "views/app/miscellaneous/miscellaneous.html"
+    //        }
+    //    }
+    //})
 //Admin
     .state('app.admin', {
         url: "/master",

@@ -4,11 +4,11 @@ ADDED from AndroidManifest.xml:2:1
 	android:hardwareAccelerated
 		ADDED from AndroidManifest.xml:2:11
 	xmlns:android
-		ADDED from AndroidManifest.xml:2:129
+		ADDED from AndroidManifest.xml:2:134
 	package
-		ADDED from AndroidManifest.xml:2:98
+		ADDED from AndroidManifest.xml:2:99
 	android:versionName
-		ADDED from AndroidManifest.xml:2:70
+		ADDED from AndroidManifest.xml:2:71
 	android:versionCode
 		ADDED from AndroidManifest.xml:2:46
 		INJECTED from AndroidManifest.xml:0:0
@@ -33,10 +33,165 @@ ADDED from AndroidManifest.xml:4:5
 		ADDED from AndroidManifest.xml:4:22
 application
 ADDED from AndroidManifest.xml:5:5
-MERGED from com.android.support:support-v4:24.0.0-alpha2:22:5
-MERGED from com.google.android.gms:play-services-ads:8.4.0:24:5
-MERGED from com.google.android.gms:play-services-basement:8.4.0:20:5
-MERGED from com.android.support:support-v4:24.0.0-alpha2:22:5
+MERGED from com.android.support:support-v4:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-fragment:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:23:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.android.support:support-v4:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-fragment:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.google.android.gms:play-services-base:9.8.00:18:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.android.support:support-v4:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-fragment:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.google.android.gms:play-services-tasks:9.8.00:4:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.android.support:support-v4:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-fragment:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.google.android.gms:play-services-clearcut:9.8.00:18:5
+MERGED from com.google.android.gms:play-services-base:9.8.00:18:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.android.support:support-v4:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-fragment:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.google.android.gms:play-services-tasks:9.8.00:4:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.android.support:support-v4:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-fragment:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.android.support:support-v4:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-fragment:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.android.support:support-v4:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-fragment:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.google.android.gms:play-services-gass:9.8.00:4:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.android.support:support-v4:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-fragment:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-media-compat:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-ui:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
+MERGED from com.android.support:support-core-utils:25.0.0:25:5
+MERGED from com.android.support:support-compat:25.0.0:25:5
 	android:supportsRtl
 		ADDED from AndroidManifest.xml:5:116
 	android:label
@@ -45,7 +200,7 @@ MERGED from com.android.support:support-v4:24.0.0-alpha2:22:5
 		ADDED from AndroidManifest.xml:5:53
 	android:hardwareAccelerated
 		ADDED from AndroidManifest.xml:5:18
-activity#com.ust.global.myust.MainActivity
+activity#com.ustglobal.beta.myust.MainActivity
 ADDED from AndroidManifest.xml:6:9
 	android:windowSoftInputMode
 		ADDED from AndroidManifest.xml:6:285
@@ -73,37 +228,41 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:9:17
 	android:name
 		ADDED from AndroidManifest.xml:9:27
-activity#com.plugin.gcm.PushHandlerActivity
+activity#com.synconset.MultiImageChooserActivity
 ADDED from AndroidManifest.xml:12:9
-	android:exported
+	android:label
 		ADDED from AndroidManifest.xml:12:19
+	android:theme
+		ADDED from AndroidManifest.xml:12:113
 	android:name
-		ADDED from AndroidManifest.xml:12:43
-receiver#com.plugin.gcm.CordovaGCMBroadcastReceiver
+		ADDED from AndroidManifest.xml:12:58
+activity#com.plugin.gcm.PushHandlerActivity
 ADDED from AndroidManifest.xml:13:9
-	android:permission
-		ADDED from AndroidManifest.xml:13:77
-	android:name
+	android:exported
 		ADDED from AndroidManifest.xml:13:19
-intent-filter#com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION+com.ustglobal.ionFullApp
-ADDED from AndroidManifest.xml:14:13
-action#com.google.android.c2dm.intent.RECEIVE
-ADDED from AndroidManifest.xml:15:17
 	android:name
-		ADDED from AndroidManifest.xml:15:25
-action#com.google.android.c2dm.intent.REGISTRATION
+		ADDED from AndroidManifest.xml:13:43
+receiver#com.plugin.gcm.CordovaGCMBroadcastReceiver
+ADDED from AndroidManifest.xml:14:9
+	android:permission
+		ADDED from AndroidManifest.xml:14:77
+	android:name
+		ADDED from AndroidManifest.xml:14:19
+intent-filter#com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION+com.ust.global.myust
+ADDED from AndroidManifest.xml:15:13
+action#com.google.android.c2dm.intent.RECEIVE
 ADDED from AndroidManifest.xml:16:17
 	android:name
 		ADDED from AndroidManifest.xml:16:25
-category#com.ustglobal.ionFullApp
+action#com.google.android.c2dm.intent.REGISTRATION
 ADDED from AndroidManifest.xml:17:17
 	android:name
-		ADDED from AndroidManifest.xml:17:27
-service#com.plugin.gcm.GCMIntentService
-ADDED from AndroidManifest.xml:20:9
+		ADDED from AndroidManifest.xml:17:25
+category#com.ust.global.myust
+ADDED from AndroidManifest.xml:18:17
 	android:name
-		ADDED from AndroidManifest.xml:20:18
-service#de.appplant.cordova.plugin.background.ForegroundService
+		ADDED from AndroidManifest.xml:18:27
+service#com.plugin.gcm.GCMIntentService
 ADDED from AndroidManifest.xml:21:9
 	android:name
 		ADDED from AndroidManifest.xml:21:18
@@ -161,103 +320,281 @@ action#com.unarin.cordova.beacon.IBeaconPlugin.DID_MONITORING
 ADDED from AndroidManifest.xml:34:17
 	android:name
 		ADDED from AndroidManifest.xml:34:25
-activity#com.google.android.gms.ads.AdActivity
+service#de.appplant.cordova.plugin.background.ForegroundService
 ADDED from AndroidManifest.xml:37:9
-MERGED from com.google.android.gms:play-services-ads:8.4.0:26:9
-	android:configChanges
-		ADDED from AndroidManifest.xml:37:19
-	android:theme
-		ADDED from AndroidManifest.xml:37:182
 	android:name
-		ADDED from AndroidManifest.xml:37:129
+		ADDED from AndroidManifest.xml:37:18
+activity#com.google.android.gms.ads.AdActivity
+ADDED from AndroidManifest.xml:38:9
+MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:25:9
+	android:configChanges
+		ADDED from AndroidManifest.xml:38:19
+	android:theme
+		ADDED from AndroidManifest.xml:38:182
+	android:name
+		ADDED from AndroidManifest.xml:38:129
 uses-sdk
-ADDED from AndroidManifest.xml:39:5
-MERGED from com.android.support:support-v4:24.0.0-alpha2:20:5
-MERGED from com.google.android.gms:play-services-ads:8.4.0:23:5
-MERGED from com.google.android.gms:play-services-basement:8.4.0:18:5
-MERGED from com.android.support:support-v4:24.0.0-alpha2:20:5
+ADDED from AndroidManifest.xml:40:5
+MERGED from com.android.support:support-v4:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-fragment:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.google.android.gms:play-services-ads:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:22:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.android.support:support-v4:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-fragment:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.google.android.gms:play-services-base:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.android.support:support-v4:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-fragment:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.google.android.gms:play-services-tasks:9.8.00:3:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.android.support:support-v4:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-fragment:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.google.android.gms:play-services-clearcut:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-base:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.android.support:support-v4:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-fragment:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.google.android.gms:play-services-tasks:9.8.00:3:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.android.support:support-v4:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-fragment:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.android.support:support-v4:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-fragment:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.android.support:support-v4:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-fragment:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.google.android.gms:play-services-gass:9.8.00:3:5
+MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.android.support:support-v4:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-fragment:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-media-compat:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-ui:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
+MERGED from com.android.support:support-core-utils:25.0.0:21:5
+MERGED from com.android.support:support-compat:25.0.0:21:5
 MERGED from android:CordovaLib:unspecified:release:25:5
 	android:targetSdkVersion
-		ADDED from AndroidManifest.xml:39:42
+		ADDED from AndroidManifest.xml:40:42
 	android:minSdkVersion
-		ADDED from AndroidManifest.xml:39:15
+		ADDED from AndroidManifest.xml:40:15
+	tools:overrideLibrary
+		ADDED from com.android.support:support-v4:25.0.0:23:9
 uses-permission#android.permission.GET_ACCOUNTS
-ADDED from AndroidManifest.xml:40:5
-	android:name
-		ADDED from AndroidManifest.xml:40:22
-uses-permission#android.permission.WAKE_LOCK
 ADDED from AndroidManifest.xml:41:5
 	android:name
 		ADDED from AndroidManifest.xml:41:22
-uses-permission#android.permission.VIBRATE
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:42:5
 	android:name
 		ADDED from AndroidManifest.xml:42:22
-uses-permission#com.google.android.c2dm.permission.RECEIVE
+uses-permission#android.permission.WAKE_LOCK
 ADDED from AndroidManifest.xml:43:5
 	android:name
 		ADDED from AndroidManifest.xml:43:22
-permission#com.ustglobal.ionFullApp.permission.C2D_MESSAGE
+uses-permission#android.permission.VIBRATE
 ADDED from AndroidManifest.xml:44:5
-	android:protectionLevel
-		ADDED from AndroidManifest.xml:44:80
 	android:name
-		ADDED from AndroidManifest.xml:44:17
-uses-permission#com.ustglobal.ionFullApp.permission.C2D_MESSAGE
+		ADDED from AndroidManifest.xml:44:22
+uses-permission#com.google.android.c2dm.permission.RECEIVE
 ADDED from AndroidManifest.xml:45:5
 	android:name
 		ADDED from AndroidManifest.xml:45:22
-uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+permission#com.ust.global.myust.permission.C2D_MESSAGE
 ADDED from AndroidManifest.xml:46:5
+	android:protectionLevel
+		ADDED from AndroidManifest.xml:46:76
 	android:name
-		ADDED from AndroidManifest.xml:46:22
-uses-permission#android.permission.ACCESS_FINE_LOCATION
+		ADDED from AndroidManifest.xml:46:17
+uses-permission#com.ust.global.myust.permission.C2D_MESSAGE
 ADDED from AndroidManifest.xml:47:5
 	android:name
 		ADDED from AndroidManifest.xml:47:22
-uses-permission#android.permission.RECORD_AUDIO
+uses-permission#android.permission.BLUETOOTH
 ADDED from AndroidManifest.xml:48:5
 	android:name
 		ADDED from AndroidManifest.xml:48:22
-uses-permission#android.permission.RECORD_VIDEO
+uses-permission#android.permission.BLUETOOTH_ADMIN
 ADDED from AndroidManifest.xml:49:5
 	android:name
 		ADDED from AndroidManifest.xml:49:22
-uses-permission#android.permission.ACCESS_COARSE_LOCATION
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:50:5
 	android:name
 		ADDED from AndroidManifest.xml:50:22
-uses-permission#android.permission.BLUETOOTH
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
 ADDED from AndroidManifest.xml:51:5
 	android:name
 		ADDED from AndroidManifest.xml:51:22
-uses-permission#android.permission.BLUETOOTH_ADMIN
+uses-permission#android.permission.ACCESS_FINE_LOCATION
 ADDED from AndroidManifest.xml:52:5
 	android:name
 		ADDED from AndroidManifest.xml:52:22
-uses-permission#android.permission.READ_EXTERNAL_STORAGE
+uses-permission#android.permission.RECORD_AUDIO
 ADDED from AndroidManifest.xml:53:5
 	android:name
 		ADDED from AndroidManifest.xml:53:22
-uses-permission#android.permission.ACCESS_NETWORK_STATE
+uses-permission#android.permission.RECORD_VIDEO
 ADDED from AndroidManifest.xml:54:5
-MERGED from com.google.android.gms:play-services-ads:8.4.0:21:5
 	android:name
 		ADDED from AndroidManifest.xml:54:22
-uses-permission#android.permission.INTERNET
+uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from AndroidManifest.xml:55:5
-MERGED from com.google.android.gms:play-services-ads:8.4.0:20:5
+MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:20:5
 	android:name
 		ADDED from AndroidManifest.xml:55:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:56:5
+MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:19:5
+	android:name
+		ADDED from AndroidManifest.xml:56:22
 activity#com.google.android.gms.ads.purchase.InAppPurchaseActivity
-ADDED from com.google.android.gms:play-services-ads:8.4.0:30:9
+ADDED from com.google.android.gms:play-services-ads-lite:9.8.00:26:9
 	android:theme
-		ADDED from com.google.android.gms:play-services-ads:8.4.0:31:13
+		ADDED from com.google.android.gms:play-services-ads-lite:9.8.00:26:92
 	android:name
-		ADDED from com.google.android.gms:play-services-ads:8.4.0:30:19
+		ADDED from com.google.android.gms:play-services-ads-lite:9.8.00:26:19
 meta-data#com.google.android.gms.version
-ADDED from com.google.android.gms:play-services-basement:8.4.0:21:9
+ADDED from com.google.android.gms:play-services-basement:9.8.00:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
 	android:name
-		ADDED from com.google.android.gms:play-services-basement:8.4.0:22:13
+		ADDED from com.google.android.gms:play-services-basement:9.8.00:20:20
 	android:value
-		ADDED from com.google.android.gms:play-services-basement:8.4.0:23:13
+		ADDED from com.google.android.gms:play-services-basement:9.8.00:20:66
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from com.google.android.gms:play-services-base:9.8.00:19:9
+MERGED from com.google.android.gms:play-services-base:9.8.00:19:9
+	android:theme
+		ADDED from com.google.android.gms:play-services-base:9.8.00:19:86
+	android:exported
+		ADDED from com.google.android.gms:play-services-base:9.8.00:19:146
+	android:name
+		ADDED from com.google.android.gms:play-services-base:9.8.00:19:19
