@@ -61,9 +61,16 @@ angular.module('starter.controllers', [])
                     $state.go('app.feeds-categories');
                 }
                 else {
-                    ProgressBar.hide()
-                    $scope.emailcolor = "Red";
-                    $scope.emailborder = "solid";
+                ProgressBar.hide()
+                    if ($scope.user.pin != '') {
+                        $scope.phonecolor = "Red";
+                        $scope.phoneborder = "solid";
+                    }
+                    else {
+                        
+                        $scope.emailcolor = "Red";
+                        $scope.emailborder = "solid";
+                    }
                 }
             }
             else {
