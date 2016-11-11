@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<widget id="com.ustglobal.beta.myust" version="1.3.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" android-versionCode="6">
+<widget id="com.ustglobal.generic.myust" version="1.3.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" android-versionCode="6">
   <name>MyUST</name>
   <description>
 An Mobile Application which provides news updates to UST global employees
     </description>
-  <author email="praveen.nelge@ust-global.com" href="http://www.ust-global.com/">MSCOE Malaysia Team</author>
+  <author email="Rohan.Chowdhary@ust-global.com" href="http://www.ust-global.com/">MSCOE Malaysia Team</author>
   <content src="index.html" />
   <access origin="*" />
   <preference name="webviewbounce" value="false" />
@@ -76,11 +76,13 @@ An Mobile Application which provides news updates to UST global employees
   <plugin name="ionic-plugin-keyboard" version="2.2.1" />
   <plugin name="cordova-plugin-image-picker" version="1.1.1" src="https://github.com/wymsee/cordova-imagePicker.git" />
   <preference name="android-minSdkVersion" value="14" />
-
   <plugin name="com.unarin.cordova.beacon" version="3.4.1" src="https://github.com/petermetz/cordova-plugin-ibeacon" />
   <plugin name="com.unarin.cordova.beacon" version="3.4.0" />
-
   <plugin name="cordova-plugin-inappbrowser" version="1.4.0" />
   <plugin name="cordova-plugin-statusbar" version="2.1.3" />
- 
+  <!--<plugin name="com.rjfun.cordova.plugin.iad" version="0.1.8" />
+  <plugin name="cordova-plugin-admobpro" version="2.20.1" />
+  <plugin name="cordova-plugin-iad" version="2.0.5" />-->
+  <plugin name="cordova-plugin-media-capture" version="1.3.0" />
+
 </widget>

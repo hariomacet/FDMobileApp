@@ -201,6 +201,7 @@ angular.module('starter.factories', [])
     var refUstQuiz = new Firebase("https://ustdb.firebaseio.com/ustQuiz");
     var refUstQuizAnswer = new Firebase("https://ustdb.firebaseio.com/ustQuizAnswer");
       var refFdRegusers = new Firebase("https://ustdb.firebaseio.com/fdRegisteredUsers");
+      var refListUid = new Firebase("https://ustdb.firebaseio.com/listUid");
 
     return {
         refRegisteration: function () {
@@ -302,7 +303,8 @@ angular.module('starter.factories', [])
         refUstQuizAnswer: function () { return refUstQuizAnswer; },
         refFdRegusers: function () {
             return refFdRegusers;
-        }
+        },
+        refListUid: function () { return refListUid; }
     };
 })
 .filter('currentdate', ['$filter', function ($filter) {

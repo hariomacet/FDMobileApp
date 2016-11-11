@@ -4,7 +4,7 @@ ADDED from AndroidManifest.xml:2:1
 	android:hardwareAccelerated
 		ADDED from AndroidManifest.xml:2:11
 	xmlns:android
-		ADDED from AndroidManifest.xml:2:133
+		ADDED from AndroidManifest.xml:2:136
 	package
 		ADDED from AndroidManifest.xml:2:98
 	android:versionName
@@ -33,28 +33,28 @@ ADDED from AndroidManifest.xml:4:5
 		ADDED from AndroidManifest.xml:4:22
 application
 ADDED from AndroidManifest.xml:5:5
-MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:23:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.google.android.gms:play-services-ads-lite:9.8.0:23:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:19:5
 MERGED from com.android.support:support-v4:24.0.0:25:5
-MERGED from com.google.android.gms:play-services-base:9.8.00:18:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.google.android.gms:play-services-base:9.8.0:18:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:19:5
 MERGED from com.android.support:support-v4:24.0.0:25:5
-MERGED from com.google.android.gms:play-services-tasks:9.8.00:4:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.google.android.gms:play-services-tasks:9.8.0:4:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:19:5
 MERGED from com.android.support:support-v4:24.0.0:25:5
-MERGED from com.google.android.gms:play-services-clearcut:9.8.00:18:5
-MERGED from com.google.android.gms:play-services-base:9.8.00:18:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.google.android.gms:play-services-clearcut:9.8.0:18:5
+MERGED from com.google.android.gms:play-services-base:9.8.0:18:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:19:5
 MERGED from com.android.support:support-v4:24.0.0:25:5
-MERGED from com.google.android.gms:play-services-tasks:9.8.00:4:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.google.android.gms:play-services-tasks:9.8.0:4:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:19:5
 MERGED from com.android.support:support-v4:24.0.0:25:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:19:5
 MERGED from com.android.support:support-v4:24.0.0:25:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:19:5
 MERGED from com.android.support:support-v4:24.0.0:25:5
-MERGED from com.google.android.gms:play-services-gass:9.8.00:4:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:19:5
+MERGED from com.google.android.gms:play-services-gass:9.8.0:4:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:19:5
 MERGED from com.android.support:support-v4:24.0.0:25:5
 	android:supportsRtl
 		ADDED from AndroidManifest.xml:5:116
@@ -64,7 +64,7 @@ MERGED from com.android.support:support-v4:24.0.0:25:5
 		ADDED from AndroidManifest.xml:5:53
 	android:hardwareAccelerated
 		ADDED from AndroidManifest.xml:5:18
-activity#com.ustglobal.beta.myust.MainActivity
+activity#com.ustglobal.generic.myust.MainActivity
 ADDED from AndroidManifest.xml:6:9
 	android:windowSoftInputMode
 		ADDED from AndroidManifest.xml:6:285
@@ -156,7 +156,7 @@ ADDED from AndroidManifest.xml:25:17
 		ADDED from AndroidManifest.xml:25:25
 activity#com.google.android.gms.ads.AdActivity
 ADDED from AndroidManifest.xml:28:9
-MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:25:9
+MERGED from com.google.android.gms:play-services-ads-lite:9.8.0:25:9
 	android:configChanges
 		ADDED from AndroidManifest.xml:28:19
 	android:theme
@@ -165,29 +165,29 @@ MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:25:9
 		ADDED from AndroidManifest.xml:28:129
 uses-sdk
 ADDED from AndroidManifest.xml:30:5
-MERGED from com.google.android.gms:play-services-ads:9.8.00:17:5
-MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:22:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-ads:9.8.0:17:5
+MERGED from com.google.android.gms:play-services-ads-lite:9.8.0:22:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:17:5
 MERGED from com.android.support:support-v4:24.0.0:21:5
-MERGED from com.google.android.gms:play-services-base:9.8.00:17:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-base:9.8.0:17:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:17:5
 MERGED from com.android.support:support-v4:24.0.0:21:5
-MERGED from com.google.android.gms:play-services-tasks:9.8.00:3:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-tasks:9.8.0:3:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:17:5
 MERGED from com.android.support:support-v4:24.0.0:21:5
-MERGED from com.google.android.gms:play-services-clearcut:9.8.00:17:5
-MERGED from com.google.android.gms:play-services-base:9.8.00:17:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-clearcut:9.8.0:17:5
+MERGED from com.google.android.gms:play-services-base:9.8.0:17:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:17:5
 MERGED from com.android.support:support-v4:24.0.0:21:5
-MERGED from com.google.android.gms:play-services-tasks:9.8.00:3:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-tasks:9.8.0:3:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:17:5
 MERGED from com.android.support:support-v4:24.0.0:21:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:17:5
 MERGED from com.android.support:support-v4:24.0.0:21:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:17:5
 MERGED from com.android.support:support-v4:24.0.0:21:5
-MERGED from com.google.android.gms:play-services-gass:9.8.00:3:5
-MERGED from com.google.android.gms:play-services-basement:9.8.00:17:5
+MERGED from com.google.android.gms:play-services-gass:9.8.0:3:5
+MERGED from com.google.android.gms:play-services-basement:9.8.0:17:5
 MERGED from com.android.support:support-v4:24.0.0:21:5
 MERGED from android:CordovaLib:unspecified:debug:25:5
 	android:targetSdkVersion
@@ -234,39 +234,39 @@ ADDED from AndroidManifest.xml:39:5
 		ADDED from AndroidManifest.xml:39:22
 uses-permission#android.permission.INTERNET
 ADDED from AndroidManifest.xml:40:5
-MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:19:5
+MERGED from com.google.android.gms:play-services-ads-lite:9.8.0:19:5
 	android:name
 		ADDED from AndroidManifest.xml:40:22
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from AndroidManifest.xml:41:5
-MERGED from com.google.android.gms:play-services-ads-lite:9.8.00:20:5
+MERGED from com.google.android.gms:play-services-ads-lite:9.8.0:20:5
 	android:name
 		ADDED from AndroidManifest.xml:41:22
 activity#com.google.android.gms.ads.purchase.InAppPurchaseActivity
-ADDED from com.google.android.gms:play-services-ads-lite:9.8.00:26:9
+ADDED from com.google.android.gms:play-services-ads-lite:9.8.0:26:9
 	android:theme
-		ADDED from com.google.android.gms:play-services-ads-lite:9.8.00:26:92
+		ADDED from com.google.android.gms:play-services-ads-lite:9.8.0:26:92
 	android:name
-		ADDED from com.google.android.gms:play-services-ads-lite:9.8.00:26:19
+		ADDED from com.google.android.gms:play-services-ads-lite:9.8.0:26:19
 meta-data#com.google.android.gms.version
-ADDED from com.google.android.gms:play-services-basement:9.8.00:20:9
-MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
-MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
-MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
-MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
-MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
-MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
-MERGED from com.google.android.gms:play-services-basement:9.8.00:20:9
+ADDED from com.google.android.gms:play-services-basement:9.8.0:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.0:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.0:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.0:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.0:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.0:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.0:20:9
+MERGED from com.google.android.gms:play-services-basement:9.8.0:20:9
 	android:name
-		ADDED from com.google.android.gms:play-services-basement:9.8.00:20:20
+		ADDED from com.google.android.gms:play-services-basement:9.8.0:20:20
 	android:value
-		ADDED from com.google.android.gms:play-services-basement:9.8.00:20:66
+		ADDED from com.google.android.gms:play-services-basement:9.8.0:20:66
 activity#com.google.android.gms.common.api.GoogleApiActivity
-ADDED from com.google.android.gms:play-services-base:9.8.00:19:9
-MERGED from com.google.android.gms:play-services-base:9.8.00:19:9
+ADDED from com.google.android.gms:play-services-base:9.8.0:19:9
+MERGED from com.google.android.gms:play-services-base:9.8.0:19:9
 	android:theme
-		ADDED from com.google.android.gms:play-services-base:9.8.00:19:86
+		ADDED from com.google.android.gms:play-services-base:9.8.0:19:86
 	android:exported
-		ADDED from com.google.android.gms:play-services-base:9.8.00:19:146
+		ADDED from com.google.android.gms:play-services-base:9.8.0:19:146
 	android:name
-		ADDED from com.google.android.gms:play-services-base:9.8.00:19:19
+		ADDED from com.google.android.gms:play-services-base:9.8.0:19:19

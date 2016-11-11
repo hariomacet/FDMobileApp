@@ -13,7 +13,7 @@ angular.module('starter.controllers', [])
     $scope.userName = $rootScope.userIdPhone.UserName;
 
     $scope.userIsAdmin = $rootScope.userIdPhone.userIsAdmin;
-   $scope.userImage = $rootScope.userIdPhone.userImage;
+    $scope.userImage = $rootScope.userIdPhone.userImage;
     // listen for the event in the relevant $scope
     //$scope.$on('userDetailsbroadcast', function (event, data) {
     //    $scope.userName = data// 'Data to send'
@@ -141,6 +141,16 @@ angular.module('starter.controllers', [])
     var checkEmailId = false;
     var checkPhonenumber = false;
     var dateNow = new Date();
+
+
+    $scope.displayEmailId = function () {
+        //var userId = $scope.user.userId == undefined ? '' : $scope.user.userId + "@ust-global.com";
+        $scope.user.email = $scope.user.userId == undefined ? '' : $scope.user.userId + "@ust-global.com";
+        
+
+    }
+
+   
     var getRandomSpan = function () {
         var str = "";                                         // String result
         for (var i = 0; i < 6; i++) {                             // Loop `len` times
@@ -164,11 +174,22 @@ angular.module('starter.controllers', [])
     $scope.doSignUp = function () {
         var isSignUp = true;
         ProgressBar.show($ionicLoading);
+        var foundValidUser = "";
+            $scope.userList = $firebaseArray(fireBaseData.refListUid());
+        $scope.userList.$loaded().then(function (userList) {
+            foundValidUser = $scope.userList.filter(function (userlist) { return userlist.userId.toUpperCase() == $scope.user.userId.toUpperCase() }); //$scope.user.userId
+
+        });
+
         $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
         $scope.userdetails.$loaded().then(function (userdetails) {
             var foundUserEmail = $scope.userdetails.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.user.email.replace(/^\s+|\s+$/g, '') });
             var foundUserPhone = $scope.userdetails.filter(function (user) { return user.userNumber == $scope.user.phone });
-            if (foundUserEmail.length > 0 || foundUserPhone.length > 0) {
+
+        
+       
+
+            if (foundUserEmail.length > 0 || foundUserPhone.length > 0 || foundValidUser.length > 0 ) {
                 $scope.user.UserExist = "Already Exists!!"
                 ProgressBar.hide();
                 isSignUp = false;
@@ -598,9 +619,9 @@ angular.module('starter.controllers', [])
 
         // Code is commented and bug is fixed as it was overriding the quiz answers of other users --Praveen 10/30/2016
         // $scope.index = foundUserEmail.length == 0 ? ustAnswerQuiz.length : foundUserEmail[0].$id;
-        $scope.index = foundUserEmail.length == 0 ? (ustAnswerQuiz.length >0 ? parseInt(_.last(ustAnswerQuiz).$id, 10)+1 : 0) : foundUserEmail[0].$id;
+        $scope.index = foundUserEmail.length == 0 ? (ustAnswerQuiz.length > 0 ? parseInt(_.last(ustAnswerQuiz).$id, 10) + 1 : 0) : foundUserEmail[0].$id;
 
-        
+
 
         if (foundUserEmail.length > 0) {
             var inputDate = moment(foundUserEmail[0].startDate).format('YYYY-MM-DD');
