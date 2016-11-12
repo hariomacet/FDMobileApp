@@ -193,10 +193,13 @@ angular.module('starter.controllers', [])
             var foundUserEmail = $scope.userdetails.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.user.email.replace(/^\s+|\s+$/g, '') });
             var foundUserPhone = $scope.userdetails.filter(function (user) { return user.userNumber == $scope.user.phone });
 
-        
-       
-
-            if (foundUserEmail.length > 0 || foundUserPhone.length > 0 || foundValidUser.length > 0 ) {
+            if (foundValidUser.length == 0)
+            {
+                $scope.user.UserExist = "Not Valid User ID!!"
+                ProgressBar.hide();
+                isSignUp = false;
+            }
+            else if (foundUserEmail.length > 0 || foundUserPhone.length > 0 ) {
                 $scope.user.UserExist = "Already Exists!!"
                 ProgressBar.hide();
                 isSignUp = false;
@@ -206,7 +209,7 @@ angular.module('starter.controllers', [])
                 ProgressBar.hide();
                 isSignUp = false;
             }
-            else if (isSignUp) {
+            else if (isSignUp && foundValidUser.length > 0) {
                 $scope.user.UserExist = null;
                 $scope.saveuserdetails = userdetails.$add({
                     userName: $scope.user.name,
@@ -221,7 +224,7 @@ angular.module('starter.controllers', [])
                     questionId: $scope.user.selectedId,
                     answer: $scope.user.answer,
                     captcha: $scope.user.rendom,
-                    userImage: $scope.userImages.length > 0 ? $scope.userImages[0] : "" // COMMENTED BY PRAVEEN AS SUGGESTED BY SANDEEP 
+                    userImage: $scope.userImages.length > 0 ? $scope.userImages[0] : "" // Image picker plugin is not avaialble for IOS
                 }).then(function (ref) {
                     ProgressBar.hide();
                     // An alert dialog
