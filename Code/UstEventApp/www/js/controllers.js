@@ -34,6 +34,8 @@ angular.module('starter.controllers', [])
             var foundUser = $scope.userdetails.filter(function (user) {
                 return user.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.user.email.replace(/^\s+|\s+$/g, '') || user.userNumber == $scope.user.phone
             });
+            var foundemail = $scope.userdetails.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.user.email.replace(/^\s+|\s+$/g, '') });
+            var foundnumber = $scope.userdetails.filter(function (user) { user.userNumber == $scope.user.phone });
             if (foundUser.length > 0) {
                 var userdata = foundUser[0];
                 if (userdata.userPassword == $scope.user.password) {
@@ -62,7 +64,7 @@ angular.module('starter.controllers', [])
                 }
                 else {
                 ProgressBar.hide()
-                    if ($scope.user.pin != '') {
+                if ($scope.user.pin != '' || foundnumber.length == 0) {
                         $scope.phonecolor = "Red";
                         $scope.phoneborder = "solid";
                     }
@@ -75,8 +77,15 @@ angular.module('starter.controllers', [])
             }
             else {
                 ProgressBar.hide()
-                $scope.emailcolor = "Red";
-                $scope.emailborder = "solid";
+                if (foundemail.length == 0 && ($scope.user.email != ''  || $scope.user.password != ''))
+                {
+                    $scope.emailcolor = "Red";
+                    $scope.emailborder = "solid";
+                }
+                if (foundnumber.length == 0 && ($scope.user.phone != '' || $scope.user.pin != '')  ) {
+                    $scope.phonecolor = "Red";
+                    $scope.phoneborder = "solid";
+                }
             }
             /* angular.forEach(userdetails, function (userdata) {
                    //  angular.forEach(userdata, function (item) {
@@ -132,6 +141,8 @@ angular.module('starter.controllers', [])
 
     $scope.user.email = ""; //"XXXXX";
     $scope.user.pin = "";   //"12345"
+    $scope.user.password = "";
+    $scope.user.phone = "";
 
     // We need this for the form validation
     $scope.selected_tab = "";

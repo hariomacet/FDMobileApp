@@ -5,9 +5,7 @@
                 <div class="card sign-up-container">
                     <form name="signup_form" class=" " novalidate>
                         <div class="item item-body">
-                            <label class="item" ng-if="user.UserExist !=null">
-                                <span class="title" style="color:red;">{{user.UserExist}}</span>
-                            </label>
+                          
                             <label class="item item-input">
                                 <input type="text" placeholder="User Name" name="user_name" ng-model="user.name" required>
                             </label>                           
@@ -59,6 +57,9 @@
                             </label>-->
                         </div>
                         <div class="item item-body bottom-content">
+                            <label class="item" ng-if="user.UserExist !=null">
+                                <span class="title" style="color:red;">{{user.UserExist}}</span>
+                            </label>
                             <button type="submit" class="button button-assertive button-block" ng-click="doSignUp()" ng-disabled="signup_form.$invalid">
                                 Sign Up
                             </button>
