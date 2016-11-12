@@ -78,34 +78,29 @@
                                 Schedule Details
                             </h4>
                         </div>
-                        <div class="item item-text-wrap">
-                            <p ng-repeat="s in event.schedule">
-                                <label ng-if="s.date != ''"> <b>Date:</b> {{s.date}}</label><br />
-                                <label ng-if="s.time != ''"> <b>Time:</b> {{s.time}} </label> <br />
-                                <label ng-if="s.place !=''"><b>AT:</b> {{s.place}} </label> 
-                            </p>
+                        <div class="item item-text-wrap" ng-repeat="s in event.schedule">
+                            <div ng-if="s.date != ''"> <b>Date:</b> {{s.date}}</div>
+                            <div ng-if="s.time != ''"> <b>Time:</b> {{s.time}}</div>
+                            <div ng-if="s.place !=''"> <b>AT:</b> {{s.place}}</div>
                         </div>
                     </div>
                     <div ng-if="event.rule.length > 0">
-                          <div ng-repeat="b in event.rule | filter: {isActive :'1'}">
+                        <div ng-repeat="b in event.rule | filter: {isActive :'1'}">
                             <div class="item item-divider item-text-wrap">
-                                <h4>                                   
+                                <h4>
                                     <i class="icon ion-android-arrow-dropright"></i>
                                     {{b.program}}
                                 </h4>
                             </div>
-                            <div class="item item-text-wrap">
-                                <p>
-                                    <label ng-if="b._time != ''"><b>Time & Duration:</b> {{b._time}}</label> <br />
-                                    <label ng-if="b.anchor != ''"><b>Anchor:</b> {{b.anchor}}</label><br />
-                                    <label ng-if="b.details != ''"><b>Details:</b> {{b.details}}</label><br />
-                                </p>
+                            <div class="item item-text-wrap" ng-repeat="s in event.schedule">
+                                <div ng-if="b._time != ''">  <b>Time & Duration:</b> {{b._time}}</div>
+                                <div ng-if="b.anchor != ''"> <b>Anchor: </b> {{b.anchor}}</div>
+                                <div ng-if="b.details != ''"><b>Details: </b> {{b.details}}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </ion-content>
     </form>
 </ion-modal-view>
