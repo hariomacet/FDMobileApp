@@ -1001,7 +1001,7 @@ angular.module('starter.controllers', [])
     $scope.username = $rootScope.userIdPhone.UserName;
     $scope.userId = $rootScope.userIdPhone.userId;
     $scope.events = [];
-    var flag = true;
+    var flag = '';
     $scope.$on('beaconEventRecieved', function (event, args) {
         $scope.events.push(args.event);
         // $scope.beaconEnter = event
@@ -1011,16 +1011,9 @@ angular.module('starter.controllers', [])
                 // CODE GOES HERE 
                 $scope.fdRegusers = $firebaseArray(fireBaseData.refFdRegusers());
                 var CurrentDate = new Date();
-                $scope.fdRegusers.$loaded().then(function (regUsers) {
-                    angular.forEach(regUsers, function (itemVal) {
-                        //  $scope.userIdEquals = angular.equals($scope.userId.trim(), itemVal.userId.trim());
-                        //   if (!$scope.userIdEquals) {
-                        if ($rootScope.userIdPhone.userId == itemVal.userId) {
-                            flag = false;
-                        }
-
-                    })
-                    if (flag) {
+                $scope.fdRegusers.$loaded().then(function (fdRegusers) {
+                    flag = $scope.fdRegusers.filter(function (userlist) { return userlist.userId.toUpperCase() == $rootScope.userIdPhone.userId.toUpperCase() }); //$scope.user.userId
+                     if (flag.length == 0) {
                         $scope.saveReguserdetails = $scope.fdRegusers.$add({
                             userName: $rootScope.userIdPhone.UserName,
                             userId: $rootScope.userIdPhone.userId,
