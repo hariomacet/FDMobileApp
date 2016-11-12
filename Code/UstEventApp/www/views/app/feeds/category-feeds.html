@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="list category-feeds" ng-if="categoryTitle == 'events2016'">
-            <div ng-if="category_sources.length>0">
+            <!--<div ng-if="category_sources.length>0">
                 <div class="item item-divider">
                     <div class="item-icon-left">
                         <i class="icon ion-ios-basketball"></i>
@@ -35,14 +35,14 @@
                     </div>
                     <div>
                         <span class="title">{{source.eventName}}</span>
-                        <!--<p class="description">{{source.time}}</p>
+                        <p class="description">{{source.time}}</p>
                         <div class="item-text-wrap description">
                             <h5>{{source.description}}</h5>
-                        </div>-->
+                        </div>
                     </div>
                     <i class="icon ion-arrow-right-c"></i>
                 </a>
-            </div>
+            </div>-->
             <div ng-if="special_sources.length>0">
                 <div class="item item-divider">
                     <div class="item-icon-left" style="padding-left: 10px;">
@@ -58,10 +58,10 @@
                     </div>
                     <div>
                         <span class="title">{{source.eventName}}</span>
-                        <!--<p class="description">{{source.time}}</p>
-                        <div class="item-text-wrap description">
+                        <p ng-if="source.time !=''" class="description">{{source.time}}</p>
+                        <div ng-if="source.description !=''" class="item-text-wrap description">
                             <h5>{{source.description}}</h5>
-                        </div>-->
+                        </div>
                     </div>
                     <i class="icon ion-arrow-right-c"></i>
                 </a>
@@ -81,10 +81,10 @@
                     </div>
                     <div>
                         <span class="title">{{source.eventName}}</span>
-                        <!--<p class="description">{{source.time}}</p>
-                        <div class="item-text-wrap description">
+                        <p class="description" ng-if="source.time != ''">{{source.time}}</p>
+                        <div  ng-if="source.description !=''" class="item-text-wrap description">
                             <h5>{{source.description}}</h5>
-                        </div>-->
+                        </div>
                     </div>
                     <i class="icon ion-arrow-right-c"></i>
                 </a>

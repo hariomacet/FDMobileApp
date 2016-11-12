@@ -32,60 +32,65 @@ angular.module('starter.controllers', [])
         $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
         $scope.userdetails.$loaded().then(function (userdetails) {
             var foundUser = $scope.userdetails.filter(function (user) {
-                return user.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.user.email.replace(/^\s+|\s+$/g, '') || user.userNumber == $scope.user.phone
+                return user.userEmailId.replace(/^\s+|\s+$/g, '').toUpperCase() === $scope.user.email.replace(/^\s+|\s+$/g, '').toUpperCase() || user.userNumber == $scope.user.phone
             });
-            var foundemail = $scope.userdetails.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.user.email.replace(/^\s+|\s+$/g, '') });
+            var foundemail = $scope.userdetails.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '').toUpperCase() === $scope.user.email.replace(/^\s+|\s+$/g, '').toUpperCase() });
             var foundnumber = $scope.userdetails.filter(function (user) { user.userNumber == $scope.user.phone });
             if (foundUser.length > 0) {
                 var userdata = foundUser[0];
-                if (userdata.userPassword == $scope.user.password) {
-                    $scope.emailcolor = "Green";
-                    $scope.validUser = true;
-                    $rootScope.userIdPhone.userId = userdata.userId;
-                    $rootScope.userIdPhone.UserName = userdata.userName;
-                    $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
-                    $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
-                    $rootScope.userIdPhone.userImage = userdata.userImage;
-                    $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
-                    ProgressBar.hide()
-                    $state.go('app.feeds-categories');
-                }
-                else if (userdata.pin == $scope.user.pin) {
-                    $scope.emailcolor = "Green";
-                    $scope.validUser = true;
-                    $rootScope.userIdPhone.userId = userdata.userId;
-                    $rootScope.userIdPhone.UserName = userdata.userName;
-                    $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
-                    $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
-                    $rootScope.userIdPhone.userImage = userdata.userImage;
-                    $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
-                    ProgressBar.hide()
-                    $state.go('app.feeds-categories');
-                }
-                else {
-                ProgressBar.hide()
-                if ($scope.user.pin != '' || foundnumber.length == 0) {
-                        $scope.phonecolor = "Red";
-                        $scope.phoneborder = "solid";
+                if (foundemail.length > 0) {
+                    if (userdata.userPassword == $scope.user.password) {
+                        $scope.emailcolor = "Green";
+                        $scope.validUser = true;
+                        $rootScope.userIdPhone.userId = userdata.userId;
+                        $rootScope.userIdPhone.UserName = userdata.userName;
+                        $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
+                        $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
+                        $rootScope.userIdPhone.userImage = userdata.userImage;
+                        $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
+                        ProgressBar.hide()
+                        $state.go('app.feeds-categories');
                     }
                     else {
-                        
+                        ProgressBar.hide()
                         $scope.emailcolor = "Red";
-                        $scope.emailborder = "solid";
+                         $scope.emailborder = "solid";
                     }
+                }
+                else if(foundnumber.length>0){
+                    if (userdata.pin == $scope.user.pin) {
+                        $scope.emailcolor = "Green";
+                        $scope.validUser = true;
+                        $rootScope.userIdPhone.userId = userdata.userId;
+                        $rootScope.userIdPhone.UserName = userdata.userName;
+                        $rootScope.userIdPhone.PhoneNumber = userdata.userNumber;
+                        $rootScope.userIdPhone.userIsAdmin = userdata.userIsAdmin;
+                        $rootScope.userIdPhone.userImage = userdata.userImage;
+                        $rootScope.userIdPhone.userEmailId = userdata.userEmailId;
+                        ProgressBar.hide()
+                        $state.go('app.feeds-categories');
+                    } else {
+                        ProgressBar.hide()
+                        $scope.phonecolor = "Red";
+                        $scope.phoneborder = "solid"
+
+                    }
+                }
+                else {
+                    ProgressBar.hide()
+                    $scope.emailcolor = "Red";
+                    $scope.emailborder = "solid";
+                    $scope.phonecolor = "Red";
+                    $scope.phoneborder = "solid";
+                   
                 }
             }
             else {
                 ProgressBar.hide()
-                if (foundemail.length == 0 && ($scope.user.email != ''  || $scope.user.password != ''))
-                {
-                    $scope.emailcolor = "Red";
-                    $scope.emailborder = "solid";
-                }
-                if (foundnumber.length == 0 && ($scope.user.phone != '' || $scope.user.pin != '')  ) {
-                    $scope.phonecolor = "Red";
-                    $scope.phoneborder = "solid";
-                }
+                $scope.emailcolor = "Red";
+                $scope.emailborder = "solid";
+                $scope.phonecolor = "Red";
+                $scope.phoneborder = "solid";
             }
             /* angular.forEach(userdetails, function (userdata) {
                    //  angular.forEach(userdata, function (item) {
@@ -164,11 +169,11 @@ angular.module('starter.controllers', [])
     $scope.displayEmailId = function () {
         //var userId = $scope.user.userId == undefined ? '' : $scope.user.userId + "@ust-global.com";
         $scope.user.email = $scope.user.userId == undefined ? '' : $scope.user.userId + "@ust-global.com";
-        
+
 
     }
 
-   
+
     var getRandomSpan = function () {
         var str = "";                                         // String result
         for (var i = 0; i < 6; i++) {                             // Loop `len` times
@@ -193,7 +198,7 @@ angular.module('starter.controllers', [])
         var isSignUp = true;
         ProgressBar.show($ionicLoading);
         var foundValidUser = "";
-            $scope.userList = $firebaseArray(fireBaseData.refListUid());
+        $scope.userList = $firebaseArray(fireBaseData.refListUid());
         $scope.userList.$loaded().then(function (userList) {
             foundValidUser = $scope.userList.filter(function (userlist) { return userlist.userId.toUpperCase() == $scope.user.userId.toUpperCase() }); //$scope.user.userId
 
@@ -204,13 +209,12 @@ angular.module('starter.controllers', [])
             var foundUserEmail = $scope.userdetails.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '') === $scope.user.email.replace(/^\s+|\s+$/g, '') });
             var foundUserPhone = $scope.userdetails.filter(function (user) { return user.userNumber == $scope.user.phone });
 
-            if (foundValidUser.length == 0)
-            {
+            if (foundValidUser.length == 0) {
                 $scope.user.UserExist = "Not Valid User ID!!"
                 ProgressBar.hide();
                 isSignUp = false;
             }
-            else if (foundUserEmail.length > 0 || foundUserPhone.length > 0 ) {
+            else if (foundUserEmail.length > 0 || foundUserPhone.length > 0) {
                 $scope.user.UserExist = "Already Exists!!"
                 ProgressBar.hide();
                 isSignUp = false;
@@ -1024,7 +1028,7 @@ angular.module('starter.controllers', [])
                 var CurrentDate = new Date();
                 $scope.fdRegusers.$loaded().then(function (fdRegusers) {
                     flag = $scope.fdRegusers.filter(function (userlist) { return userlist.userId.toUpperCase() == $rootScope.userIdPhone.userId.toUpperCase() }); //$scope.user.userId
-                     if (flag.length == 0) {
+                    if (flag.length == 0) {
                         $scope.saveReguserdetails = $scope.fdRegusers.$add({
                             userName: $rootScope.userIdPhone.UserName,
                             userId: $rootScope.userIdPhone.userId,

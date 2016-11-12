@@ -19,9 +19,9 @@
                         <div class="item item-text-wrap">
                             <p ng-repeat="s in event.schedule">
                                 <i class="icon ion-android-arrow-dropright"></i>
-                                <!--<b>Date:</b> {{s.date}}<br />
+                                <b>Date:</b> {{s.date}}<br />
                                 <b>Time:</b> {{s.time}}<br />
-                                <b>AT:</b> {{s.place}}-->
+                                <b>AT:</b> {{s.place}}
                             </p>
                         </div>
                     </div>
@@ -80,25 +80,25 @@
                         </div>
                         <div class="item item-text-wrap">
                             <p ng-repeat="s in event.schedule">
-                                <!--<b>Date:</b> {{s.date}}<br />
-                                <b>Time:</b> {{s.time}}<br />
-                                <b>AT:</b> {{s.place}}-->
+                                <label ng-if="s.date != ''"> <b>Date:</b> {{s.date}}</label><br />
+                                <label ng-if="s.time != ''"> <b>Time:</b> {{s.time}} </label> <br />
+                                <label ng-if="s.place !=''"><b>AT:</b> {{s.place}} </label> 
                             </p>
                         </div>
                     </div>
                     <div ng-if="event.rule.length > 0">
-                        <div ng-repeat="b in event.rule">
+                          <div ng-repeat="b in event.rule | filter: {isActive :'1'}">
                             <div class="item item-divider item-text-wrap">
-                                <h4>
+                                <h4>                                   
                                     <i class="icon ion-android-arrow-dropright"></i>
                                     {{b.program}}
                                 </h4>
                             </div>
                             <div class="item item-text-wrap">
                                 <p>
-                                    <!--<b>Time & Duration:</b> {{b._time}}<br />
-                                    <b>Anchor:</b> {{b.anchor}}<br />
-                                    <b>Details:</b> {{b.details}}<br />-->
+                                    <label ng-if="b._time != ''"><b>Time & Duration:</b> {{b._time}}</label> <br />
+                                    <label ng-if="b.anchor != ''"><b>Anchor:</b> {{b.anchor}}</label><br />
+                                    <label ng-if="b.details != ''"><b>Details:</b> {{b.details}}</label><br />
                                 </p>
                             </div>
                         </div>

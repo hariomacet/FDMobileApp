@@ -13,72 +13,77 @@
     <ion-side-menu side="left" class="main-menu" expose-aside-when="large">
         <ion-content>
             <ion-list style="cursor:pointer;">
-                <ion-item class="heading-item item item-avatar" nav-clear menu-close ui-sref="app.feeds-categories">
-                    <div class="user-image-container" ng-if="userImage !=null">
-                        <pre-img ratio="_1_1" helper-class="rounded-image" ng-if="userImage !=''">
-                            <img class="user-image" ng-src="data:image/jpeg;base64{{userImage}}" spinner-on-load>
-                        </pre-img>
-                        <pre-img ratio="_1_1" helper-class="rounded-image" ng-if="userImage ==''">
-                            <img class="user-image" ng-src="../../img/ust_global.jpg" spinner-on-load>
-                        </pre-img>
+                <!--<ion-item class="heading-item item item-avatar" nav-clear menu-close ui-sref="app.feeds-categories">-->
+                    <ion-item class="menu-text" nav-clear menu-close ui-sref="app.feeds-categories">
+                        <!--<div class="user-image-container" ng-if="userImage !=null">
+                <pre-img ratio="_1_1" helper-class="rounded-image" ng-if="userImage !=''">
+                    <img class="user-image" ng-src="data:image/jpeg;base64{{userImage}}" spinner-on-load>
+                </pre-img>
+                <pre-img ratio="_1_1" helper-class="rounded-image" ng-if="userImage ==''">
+                    <img class="user-image" ng-src="../../img/ust_global.jpg" spinner-on-load>
+                </pre-img>
+            </div>-->
+                        <!--<div class="user-image-container">
+                <pre-img ratio="_1_1" helper-class="rounded-image">
+                    <img class="user-image" ng-src="../../img/ust_global.jpg" spinner-on-load>
+                </pre-img>
+            </div>-->
+
+
+                        <h2 class="menu-text">Hi {{userName}}</h2>
+                        <p class="menu-text">Welcome back!!</p>
+
+
+                    </ion-item>
+                    <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.bookmarks">
+          <i class="icon ion-bookmark"></i>
+          <h2 class="menu-text">Saved for later</h2>
+        </ion-item>-->
+                    <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.feeds-categories">
+                        <i class="icon ion-radio-waves"></i>
+                        <h2 class="menu-text">Dashboard</h2>
+                    </ion-item>
+                    <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.wordpress">
+          <i class="icon ion-social-wordpress"></i>
+          <h2 class="menu-text">Wordpress</h2>
+        </ion-item>-->
+                    <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.layouts">
+            <i class="icon ion-wand"></i>
+            <h2 class="menu-text">Layouts</h2>
+        </ion-item>-->
+                    <div ng-if="userIsAdmin == '1'">
+                        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.admin">
+                            <i class="icon ion-asterisk"></i>
+                            <h2 class="menu-text">Admin</h2>
+                        </ion-item>
                     </div>
-                    <!--<div class="user-image-container">
-                        <pre-img ratio="_1_1" helper-class="rounded-image">
-                            <img class="user-image" ng-src="../../img/ust_global.jpg" spinner-on-load>
-                        </pre-img>
-                    </div>-->
-                    <h2 class="greeting">Hi {{userName}}</h2>
-                    <p class="message">Welcome back</p>
-                </ion-item>
-                <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.bookmarks">
-                  <i class="icon ion-bookmark"></i>
-                  <h2 class="menu-text">Saved for later</h2>
-                </ion-item>-->
-                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.feeds-categories">
-                    <i class="icon ion-radio-waves"></i>
-                    <h2 class="menu-text">Dashboard</h2>
-                </ion-item>
-                <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.wordpress">
-                  <i class="icon ion-social-wordpress"></i>
-                  <h2 class="menu-text">Wordpress</h2>
-                </ion-item>-->
-                <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.layouts">
-                    <i class="icon ion-wand"></i>
-                    <h2 class="menu-text">Layouts</h2>
-                </ion-item>-->
-                <div ng-if="userIsAdmin == '1'">
-                    <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.admin">
-                        <i class="icon ion-asterisk"></i>
-                        <h2 class="menu-text">Admin</h2>
+                    <div ng-if="userIsAdmin == '2'">
+                        <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.admin">
+                            <i class="icon ion-asterisk"></i>
+                            <h2 class="menu-text">Super Admin</h2>
+                        </ion-item>
+                    </div>
+                    <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.forms">
+          <i class="icon ion-document"></i>
+          <h2 class="menu-text">Forms</h2>
+        </ion-item>-->
+                    <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.survey" ng-hide="true">
+                        <i class="icon ion-document"></i>
+                        <h2 class="menu-text">Survey</h2>
                     </ion-item>
-                </div>
-                <div ng-if="userIsAdmin == '2'">
-                    <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.admin">
-                        <i class="icon ion-asterisk"></i>
-                        <h2 class="menu-text">Super Admin</h2>
+                    <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.settings">
+            <i class="icon ion-gear-a"></i>
+            <h2 class="menu-text">Settings</h2>
+        </ion-item>-->
+                    <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.profileSetting">
+            <i class="icon ion-camera"></i>
+            <h2 class="menu-text">Change Pics</h2>
+        </ion-item>-->
+                    <ion-item class="item-icon-left" nav-clear menu-close ui-sref="auth.login" ui-sref-opts="{reload: true}">
+                        <i class="icon ion-log-out"></i>
+                        <h2 class="menu-text">LogOut</h2>
                     </ion-item>
-                </div>
-                <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.forms">
-                  <i class="icon ion-document"></i>
-                  <h2 class="menu-text">Forms</h2>
-                </ion-item>-->
-                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.survey" ng-hide="true">
-                    <i class="icon ion-document"></i>
-                    <h2 class="menu-text">Survey</h2>
-                </ion-item>
-                <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.settings">
-                    <i class="icon ion-gear-a"></i>
-                    <h2 class="menu-text">Settings</h2>
-                </ion-item>-->
-                <!--<ion-item class="item-icon-left" nav-clear menu-close ui-sref="app.profileSetting">
-                    <i class="icon ion-camera"></i>
-                    <h2 class="menu-text">Change Pics</h2>
-                </ion-item>-->
-                <ion-item class="item-icon-left" nav-clear menu-close ui-sref="auth.login" ui-sref-opts="{reload: true}">
-                    <i class="icon ion-log-out"></i>
-                    <h2 class="menu-text">LogOut</h2>
-                </ion-item>
-            </ion-list>
+</ion-list>
         </ion-content>
     </ion-side-menu>
 </ion-side-menus>
