@@ -1017,6 +1017,7 @@ angular.module('starter.controllers', [])
     $scope.userId = $rootScope.userIdPhone.userId;
     $scope.events = [];
     var flag = '';
+    
     $scope.$on('beaconEventRecieved', function (event, args) {
         $scope.events.push(args.event);
         // $scope.beaconEnter = event
@@ -1029,12 +1030,13 @@ angular.module('starter.controllers', [])
                 $scope.fdRegusers.$loaded().then(function (fdRegusers) {
                     flag = $scope.fdRegusers.filter(function (userlist) { return userlist.userId.toUpperCase() == $rootScope.userIdPhone.userId.toUpperCase() }); //$scope.user.userId
                     if (flag.length == 0) {
+                      
                         $scope.saveReguserdetails = $scope.fdRegusers.$add({
                             userName: $rootScope.userIdPhone.UserName,
                             userId: $rootScope.userIdPhone.userId,
                             lastRegistered: CurrentDate.toLocaleString()
                         }).then(function (fdRegusers) {
-                            //   console.log(ref);
+                            $ionicLoading.show({ template: 'Welcome to UST Gobal 17th Foundation day. Registered Successfully!!', noBackdrop: true, duration: 10000 });
                         }, function (error) {
                             //console.log("Error:", error);
                         });
@@ -1082,6 +1084,7 @@ angular.module('starter.controllers', [])
     //$http.get('feeds-categories.json').success(function (response) {
     //    $scope.feeds_categories = response;
     //});
+        
 })
 
 .controller('EventDetailsCtrl', function ($scope, $stateParams, $firebaseArray, fireBaseData) {
