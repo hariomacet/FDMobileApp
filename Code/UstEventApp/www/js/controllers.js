@@ -161,6 +161,7 @@ angular.module('starter.controllers', [])
 .controller('SignupCtrl', function ($scope, $state, $firebaseArray, fireBaseData, $cordovaCamera, $rootScope, $cordovaFileTransfer, $ionicPopup, ProgressBar, $ionicLoading) {
     $scope.user = {};
     $scope.user.email = "";
+    $scope.user.phone="";
     var checkEmailId = false;
     var checkPhonenumber = false;
     var dateNow = new Date();
@@ -173,6 +174,7 @@ angular.module('starter.controllers', [])
 
     }
 
+    
 
     var getRandomSpan = function () {
         var str = "";                                         // String result
