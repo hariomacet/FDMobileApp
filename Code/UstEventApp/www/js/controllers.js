@@ -1153,13 +1153,13 @@ angular.module('starter.controllers', [])
                  }
                  else if ($scope.categoryTitle == "events2016") {
                      angular.forEach(categoryitem, function (sport) {
-                         if (sport.type == 'sport' && sport.isActive == '1') {
+                         if (sport.type == 'sport') {
                              $scope.category_sources.push(sport)
                          }
-                         if (sport.type == 'special' && sport.isActive == '1') {
+                         if (sport.type == 'special') {
                              $scope.special_sources.push(sport)
                          }
-                         if (sport.type == 'other' && sport.isActive == '1') {
+                         if (sport.type == 'other') {
                              $scope.other_sources.push(sport)
                          }
                      })
@@ -1401,16 +1401,17 @@ angular.module('starter.controllers', [])
     $scope.Employees = $firebaseArray(fireBaseData.refEmpList());
     $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
     $scope.userVoteCount = $firebaseArray(fireBaseData.refVoteCount());
-    $scope.userVoteCount.$loaded().then(function (userVoteCount) {
-        var total = parseInt(userVoteCount.length)
-        $scope.Employees.$loaded().then(function (Employees) {
-            angular.forEach(Employees, function (emp) {
-                var div = parseInt(emp.totalVote) * 100 / total
-                var obj = { 'empColor': emp.empColor, 'empId': emp.empId, 'empName': emp.empName, 'totalVote': emp.totalVote, 'empPercent': div , 'isActive' : emp.isActive }
-                $scope.EmployeesData.push(obj);
-            });
-        })
-    });
+    //$scope.userVoteCount.$loaded().then(function (userVoteCount) {
+    //    var total = parseInt(userVoteCount.length)
+    //    $scope.Employees.$loaded().then(function (Employees) {
+    //        angular.forEach(Employees, function (emp) {
+    //            //var div = parseInt(emp.totalVote) * 100 / total
+    //            var div = parseInt(emp.totalVote)
+    //            var obj = { 'empColor': emp.empColor, 'empId': emp.empId, 'empName': emp.empName, 'totalVote': emp.totalVote, 'empPercent': div , 'isActive' : emp.isActive }
+    //            $scope.EmployeesData.push(obj);
+    //        });
+    //    })
+    //});
 
 })
 .controller("EventMastereCtrl", function ($scope, $stateParams, $firebaseArray, fireBaseData, $ionicPopup) {
