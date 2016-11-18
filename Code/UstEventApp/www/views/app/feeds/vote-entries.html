@@ -8,7 +8,7 @@
     <ion-content>
         <ion-list>
             <div class="list">
-                <div style="display: -webkit-box;" ng-repeat="emp in Employees">
+                   <div style="display: -webkit-box;" ng-repeat="emp in Employees | filter:{isActive:'1'}">
                     <span class="input-label col col-50" style="background-color:{{emp.empColor}} !important;color:white;">{{emp.empName}} </span>
                     <ion-radio ng-model="v.choice" ng-value="emp.empId" class="col col-50 item-radio" ng-disabled="isDisable" ng-change="doSaveVote(v);">{{v.choice==emp.empId?'Done':'Vote'}} </ion-radio>
                 </div>

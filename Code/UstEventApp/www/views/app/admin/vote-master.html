@@ -8,11 +8,12 @@
     <ion-content>
         <ion-list>
             <div class="list">
-                <div class="" ng-repeat="emp in EmployeesData | orderByDesc:'empPercent':true">
-                    <span class="col progress">{{emp.empName}} <span class="badge badge-assertive">{{emp.totalVote}}</span></span>
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{emp.empPercent | number: 2}}" style="background-color:{{emp.empColor}} !important;width:{{emp.empPercent | number: 2}}%;"
-                         aria-valuemin="0" aria-valuemax="100" ng-if="emp.empPercent>0">{{emp.empPercent | number: 2}}%
+                <div class="" ng-repeat="emp in EmployeesData | filter :{isActive: '1'} | orderByDesc:'empPercent':true"  >
+                    <span class="col progress">{{emp.empName}} </span>
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{emp.empPercent | number: 2}}" style="background-color:{{emp.empColor}} !important; width:{{emp.empPercent | number: 2}}%;"
+                         aria-valuemin="0" aria-valuemax="100" ng-if="emp.empPercent>0">
                     </div>
+                    <div style="text-align: center; font-weight:bold">{{emp.empPercent | number: 2}}%</div>
                 </div>
             </div>
         </ion-list>

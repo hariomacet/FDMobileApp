@@ -5,8 +5,8 @@
     <ion-content>
         <div class="list category-feeds" ng-if="categoryTitle != 'survey' 
              && categoryTitle != 'vote' && categoryTitle != 'events2016' && categoryTitle != 'attendance'" >
-            <a ng-repeat="source in category_sources" class="item item-icon-right"
-               ui-sref="app.feed-entries({categoryId: categoryId, sourceId: source.id, sourceTitle : (source.title | slugify)  })">
+            <a ng-repeat="source in category_sources | filter: {isActive :1}" class="item item-icon-right"
+               ui-sref="app.event-details({categoryId: source.id,sourceId: (source.title | slugify)})">
                 <div class="thumbnail-outer">
                     <pre-img ratio="_1_1" helper-class="">
                         <img class="thumbnail" ng-src="{{source.image}}" spinner-on-load>
@@ -14,7 +14,10 @@
                 </div>
                 <div>
                     <span class="title">{{source.title}}</span>
-                    <p class="description">{{source.description}}</p>
+                    <!--<p ng-if="source.time !=''" class="description">{{source.time}}</p>-->
+                    <div ng-if="source.description !=''" class="item-text-wrap description">
+                        <h5>{{source.description}}</h5>
+                    </div>
                 </div>
                 <i class="icon ion-arrow-right-c"></i>
             </a>

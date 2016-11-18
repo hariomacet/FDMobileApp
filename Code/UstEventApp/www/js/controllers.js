@@ -35,7 +35,7 @@ angular.module('starter.controllers', [])
                 return user.userEmailId.replace(/^\s+|\s+$/g, '').toUpperCase() === $scope.user.email.replace(/^\s+|\s+$/g, '').toUpperCase() || user.userNumber == $scope.user.phone
             });
             var foundemail = $scope.userdetails.filter(function (user) { return user.userEmailId.replace(/^\s+|\s+$/g, '').toUpperCase() === $scope.user.email.replace(/^\s+|\s+$/g, '').toUpperCase() });
-            var foundnumber = $scope.userdetails.filter(function (user) { user.userNumber == $scope.user.phone });
+            var foundnumber = $scope.userdetails.filter(function (user) { return user.userNumber == $scope.user.phone });
             if (foundUser.length > 0) {
                 var userdata = foundUser[0];
                 if (foundemail.length > 0) {
@@ -1203,6 +1203,7 @@ angular.module('starter.controllers', [])
         sourceTitle = $stateParams.sourceTitle,
 			sourceId = $stateParams.sourceId;
 
+    
     if (categoryId == "gallery") {
         var ref = new Firebase("https://ustdb.firebaseio.com/nowU/feed_source");
         ref.once("value", function (snapshot) {
@@ -1387,17 +1388,18 @@ angular.module('starter.controllers', [])
     $scope.EmployeesData = [];
     $scope.Employees = $firebaseArray(fireBaseData.refEmpList());
     $scope.userdetails = $firebaseArray(fireBaseData.refRegisteration());
-    $scope.userdetails.$loaded().then(function (userdetails) {
-        var total = parseInt(userdetails.length)
+    $scope.userVoteCount = $firebaseArray(fireBaseData.refVoteCount());
+    $scope.userVoteCount.$loaded().then(function (userVoteCount) {
+        var total = parseInt(userVoteCount.length)
         $scope.Employees.$loaded().then(function (Employees) {
             angular.forEach(Employees, function (emp) {
                 var div = parseInt(emp.totalVote) * 100 / total
-
-                var obj = { 'empColor': emp.empColor, 'empId': emp.empId, 'empName': emp.empName, 'totalVote': emp.totalVote, 'empPercent': div }
+                var obj = { 'empColor': emp.empColor, 'empId': emp.empId, 'empName': emp.empName, 'totalVote': emp.totalVote, 'empPercent': div , 'isActive' : emp.isActive }
                 $scope.EmployeesData.push(obj);
             });
         })
     });
+
 })
 .controller("EventMastereCtrl", function ($scope, $stateParams, $firebaseArray, fireBaseData, $ionicPopup) {
     $scope.v = {};

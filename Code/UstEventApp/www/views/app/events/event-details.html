@@ -101,6 +101,56 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="card" ng-if="EventDetails[0].type =='P'">
+                <div ng-repeat="event in EventDetails">
+                    <!--<div ng-if="event.schedule.length>0">
+                        <div class="item item-divider item-text-wrap">
+                            <h4>
+                                <i class="icon ion-ios-time"></i>
+                                Schedule Details
+                            </h4>
+                        </div>                     
+                    </div>-->
+                    <div ng-if="event.rule.length > 0">
+                        <div ng-repeat="b in event.rule | filter: {isActive :'1'}">
+                            <!--<div class="item item-divider item-text-wrap">
+                                <h4>
+                                    <i class="icon ion-android-arrow-dropright"></i>
+                                    {{b.program}}
+                                </h4>
+                            </div>
+                            <div class="item item-text-wrap" ng-repeat="s in event.schedule">
+                                <div ng-if="b._time != ''">  <b>Time & Duration:</b> {{b._time}}</div>
+                                <div ng-if="b.anchor != ''"> <b>Anchor: </b> {{b.anchor}}</div>
+                                <div ng-if="b.details != ''"><b>Details: </b> {{b.details}}</div>
+                                <pre-img helper-class="square-image">
+                                    <img class="full-image" ng-src="{{b.image}}" spinner-on-load>
+                                </pre-img>
+                            </div>-->
+
+                            <div class="list card">
+                                <div class="button button-calm" style="width:100%">
+                                   {{b.program}}
+                                 </div>
+                                <div class="item item-body" ng-repeat="s in event.schedule">
+                                    <img class="full-image"  ng-src="{{b.image}}">
+                                    <p>
+                                        <div ng-if="b._time != ''">  <b>Time & Duration:</b>{{b._time}}</div>
+                                        <div ng-if="b.anchor != ''"> <b>Event Name: </b> {{b.anchor}}</div>
+                                        <div ng-if="b.details != ''"><b>Details: </b> {{b.details}}</div>
+                                    </p>
+                                 
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </ion-content>
     </form>
 </ion-modal-view>
