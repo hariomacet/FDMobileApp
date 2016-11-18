@@ -84,5 +84,6 @@ An Mobile Application which provides news updates to UST global employees
   <plugin name="cordova-plugin-admobpro" version="2.20.1" />
   <plugin name="cordova-plugin-iad" version="2.0.5" />-->
   <plugin name="cordova-plugin-media-capture" version="1.3.0" />
- 
+
+  <plugin name="cordova-plugin-x-toast" version="2.5.2" src="https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin" />
 </widget>

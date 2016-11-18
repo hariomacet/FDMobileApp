@@ -54,7 +54,7 @@ angular.module('starter.controllers', [])
                     else {
                         ProgressBar.hide()
                         $scope.emailcolor = "Red";
-                         $scope.emailborder = "solid";
+                        $scope.emailborder = "solid";
                     }
                 }
                 else if(foundnumber.length>0){
@@ -141,6 +141,11 @@ angular.module('starter.controllers', [])
         //}
 
     };
+
+    var flag = '';
+   
+
+
 
     $scope.user = {};
 
@@ -1013,7 +1018,7 @@ angular.module('starter.controllers', [])
 
 // FEED
 //brings all feed categories
-.controller('FeedsCategoriesCtrl', function ($scope, $http, $firebaseArray, fireBaseData, $rootScope, ProgressBar, $ionicLoading, beacon) {
+.controller('FeedsCategoriesCtrl', function ($scope, $http, $firebaseArray, fireBaseData, $rootScope, ProgressBar, $ionicLoading, beacon,$cordovaToast) {
 
     $scope.username = $rootScope.userIdPhone.UserName;
     $scope.userId = $rootScope.userIdPhone.userId;
@@ -1027,6 +1032,7 @@ angular.module('starter.controllers', [])
             // ADDED NEW 
             if (args.event.beaconName === "First beacon") {
                 // CODE GOES HERE 
+              
                 $scope.fdRegusers = $firebaseArray(fireBaseData.refFdRegusers());
                 var CurrentDate = new Date();
                 $scope.fdRegusers.$loaded().then(function (fdRegusers) {
@@ -1038,7 +1044,13 @@ angular.module('starter.controllers', [])
                             userId: $rootScope.userIdPhone.userId,
                             lastRegistered: CurrentDate.toLocaleString()
                         }).then(function (fdRegusers) {
-                            $ionicLoading.show({ template: 'Welcome to UST Gobal 17th Foundation day. Registered Successfully!!', noBackdrop: true, duration: 10000 });
+                            $cordovaToast.showLongBottom('Welcome to UST Gobal 17th Foundation day. Registered Successfully!!', 'long', 'Bottom')
+                            .then(function (success) {
+                            // success
+                                }, function (error) {
+                                    // error
+                             });                        
+                            //  $ionicLoading.show({ template: 'Welcome to UST Gobal 17th Foundation day. Registered Successfully!!', noBackdrop: true, duration: 10000 });
                         }, function (error) {
                             //console.log("Error:", error);
                         });
@@ -1053,7 +1065,7 @@ angular.module('starter.controllers', [])
             $scope.beaconValue = "No Beacon around";
         }
         $scope.$apply();
-    });
+    }); 
 
 
 
